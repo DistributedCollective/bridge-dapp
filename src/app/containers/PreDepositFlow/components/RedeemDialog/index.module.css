@@ -1,0 +1,16 @@
+.container {
+    background-color: #000000;
+    color: #E9EAE9;
+    max-width: 468px;
+    padding: 40px;
+    border-radius: 15px;
+    position: relative;
+    letter-spacing: 0;
+    width: 100%;
+}
+
+@media screen and (min-width: 540px) {
+    .container {
+        width: 468px;
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "short_name": "Sovryn Pre-Order",
+  "name": "Sovryn Pre-Order",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo52.png",
+      "type": "image/png",
+      "sizes": "52x52"
+    },
+    {
+      "src": "logo104.png",
+      "type": "image/png",
+      "sizes": "104x104"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
