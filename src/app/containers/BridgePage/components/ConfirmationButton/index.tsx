@@ -19,7 +19,13 @@ interface Props {
 }
 
 export function ConfirmationButton({ state, dispatch }: Props) {
-  const { sourceNetwork, asset } = useBridgeState();
+  const { sourceNetwork, targetNetwork, asset } = useBridgeState();
+  const swapNetworks = () => {
+    const source = sourceNetwork.value;
+    const target = targetNetwork.value;
+    sourceNetwork.set(target);
+    targetNetwork.set(source);
+  };
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
       {state.address.length === 0 ? (
@@ -30,11 +36,12 @@ export function ConfirmationButton({ state, dispatch }: Props) {
             src={swapLogo}
             alt="Swap Icon"
             className={cn(
-              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300',
+              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
               {
                 'opacity-25': state.networkType !== sourceNetwork.value,
               },
             )}
+            onClick={() => swapNetworks()}
           />
           {state.networkType !== sourceNetwork.value ? (
             <WrongNetwork sourceNetwork={sourceNetwork.value} />
