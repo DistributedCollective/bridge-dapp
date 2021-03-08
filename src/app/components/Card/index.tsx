@@ -8,6 +8,11 @@ interface Props {
   theme?: 'dark' | 'light';
 }
 
+/**
+ * @deprecated
+ * @param props
+ * @constructor
+ */
 export function Card(props: Props) {
   return (
     <div className="container px-3 lg:px-32">

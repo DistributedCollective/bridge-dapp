@@ -19,7 +19,6 @@ import { NoticeCard } from './components/NoticeCard';
 import { DepositPendingCard } from './components/DepositPendingCard';
 import { DepositWalletCard } from './components/DepositWalletCard';
 import { ConnectCard } from './components/ConnectCard';
-import { StatsBar } from '../../components/StatsBar';
 
 interface Props {}
 
@@ -51,7 +50,6 @@ export function PreDepositFlow(props: Props) {
 
   return (
     <>
-      <StatsBar state={state} dispatch={dispatch} />
       <div className="pb-16">
         <StepRenderer state={state} dispatch={dispatch} />
       </div>

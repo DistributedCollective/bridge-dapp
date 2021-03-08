@@ -1,0 +1,21 @@
+@layer components {
+    .bp3-select-popover .bp3-popover-content {
+        @apply bg-dark border border-dark-1;
+    }
+
+    .bp3-select-popover .bp3-menu {
+        @apply bg-dark text-white font-semibold text-base;
+    }
+
+    .bp3-select-popover .bp3-input-group > .bp3-icon {
+        color: theme('colors.white')!important;
+    }
+
+    .bp3-select-popover .bp3-input-group > .bp3-input {
+        @apply bg-dark text-white;
+    }
+
+    .bp3-select-popover .bp3-popover-arrow-fill {
+        fill: theme('colors.dark.DEFAULT');
+    }
+}

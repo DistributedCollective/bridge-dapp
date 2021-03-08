@@ -1,0 +1,213 @@
+@import "tailwindcss/components/index.css";
+
+@layer components {
+    .link {
+        @apply text-primary no-underline;
+    }
+
+    .link:hover {
+        @apply text-primary underline;
+    }
+
+    .header-link, .header-link:visited {
+        @apply font-body uppercase no-underline text-white text-base leading-none no-underline font-medium transition mx-6;
+    }
+
+    .header-link:hover, .header-link:active {
+        @apply text-secondary no-underline;
+    }
+
+    .header-link.active {
+        @apply text-white font-black no-underline;
+    }
+
+    /* form button styles */
+    .btn {
+        height: 3rem;
+        letter-spacing: 0.1rem;
+        @apply flex flex-row items-center justify-center;
+        @apply text-primary uppercase text-xl font-black leading-none font-body;
+        @apply px-4 py-2;
+        @apply border rounded-lg;
+        @apply transition;
+        @apply bg-primary bg-opacity-5;
+        @apply hover:bg-opacity-25;
+    }
+
+    .btn:disabled {
+        @apply opacity-25 bg-opacity-25 cursor-not-allowed;
+    }
+
+    .btn.loading, .btn.loading:disabled {
+        @apply opacity-75 bg-opacity-25 cursor-wait;
+    }
+
+    .btn .bp3-spinner .bp3-spinner-head {
+        stroke: theme('colors.primary');
+    }
+
+    .btn .bp3-spinner .bp3-spinner-track {
+        stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    /* inverted btn styles */
+    .btn-inverted {
+        @apply btn;
+        @apply text-black bg-opacity-100;
+        @apply hover:bg-opacity-75;
+    }
+
+    .btn-inverted:disabled {
+        @apply opacity-75 bg-opacity-75 cursor-not-allowed;
+    }
+
+    .btn-inverted.loading, .btn-inverted.loading:disabled {
+        @apply opacity-75 bg-opacity-75 cursor-wait;
+    }
+
+    .btn-inverted .bp3-spinner .bp3-spinner-head {
+        stroke: theme('colors.black');
+    }
+
+    .btn-inverted .bp3-spinner .bp3-spinner-track {
+        stroke: rgba(0, 0, 0, 0.1);
+    }
+
+    /* action btn styles */
+    .btn-action {
+        height: 3rem;
+        letter-spacing: 0.1rem;
+        @apply flex flex-row items-center justify-center;
+        @apply text-primary text-lg font-medium leading-none font-body;
+        @apply px-4 py-2;
+        @apply border rounded-full;
+        @apply transition;
+        @apply bg-primary bg-opacity-5;
+        @apply normal-case;
+        @apply hover:bg-opacity-25;
+    }
+
+    .btn-action:disabled {
+        @apply opacity-25 bg-opacity-25 cursor-not-allowed;
+    }
+
+    .btn-action.loading, .btn-action.loading:disabled {
+        @apply opacity-75 bg-opacity-25 cursor-wait;
+    }
+
+    .btn-action .bp3-spinner .bp3-spinner-head {
+        stroke: theme('colors.primary');
+    }
+
+    .btn-action .bp3-spinner .bp3-spinner-track {
+        stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    /* trading button styles */
+    .btn-trade {
+        width: 100%;
+        height: 3.75rem;
+        letter-spacing: 0.1rem;
+        @apply flex flex-row items-center justify-center;
+        @apply text-white uppercase text-2xl font-black leading-none font-body;
+        @apply px-4 py-2;
+        @apply border-0 rounded-lg;
+        @apply transition;
+        @apply hover:bg-opacity-75;
+    }
+
+    .btn-trade:disabled {
+        @apply opacity-25 bg-opacity-100 cursor-not-allowed;
+    }
+
+    .btn-trade.loading, .btn-trade.loading:disabled {
+        @apply opacity-75 bg-opacity-100 cursor-wait;
+    }
+
+    .btn-trade .bp3-spinner .bp3-spinner-head {
+        stroke: theme('colors.white');
+    }
+
+    .btn-trade .bp3-spinner .bp3-spinner-track {
+        stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-loader__spinner {
+        @apply block overflow-hidden text-left;
+        transition: width 150ms, opacity 100ms;
+        opacity: 0;
+        width: 0;
+    }
+
+    .btn-loader__spinner.active {
+        width: 2rem;
+        opacity: 100;
+    }
+
+    /* Slider */
+    .slider {
+        height: 3rem;
+    }
+
+    .slider .bp3-slider-track {
+        height: 0.75rem;
+        @apply rounded-lg;
+    }
+
+    .slider .bp3-slider-progress {
+        height: 0.75rem;
+        /* todo change color with correct tailwinds definition */
+        background-color: #707070;
+    }
+
+    .slider .bp3-slider-progress.bp3-intent-primary {
+        background-color: theme('colors.secondary');
+    }
+
+    .slider .bp3-slider-handle {
+        @apply rounded-full w-6 h-6;
+    }
+
+    .slider .bp3-slider-axis {
+        position: relative;
+        width: calc(100% - 0.75rem);
+        @apply mx-auto;
+    }
+
+    .slider .bp3-slider-label {
+        @apply font-bold font-body text-white;
+        top: 0.75rem;
+    }
+
+    .slider .bp3-slider-handle .bp3-slider-label {
+        display: none;
+    }
+
+    .trading-form-card {
+        max-width: 452px;
+        width: 100%;
+    }
+
+
+
+
+    .bridge-card {
+        @apply w-full flex-shrink-0 flex-grow-0;
+    }
+
+    .bridge-actions {
+        @apply w-full flex-shrink-0 flex-grow-0;
+    }
+
+    @responsive {
+        .bridge-card-m-400 {
+            max-width: 400px;
+            width: 400px;
+        }
+
+        .bridge-actions-sized {
+            max-width: 224px;
+            width: 224px;
+        }
+    }
+}

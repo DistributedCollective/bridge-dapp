@@ -1,0 +1,17 @@
+@layer base {
+    body {
+        @apply bg-dark text-white font-body;
+    }
+
+    * {
+        @apply font-body;
+    }
+
+    a, a:visited {
+        @apply text-primary no-underline underline;
+    }
+
+    a:hover, a:active {
+        @apply text-primary underline;
+    }
+}

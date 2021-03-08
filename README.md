@@ -1,1 +1,1 @@
-# Sovryn Governance Dapp
+# Sovryn Bridge

@@ -1,25 +1,5 @@
-import { Toaster } from '@blueprintjs/core';
-
-export const toaster = Toaster.create({
-  position: 'bottom',
-});
+import { toaster } from '../services/toaster';
 
 export function showError(message: string) {
-  toaster.show(
-    {
-      intent: 'danger',
-      message,
-    },
-    'error',
-  );
-}
-
-export function showSuccess(message: string) {
-  toaster.show(
-    {
-      intent: 'success',
-      message,
-    },
-    'success',
-  );
+  toaster.error(message, 'error');
 }

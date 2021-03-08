@@ -15,8 +15,8 @@ import { GlobalStyle } from 'styles/global-styles';
 import { DEFAULT_CHAIN } from '../utils/helpers';
 import { BlockChainProvider } from './containers/BlockChainProvider';
 
-import { HomePage } from './containers/HomePage/Loadable';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
+import { BridgePage } from './containers/BridgePage/Loadable';
 
 export function App() {
   console.log(`FOR CHAIN ${DEFAULT_CHAIN}`);
@@ -25,7 +25,7 @@ export function App() {
       <Helmet titleTemplate="%s | Sovryn" defaultTitle="Sovryn" />
       <BlockChainProvider>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={BridgePage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BlockChainProvider>

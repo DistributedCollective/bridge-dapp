@@ -1,0 +1,12 @@
+@layer components {
+    .card {
+        @apply block bg-dark-2 border border-dark-1 py-6 px-8 w-full;
+        border-radius: 2rem;
+    }
+
+    .card h1 {
+        @apply text-center uppercase mb-16 text-2xl font-extrabold;
+        font-size: 2.375rem;
+        line-height: 2.6875rem;
+    }
+}

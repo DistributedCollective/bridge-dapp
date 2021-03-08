@@ -1,0 +1,29 @@
+@layer components {
+    .radio-group {
+        @apply w-full flex flex-row justify-between items-center rounded-lg border border-white overflow-hidden divide-x divide-white;
+    }
+
+    .radio-button {
+        @apply flex-grow-0 flex-shrink block w-full p-2 cursor-pointer m-0 h-10 flex flex-row items-center justify-center transition truncate;
+    }
+
+    .radio-button--active {
+        /*@apply bg-secondary bg-opacity-75;*/
+    }
+
+    .radio-button__content {
+        @apply w-full font-semibold flex flex-row justify-center items-center opacity-25 transition truncate whitespace-nowrap;
+    }
+    .radio-button__content--active {
+        @apply opacity-100;
+    }
+
+    .radio-group--secondary.radio-group {
+        @apply border-secondary divide-secondary;
+    }
+
+    .radio-group--secondary .radio-button--active {
+        @apply bg-secondary bg-opacity-75;
+    }
+
+}

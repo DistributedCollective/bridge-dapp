@@ -1,0 +1,92 @@
+@layer components {
+    .dialog {
+        opacity:1;
+        transform:scale(1);
+        align-items:center;
+        display:flex;
+        justify-content:center;
+        min-height:100%;
+        pointer-events:none;
+        user-select:none;
+        width:100%;
+        position: fixed;
+        z-index: 20;
+    }
+    .bp3-overlay-inline .bp3-overlay-content, .bp3-overlay-scroll-container .dialog {
+        position: absolute;
+    }
+    .bp3-overlay-backdrop {
+        @apply bg-dark-1 bg-opacity-75;
+    }
+    .dialog>.dialog-wrapper {
+        pointer-events: all;
+        user-select: text;
+    }
+    .dialog.bp3-overlay-appear>.dialog-wrapper,
+    .dialog.bp3-overlay-enter>.dialog-wrapper{
+        opacity:0;
+        transform:scale(.5);
+    }
+    .dialog.bp3-overlay-appear-active>.dialog-wrapper,
+    .dialog.bp3-overlay-enter-active>.dialog-wrapper{
+        opacity:1;
+        transform:scale(1);
+        transition-duration:.3s;
+        transition-property:opacity,transform,-webkit-transform;
+        transition-timing-function:cubic-bezier(.54,1.12,.38,1.11);
+    }
+    .dialog.bp3-overlay-exit>.dialog-wrapper{
+        opacity:1;
+        transform:scale(1)
+    }
+    .dialog.bp3-overlay-exit-active>.dialog-wrapper{
+        opacity:0;
+        transform:scale(.5);
+        transition-duration:.3s;
+        transition-property:opacity,transform,-webkit-transform;
+        transition-timing-function:cubic-bezier(.54,1.12,.38,1.11)
+    }
+
+    .dialog-wrapper {
+        width: 100%;
+        max-width: 468px;
+    }
+
+    .dialog-container {
+        @apply bg-black;
+        @apply text-white;
+        @apply w-full;
+        @apply p-12 rounded-2xl;
+        max-width: 470px;
+        position: relative;
+        letter-spacing: 0;
+    }
+
+    .dialog .dialog-close {
+        @apply cursor-pointer transition duration-300;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: url("../../../assets/close.svg") center center no-repeat;
+        background-size: 2rem 2rem;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .dialog .dialog-close:hover {
+        @apply opacity-70;
+    }
+
+
+    .dialog h1, .dialog .title {
+        @apply font-semibold mb-12 text-center mx-auto;
+        max-width: 240px;
+        font-size: 1.75rem;
+        line-height: 2.125rem;
+    }
+
+    .dialog .lead {
+        max-width: 345px;
+        @apply text-center mx-auto;
+    }
+}

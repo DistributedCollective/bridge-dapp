@@ -7,6 +7,11 @@ interface Props {
   children?: React.ReactNode;
 }
 
+/**
+ * @deprecated
+ * @param props
+ * @constructor
+ */
 export function Layout(props: Props) {
   return (
     <>

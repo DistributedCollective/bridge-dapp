@@ -1,0 +1,22 @@
+@layer components {
+    .input-wrapper {
+        height: 2.5rem;
+        @apply bg-white px-5 flex flex-row justify-center items-center space-x-4 rounded-lg;
+        @apply font-semibold font-body text-black;
+    }
+
+    .input {
+        @apply w-full bg-transparent text-black appearance-none;
+        @apply font-semibold font-body;
+    }
+
+    .input-append {}
+
+    .input-wrapper.readonly {
+        @apply bg-transparent text-white border border-white;
+    }
+
+    .input-wrapper.readonly .input {
+        @apply text-white;
+    }
+}

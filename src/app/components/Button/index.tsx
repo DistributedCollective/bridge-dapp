@@ -11,6 +11,14 @@ interface Props {
   className?: string;
 }
 
+/**
+ * @deprecated
+ * @param text
+ * @param className
+ * @param loading
+ * @param props
+ * @constructor
+ */
 export function Button({ text, className, loading, ...props }: Props) {
   return (
     <button

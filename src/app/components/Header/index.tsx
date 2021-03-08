@@ -7,6 +7,10 @@ import { WalletConnectorButton } from '../../containers/BlockChainProvider/compo
 import { DEFAULT_CHAIN } from '../../../utils/helpers';
 import { selectBlockChainProvider } from '../../containers/BlockChainProvider/selectors';
 
+/**
+ * @deprecated
+ * @constructor
+ */
 export function Header() {
   const { chainId, network } = useSelector(selectBlockChainProvider);
   return (

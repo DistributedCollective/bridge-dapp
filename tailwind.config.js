@@ -1,51 +1,36 @@
 module.exports = {
-  purge: ['src/**/*.ts', 'src/**/*.tsx', 'public/**/*.html'],
+  purge: ['./src/components/**/*.{ts,tsx}', './src/containers/**/*.{ts,tsx}'],
   future: {
     purgeLayersByDefault: true,
   },
   theme: {
-    fontFamily: {
-      montserrat: ['Montserrat', 'sans-serif'],
-      DEFAULT: ['Montserrat', 'sans-serif'],
-    },
     container: {
       center: true,
-      padding: '15px',
+      padding: '1rem',
+    },
+    fontFamily: {
+      body: ['Montserrat', 'sans-serif'],
     },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      truewhite: '#ffffff',
+      primary: '#EDB305',
+      secondary: '#2274A5',
+      white: '#e9eae9',
       black: '#000000',
-      dark: '#181818',
-      white: '#D9D9D9',
-      gray: '#383838',
-      verydark: '#282828',
-      lightdark: '#686868',
-      bordergray: '#575757',
-      gold: '#FEC004',
-      teal: '#4ECDC4',
-      red: '#ff0000',
-    },
-    fontSize: {
-      small: '14px',
-      normal: '16px',
-      button: '18px',
-      lead: '20px',
-      heading: '28px',
-      title: '53px',
-    },
-    extend: {
-      opacity: {
-        '5': '0.05',
+      dark: {
+        1: '#575757',
+        DEFAULT: '#191919',
+        2: '#101010',
       },
-      screens: {
-        '2xl': '1536px',
-      },
+      green: '#17C3B2',
+      red: '#D74E09',
     },
+    extend: {},
   },
   variants: {
     opacity: ['responsive', 'hover'],
+    extend: {},
   },
   plugins: [],
 };

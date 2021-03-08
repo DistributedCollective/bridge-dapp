@@ -1,3 +1,9 @@
 {
-  "title": "welcome"
+  "title": "Homecoming Bridge",
+  "form": {
+    "select": {
+      "placeholder": "Select an item",
+      "noResults": "No results"
+    }
+  }
 }
