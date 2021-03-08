@@ -10,6 +10,8 @@ export class NetworkDetails {
     public image: string,
     public nodeUrl: string,
     bridgeContractAddress: string,
+    public explorerTx: string,
+    public explorerAdr: string,
   ) {
     this.bridgeContractAddress = bridgeContractAddress.toLowerCase();
   }

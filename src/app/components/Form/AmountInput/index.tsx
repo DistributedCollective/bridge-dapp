@@ -31,7 +31,7 @@ export function AmountInput({
         placeholder={placeholder || '0.0000'}
         appendElem={
           asset !== undefined
-            ? AssetDictionary.get(networkType, asset)?.symbol
+            ? AssetDictionary.getSymbol(networkType, asset)
             : null
         }
         {...props}

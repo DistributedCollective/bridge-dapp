@@ -6,6 +6,7 @@ export interface BridgePageState {
   connecting: boolean;
   networkType: NetworkType;
   networkChain: NetworkChainId;
+  blockNumber: number;
   tx: TxState;
 }
 

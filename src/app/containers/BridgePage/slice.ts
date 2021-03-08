@@ -11,6 +11,7 @@ export const initialState: ContainerState = {
   connecting: false,
   networkType: wallet.networkType,
   networkChain: wallet.chainId,
+  blockNumber: 0,
   tx: {
     step: TxStep.NONE,
     loading: false,
@@ -30,7 +31,11 @@ const bridgePageSlice = createSlice({
   name: 'bridgePage',
   initialState,
   reducers: {
-    init(state) {},
+    init() {},
+    changeNetwork(state, { payload }: PayloadAction<NetworkType>) {},
+    block(state, { payload }: PayloadAction<number>) {
+      state.blockNumber = payload;
+    },
     userConnecting(state, { payload }: PayloadAction<boolean>) {
       state.connecting = payload;
     },
@@ -81,9 +86,15 @@ const bridgePageSlice = createSlice({
       state.tx.hash = payload;
     },
 
-    confirmedTransfer() {},
+    confirmedTransfer(state) {
+      state.tx.loading = false;
+      state.tx.step = TxStep.COMPLETED_TRANSFER;
+    },
 
-    failedTransfer() {},
+    failedTransfer(state) {
+      state.tx.loading = false;
+      state.tx.step = TxStep.FAILED_TRANSFER;
+    },
 
     forceTransferState(state, { payload }: PayloadAction<TxStep>) {
       state.tx.loading = false;

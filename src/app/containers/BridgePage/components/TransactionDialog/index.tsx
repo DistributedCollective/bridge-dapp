@@ -7,11 +7,10 @@ import { actions } from '../../slice';
 import { Spinner } from '@blueprintjs/core';
 import { Asset, NetworkType } from '../../../../../types';
 import { AssetDictionary } from '../../../../../dictionaries';
-import { AssetDetails } from '../../../../../models/AssetDetails';
-import { prettyTx } from '../../../../../utils/helpers';
+import { TransactionBadge } from '../../../../components/TransactionBadge';
 
 export function TransactionDialog() {
-  const { tx } = useSelector(selectBridgePage);
+  const { tx, networkType } = useSelector(selectBridgePage);
   const dispatch = useDispatch();
   return (
     <Dialog
@@ -26,9 +25,15 @@ export function TransactionDialog() {
         />
       )}
       {tx.step === TxStep.CONFIRM_TRANSFER && <StepConfirm />}
-      {tx.step === TxStep.PENDING_TRANSFER && <StepPending tx={tx} />}
-      {tx.step === TxStep.COMPLETED_TRANSFER && <StepConfirmed tx={tx} />}
-      {tx.step === TxStep.FAILED_TRANSFER && <StepFailed tx={tx} />}
+      {tx.step === TxStep.PENDING_TRANSFER && (
+        <StepPending tx={tx} network={networkType} />
+      )}
+      {tx.step === TxStep.COMPLETED_TRANSFER && (
+        <StepConfirmed tx={tx} network={networkType} />
+      )}
+      {tx.step === TxStep.FAILED_TRANSFER && (
+        <StepFailed tx={tx} network={networkType} />
+      )}
       {tx.step === TxStep.USER_DENIED && <StepUserDenied />}
     </Dialog>
   );
@@ -44,6 +49,7 @@ function StepMain() {
 
 interface TxProps {
   tx: TxState;
+  network: NetworkType;
 }
 
 function StepApprove({
@@ -53,7 +59,7 @@ function StepApprove({
   asset: Asset;
   network: NetworkType;
 }) {
-  const { symbol } = AssetDictionary.get(network, asset) as AssetDetails;
+  const symbol = AssetDictionary.getSymbol(network, asset);
   return (
     <>
       <h1>Confirm in your browser wallet</h1>
@@ -83,32 +89,38 @@ function StepConfirm() {
   );
 }
 
-function StepPending({ tx }: TxProps) {
+function StepPending({ tx, network }: TxProps) {
   return (
     <>
       <h1>Transaction pending</h1>
       <p className="lead">Your transaction pending.</p>
-      <p>{prettyTx(tx.hash)}</p>
+      <div className="mt-12 text-center">
+        <TransactionBadge transactionHash={tx.hash} networkType={network} />
+      </div>
     </>
   );
 }
 
-function StepConfirmed({ tx }: TxProps) {
+function StepConfirmed({ tx, network }: TxProps) {
   return (
     <>
       <h1>Transaction confirmed</h1>
       <p className="lead">Your transaction confirmed.</p>
-      <p>{prettyTx(tx.hash)}</p>
+      <div className="mt-12 text-center">
+        <TransactionBadge transactionHash={tx.hash} networkType={network} />
+      </div>
     </>
   );
 }
 
-function StepFailed({ tx }: TxProps) {
+function StepFailed({ tx, network }: TxProps) {
   return (
     <>
       <h1>Transaction failed</h1>
-      <p className="lead">Your transaction failed.</p>
-      <p>{prettyTx(tx.hash)}</p>
+      <p className="lead">Your transaction failed.</p>{' '}
+      <div className="mt-12 text-center">
+        <TransactionBadge transactionHash={tx.hash} networkType={network} />
+      </div>
     </>
   );
 }

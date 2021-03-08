@@ -85,6 +85,16 @@ class Network {
     return web3.eth.getTransactionCount(address);
   }
 
+  public async receipt(network: NetworkType, transactionHash: string) {
+    const web3 = await this.getWeb3ForNetwork(network);
+    return web3.eth.getTransactionReceipt(transactionHash);
+  }
+
+  public async blockNumber(network: NetworkType) {
+    const web3 = await this.getWeb3ForNetwork(network);
+    return web3.eth.getBlockNumber();
+  }
+
   public async getWeb3ForNetwork(network: NetworkType): Promise<Web3> {
     const { chainId, nodeUrl } = NetworkDictionary.get(network);
     if (!this.web3s.hasOwnProperty(chainId)) {

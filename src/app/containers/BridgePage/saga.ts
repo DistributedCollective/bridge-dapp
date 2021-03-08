@@ -6,7 +6,9 @@ import {
   fork,
   cancel,
   cancelled,
+  select,
 } from 'redux-saga/effects';
+import delay from '@redux-saga/delay-p';
 import { bignumber } from 'mathjs';
 import { eventChannel } from 'redux-saga';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -16,9 +18,10 @@ import { FormPayload, TxStep } from './types';
 import { token } from '../../../services/interactions/token';
 import { toWei } from '../../../utils/math';
 import { network } from '../../../services';
-import { AppMode } from '../../../types';
+import { AppMode, NetworkType } from '../../../types';
 import { bridge } from '../../../services/interactions/bridge';
 import { AssetDictionary } from '../../../dictionaries';
+import { selectBridgePage } from './selectors';
 
 function createWeb3Connection(wallet: Wallet) {
   return eventChannel(emit => {
@@ -105,6 +108,12 @@ function* confirmTransfer() {
         payload.form.asset,
       ) as string;
 
+      const isNative = AssetDictionary.isNativeCoin(
+        payload.form.sourceNetwork,
+        payload.form.asset,
+      );
+      const value = isNative ? toWei(payload.form.value) : '0';
+
       if (payload.form.receiver === '') {
         transferTx = yield call(
           [bridge, bridge.receiveTokens],
@@ -114,7 +123,7 @@ function* confirmTransfer() {
           {
             nonce,
             gas: payload.nonce !== undefined ? 250000 : undefined,
-            value: '0',
+            value,
           },
         );
       } else {
@@ -123,11 +132,11 @@ function* confirmTransfer() {
           payload.form.sourceNetwork,
           tokenAddress,
           toWei(payload.form.amount),
-          payload.form.receiver,
+          payload.form.receiver.toLowerCase(),
           {
             nonce,
             gas: payload.nonce !== undefined ? 250000 : undefined,
-            value: '0',
+            value,
           },
         );
       }
@@ -141,7 +150,12 @@ function* confirmTransfer() {
 
 function* confirmedTransfer() {}
 
-function* pendingTransfer() {}
+function* pendingTransfer() {
+  while (true) {
+    yield take(actions.pendingTransfer.type);
+    yield call(watchPendingTransaction);
+  }
+}
 
 function* failedTransfer() {}
 
@@ -152,6 +166,11 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
     yield fork(pendingTransfer);
     yield fork(confirmedTransfer);
     yield fork(failedTransfer);
+
+    if (AssetDictionary.isNativeCoin(payload.sourceNetwork, payload.asset)) {
+      yield put(actions.confirmTransfer({ form: payload }));
+      return;
+    }
 
     const allowance = yield call(
       [token, token.allowance],
@@ -182,9 +201,38 @@ function* cancelTransfer() {
   yield put(actions.closeTransfer());
 }
 
+function* watchPendingTransaction() {
+  let check = true;
+  while (check) {
+    const { tx } = yield select(selectBridgePage);
+    const state = yield call(
+      [network, network.receipt],
+      tx.payload.sourceNetwork,
+      tx.hash,
+    );
+    if (state && state.status) {
+      yield put(actions.confirmedTransfer());
+      check = false;
+    } else if (state && !state.status) {
+      yield put(actions.failedTransfer());
+      check = false;
+    } else {
+      yield delay(5000);
+    }
+  }
+}
+
+function* watchBlockChanges({ payload }: PayloadAction<NetworkType>) {
+  while (true) {
+    const block = yield call([network, network.blockNumber], payload);
+    yield put(actions.block(block));
+    yield delay(10000);
+  }
+}
+
 export function* bridgePageSaga() {
   yield takeLatest(actions.init.type, watchWalletChannel);
-
+  yield takeLatest(actions.changeNetwork.type, watchBlockChanges);
   yield takeLatest(actions.submitTransfer.type, watchTransferSaga);
   yield takeLatest(actions.userAddressChanged.type, cancelTransfer);
   yield takeLatest(actions.userChainChanged.type, cancelTransfer);

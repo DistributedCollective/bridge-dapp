@@ -21,7 +21,11 @@ export function AssetSelect(props: Props) {
         props.networkType,
         item,
       ) as AssetDetails;
-      return { key: item, label: asset.symbol, data: asset.image };
+      return {
+        key: item,
+        label: asset.getSymbol(props.networkType),
+        data: asset.image,
+      };
     });
   }, [props.options, props.networkType]);
   return (

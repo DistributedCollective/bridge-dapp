@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function BridgeInformation({ networkType, asset }: Props) {
-  const symbol = AssetDictionary.get(networkType, asset)?.symbol || 'Token';
+  const symbol = AssetDictionary.getSymbol(networkType, asset) || 'Token';
   const { min, max, fee, daily } = useBridgeState();
   return (
     <div className="mt-16 w-full opacity-50">

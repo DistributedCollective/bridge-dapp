@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
-import { NetworkDictionary } from '../../../../../dictionaries';
+import {
+  AssetDictionary,
+  NetworkDictionary,
+} from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
 import { NetworkType } from '../../../../../types';
 import { toNumberFormat } from '../../../../../utils/math';
@@ -18,6 +21,7 @@ export function DestinationChainCard() {
     amount,
     receiver,
     fee,
+    asset,
   } = useBridgeState();
 
   const [cost, setCost] = useState(0);
@@ -99,7 +103,13 @@ export function DestinationChainCard() {
           label="Receive Asset:"
           describe={<>Total Cost: {toNumberFormat(cost, 4)}</>}
         >
-          <Input value={toNumberFormat(value, 4)} readOnly />
+          <Input
+            value={toNumberFormat(value, 4)}
+            readOnly
+            appendElem={
+              <>{AssetDictionary.getSymbol(targetNetwork.value, asset.value)}</>
+            }
+          />
         </FormGroup>
       </Card>
     </div>

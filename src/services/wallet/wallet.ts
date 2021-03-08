@@ -19,9 +19,9 @@ class Wallet {
 
   private _triggers: { [key: string]: Array<any> } = {};
 
-  private _web3: Web3 = new Web3(window.ethereum);
+  private _web3: Web3 = new Web3((window as any).ethereum);
 
-  private _provider = window.ethereum || false;
+  private _provider = (window as any).ethereum || false;
 
   constructor() {
     this.watchForChanges();
