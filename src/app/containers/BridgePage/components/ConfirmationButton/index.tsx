@@ -12,6 +12,7 @@ import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { BridgeInformation } from '../DestinationChainCard/BridgeInformation';
 import { actions } from '../../slice';
 import { toWei } from '../../../../../utils/math';
+import { useBalanceOf } from '../../../../hooks/useBalanceOf';
 
 interface Props {
   state: BridgePageState;
@@ -110,16 +111,23 @@ function FormButton({
     }
   }, [data, state.tx.loading, dispatch]);
 
+  const { value, loading } = useBalanceOf(
+    data.asset.value,
+    data.sourceNetwork.value,
+  );
+
   return (
     <div>
       <Button
         text="Transfer"
         loading={state.tx.loading}
         disabled={
+          loading ||
           state.tx.loading ||
           bignumber(toWei(data.amount.value)).lessThan(
             data.min.nested('value').value,
-          )
+          ) ||
+          bignumber(toWei(data.amount.value)).greaterThan(value)
         }
         onClick={handleSubmit}
       />
