@@ -27,8 +27,23 @@ class Bridge {
       config,
     );
   }
-  public async receiveTokensAt(): Promise<string> {
-    return '';
+
+  public async receiveTokensAt(
+    networkType: NetworkType,
+    tokenAddress: string,
+    amount: string,
+    receiver: string,
+    config?: TransactionConfig,
+  ): Promise<string> {
+    const { address, abi } = this.getBridgeData(networkType);
+    return network.send(
+      networkType,
+      address,
+      abi,
+      'receiveTokensAt',
+      [tokenAddress, amount, receiver, '0x'],
+      config,
+    );
   }
 
   public getFeePercentage(networkType: NetworkType) {

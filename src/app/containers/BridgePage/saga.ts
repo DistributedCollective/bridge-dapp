@@ -118,7 +118,18 @@ function* confirmTransfer() {
           },
         );
       } else {
-        transferTx = yield call([bridge, bridge.receiveTokensAt]);
+        transferTx = yield call(
+          [bridge, bridge.receiveTokensAt],
+          payload.form.sourceNetwork,
+          tokenAddress,
+          toWei(payload.form.amount),
+          payload.form.receiver,
+          {
+            nonce,
+            gas: payload.nonce !== undefined ? 250000 : undefined,
+            value: '0',
+          },
+        );
       }
 
       yield put(actions.pendingTransfer(transferTx));
