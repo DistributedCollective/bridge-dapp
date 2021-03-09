@@ -50,7 +50,7 @@ export class AssetDictionary {
     ),
     new AssetDetails(
       Asset.WBTC,
-      'wBTC',
+      'WBTC',
       'Wrapped Bitcoin',
       btcIcon,
       18,
@@ -61,7 +61,7 @@ export class AssetDictionary {
         ],
         [
           NetworkChainId.ETH_TESTNET,
-          '0x3565C6217A9311294A8502dBe1e1f7B8816ed038'.toLowerCase(),
+          '0x3565c6217a9311294a8502dbe1e1f7b8816ed038'.toLowerCase(),
         ],
       ]),
     )
@@ -73,10 +73,10 @@ export class AssetDictionary {
       )
       .setSymbols(
         new Map<NetworkChainId, string>([
-          [NetworkChainId.RSK_MAINNET, 'rwBTC'],
-          [NetworkChainId.ETH_MAINNET, 'wBTC'],
-          [NetworkChainId.RSK_TESTNET, 'rwBTC'],
-          [NetworkChainId.ETH_TESTNET, 'wBTC'],
+          [NetworkChainId.RSK_MAINNET, 'rWBTC'],
+          [NetworkChainId.ETH_MAINNET, 'WBTC'],
+          [NetworkChainId.RSK_TESTNET, 'rWBTC'],
+          [NetworkChainId.ETH_TESTNET, 'WBTC'],
         ]),
       ),
   ];

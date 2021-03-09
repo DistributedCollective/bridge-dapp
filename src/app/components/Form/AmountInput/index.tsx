@@ -68,7 +68,7 @@ function AmountSelector(props: AmountSelectorProps) {
         .mul(percent / 100)
         .toString();
     }
-    props.onChange(fromWei(value));
+    props.onChange(fromWei(value, props.asset, props.network));
   };
   return (
     <div className="mt-4 flex flex-row items-center justify-between border border-secondary rounded-lg divide-x divide-secondary">

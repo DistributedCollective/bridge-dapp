@@ -11,8 +11,9 @@ import { NetworkDictionary } from '../../../../../dictionaries';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { BridgeInformation } from '../DestinationChainCard/BridgeInformation';
 import { actions } from '../../slice';
-import { toWei } from '../../../../../utils/math';
+import { fromWei, toWei } from '../../../../../utils/math';
 import { useBalanceOf } from '../../../../hooks/useBalanceOf';
+import { WalletButton } from '../../../../components/Form/WalletButton';
 
 interface Props {
   state: BridgePageState;
@@ -62,9 +63,8 @@ export function ConfirmationButton({ state, dispatch }: Props) {
 function ConnectWallet({ loading }: { loading: boolean }) {
   return (
     <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      <Button
+      <WalletButton
         text="Connect Wallet"
-        className="btn-action w-full"
         onClick={() => wallet.connect()}
         loading={loading}
         disabled={loading}
@@ -117,17 +117,24 @@ function FormButton({
   );
 
   return (
-    <div>
+    <div className="w-full text-center">
       <Button
         text="Transfer"
         loading={state.tx.loading}
+        className="btn-trade mx-auto"
         disabled={
-          loading ||
+          (loading && !value) ||
           state.tx.loading ||
-          bignumber(toWei(data.amount.value)).lessThan(
-            data.min.nested('value').value,
+          bignumber(data.amount.value || '0').lessThan(
+            fromWei(data.min.nested('value').value),
           ) ||
-          bignumber(toWei(data.amount.value)).greaterThan(value)
+          bignumber(
+            toWei(
+              data.amount.value,
+              data.asset.value,
+              data.sourceNetwork.value,
+            ),
+          ).greaterThan(value)
         }
         onClick={handleSubmit}
       />

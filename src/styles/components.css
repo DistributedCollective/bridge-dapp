@@ -51,56 +51,26 @@
     }
 
     /* inverted btn styles */
-    .btn-inverted {
+    .btn-wallet {
         @apply btn;
-        @apply text-black bg-opacity-100;
-        @apply hover:bg-opacity-75;
+        @apply normal-case px-8 font-medium text-base;
+        height: 2.5rem;
     }
 
-    .btn-inverted:disabled {
+    .btn-wallet:disabled {
         @apply opacity-75 bg-opacity-75 cursor-not-allowed;
     }
 
-    .btn-inverted.loading, .btn-inverted.loading:disabled {
+    .btn-wallet.loading, .btn-wallet.loading:disabled {
         @apply opacity-75 bg-opacity-75 cursor-wait;
     }
 
-    .btn-inverted .bp3-spinner .bp3-spinner-head {
+    .btn-wallet .bp3-spinner .bp3-spinner-head {
         stroke: theme('colors.black');
     }
 
-    .btn-inverted .bp3-spinner .bp3-spinner-track {
+    .btn-wallet .bp3-spinner .bp3-spinner-track {
         stroke: rgba(0, 0, 0, 0.1);
-    }
-
-    /* action btn styles */
-    .btn-action {
-        height: 3rem;
-        letter-spacing: 0.1rem;
-        @apply flex flex-row items-center justify-center;
-        @apply text-primary text-lg font-medium leading-none font-body;
-        @apply px-4 py-2;
-        @apply border rounded-full;
-        @apply transition;
-        @apply bg-primary bg-opacity-5;
-        @apply normal-case;
-        @apply hover:bg-opacity-25;
-    }
-
-    .btn-action:disabled {
-        @apply opacity-25 bg-opacity-25 cursor-not-allowed;
-    }
-
-    .btn-action.loading, .btn-action.loading:disabled {
-        @apply opacity-75 bg-opacity-25 cursor-wait;
-    }
-
-    .btn-action .bp3-spinner .bp3-spinner-head {
-        stroke: theme('colors.primary');
-    }
-
-    .btn-action .bp3-spinner .bp3-spinner-track {
-        stroke: rgba(255, 255, 255, 0.2);
     }
 
     /* trading button styles */
@@ -109,11 +79,13 @@
         height: 3.75rem;
         letter-spacing: 0.1rem;
         @apply flex flex-row items-center justify-center;
-        @apply text-white uppercase text-2xl font-black leading-none font-body;
+        @apply text-white uppercase text-2xl font-extrabold leading-none font-body;
+        @apply bg-green w-full;
         @apply px-4 py-2;
         @apply border-0 rounded-lg;
         @apply transition;
         @apply hover:bg-opacity-75;
+        max-width: 250px;
     }
 
     .btn-trade:disabled {

@@ -6,7 +6,14 @@
 
     .card h1 {
         @apply text-center uppercase mb-16 text-2xl font-extrabold;
-        font-size: 2.375rem;
-        line-height: 2.6875rem;
+        font-size: 1.375rem;
+        line-height: 1.6875rem;
+    }
+
+    @screen sm {
+        .card h1 {
+            font-size: 2.375rem;
+            line-height: 2.6875rem;
+        }
     }
 }

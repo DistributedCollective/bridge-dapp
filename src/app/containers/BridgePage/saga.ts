@@ -63,7 +63,11 @@ function* approveTransfer() {
     );
 
     try {
-      const amountToApprove = toWei(AppMode.TESTNET ? payload.amount : 1000000);
+      const amountToApprove = toWei(
+        AppMode.TESTNET ? payload.amount : 1000000,
+        payload.asset,
+        payload.sourceNetwork,
+      );
 
       const approveHash = yield call(
         [token, token.approve],
@@ -112,14 +116,24 @@ function* confirmTransfer() {
         payload.form.sourceNetwork,
         payload.form.asset,
       );
-      const value = isNative ? toWei(payload.form.value) : '0';
+      const value = isNative
+        ? toWei(
+            payload.form.value,
+            payload.form.asset,
+            payload.form.sourceNetwork,
+          )
+        : '0';
 
       if (payload.form.receiver === '') {
         transferTx = yield call(
           [bridge, bridge.receiveTokens],
           payload.form.sourceNetwork,
           tokenAddress,
-          toWei(payload.form.amount),
+          toWei(
+            payload.form.amount,
+            payload.form.asset,
+            payload.form.sourceNetwork,
+          ),
           {
             nonce,
             gas: payload.nonce !== undefined ? 250000 : undefined,
@@ -131,7 +145,11 @@ function* confirmTransfer() {
           [bridge, bridge.receiveTokensAt],
           payload.form.sourceNetwork,
           tokenAddress,
-          toWei(payload.form.amount),
+          toWei(
+            payload.form.amount,
+            payload.form.asset,
+            payload.form.sourceNetwork,
+          ),
           payload.form.receiver.toLowerCase(),
           {
             nonce,
@@ -179,7 +197,17 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
       wallet.address,
     );
 
-    if (bignumber(allowance).lessThan(toWei(payload.amount))) {
+    console.log('allowance', allowance);
+    console.log(
+      'amount',
+      toWei(payload.amount, payload.asset, payload.sourceNetwork),
+    );
+
+    if (
+      bignumber(allowance).lessThan(
+        toWei(payload.amount, payload.asset, payload.sourceNetwork),
+      )
+    ) {
       yield put(actions.approveTokens(payload));
     } else {
       yield put(actions.confirmTransfer({ form: payload }));
