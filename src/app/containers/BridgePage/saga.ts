@@ -197,12 +197,6 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
       wallet.address,
     );
 
-    console.log('allowance', allowance);
-    console.log(
-      'amount',
-      toWei(payload.amount, payload.asset, payload.sourceNetwork),
-    );
-
     if (
       bignumber(allowance).lessThan(
         toWei(payload.amount, payload.asset, payload.sourceNetwork),

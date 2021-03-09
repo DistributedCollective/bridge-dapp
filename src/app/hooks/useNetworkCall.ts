@@ -15,7 +15,6 @@ export function useNetworkCall<
   const argRef = useRef(args);
 
   useEffect(() => {
-    console.log(fn.name, 'call', 'started', args);
     let canceled = false;
     if ((condition !== undefined && condition) || condition === undefined) {
       setState(prevState => ({
@@ -48,7 +47,6 @@ export function useNetworkCall<
 
     return () => {
       canceled = true;
-      console.log(fn.name, 'call', 'canceled', args);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(fn), JSON.stringify(args), condition, blockNumber]);
