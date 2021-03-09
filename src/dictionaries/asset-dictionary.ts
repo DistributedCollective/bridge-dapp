@@ -65,7 +65,7 @@ export class AssetDictionary {
         new Map<NetworkChainId, string>([
           [NetworkChainId.RSK_MAINNET, 'rRenBTC'],
           [NetworkChainId.ETH_MAINNET, 'RenBTC'],
-          [NetworkChainId.RSK_TESTNET, 'rRenWBTC'],
+          [NetworkChainId.RSK_TESTNET, 'rRenBTC'],
           [NetworkChainId.ETH_TESTNET, 'RenBTC'],
         ]),
       ),
