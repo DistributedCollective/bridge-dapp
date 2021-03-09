@@ -28,8 +28,8 @@ const globalBridgeState = createState<BridgeState>({
   daily: createValue(0),
   sourceNetwork: NetworkType.RSK,
   targetNetwork: NetworkType.ETH,
-  asset: Asset.DOC,
-  amount: '1',
+  asset: Asset.WBTC,
+  amount: '0.001',
   receiver: '',
 });
 

@@ -18,7 +18,7 @@ export const initialState: ContainerState = {
     hash: '',
     approveHash: '',
     payload: {
-      asset: Asset.BTC,
+      asset: Asset.WBTC,
       amount: '',
       receiver: '',
       sourceNetwork: NetworkType.RSK,
@@ -107,7 +107,7 @@ const bridgePageSlice = createSlice({
       state.tx.hash = '';
       state.tx.approveHash = '';
       state.tx.payload.amount = '';
-      state.tx.payload.asset = Asset.BTC;
+      state.tx.payload.asset = Asset.WBTC;
       state.tx.payload.receiver = '';
       state.tx.payload.sourceNetwork = NetworkType.RSK;
       state.tx.payload.targetNetwork = NetworkType.ETH;

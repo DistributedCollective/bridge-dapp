@@ -1,58 +1,17 @@
 import { Asset, NetworkChainId, NetworkType } from 'types';
 import { AssetDetails } from 'models/AssetDetails';
 import { NetworkDictionary } from './index';
-// import docIcon from 'assets/tokens/doc.svg';
-import sovIcon from 'assets/tokens/sov.svg';
-import btcIcon from 'assets/tokens/rbtc.png';
+
+import wbtcIcon from 'assets/tokens/wbtc.svg';
+import renBtcIcon from 'assets/tokens/renBTC.svg';
 
 export class AssetDictionary {
   public static assets: AssetDetails[] = [
-    // new AssetDetails(
-    //   Asset.DOC,
-    //   'DOC',
-    //   'DOC Stablecoin',
-    //   docIcon,
-    //   18,
-    //   new Map([
-    //     [
-    //       NetworkChainId.RSK_TESTNET,
-    //       '0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0'.toLowerCase(),
-    //     ],
-    //     [
-    //       NetworkChainId.ETH_TESTNET,
-    //       '0x1365c9cCA0BF5948A1d75c5D63aBBF1018993D4c'.toLowerCase(),
-    //     ],
-    //   ]),
-    // ),
-    new AssetDetails(
-      Asset.DAI,
-      'DAI',
-      'DAI Stablecoin',
-      sovIcon,
-      18,
-      new Map([
-        [
-          NetworkChainId.RSK_TESTNET,
-          '0x31FE2DF1e74c54a7d8753dd4317c118c5B9A6507'.toLowerCase(),
-        ],
-        [
-          NetworkChainId.ETH_TESTNET,
-          '0x1365c9cCA0BF5948A1d75c5D63aBBF1018993D4c'.toLowerCase(),
-        ],
-      ]),
-    ).setSymbols(
-      new Map<NetworkChainId, string>([
-        [NetworkChainId.RSK_MAINNET, 'rDAI'],
-        [NetworkChainId.ETH_MAINNET, 'DAI'],
-        [NetworkChainId.RSK_TESTNET, 'rDAI'],
-        [NetworkChainId.ETH_TESTNET, 'DAI'],
-      ]),
-    ),
     new AssetDetails(
       Asset.WBTC,
       'WBTC',
       'Wrapped Bitcoin',
-      btcIcon,
+      wbtcIcon,
       18,
       new Map([
         [
@@ -77,6 +36,37 @@ export class AssetDictionary {
           [NetworkChainId.ETH_MAINNET, 'WBTC'],
           [NetworkChainId.RSK_TESTNET, 'rWBTC'],
           [NetworkChainId.ETH_TESTNET, 'WBTC'],
+        ]),
+      ),
+    new AssetDetails(
+      Asset.renBTC,
+      'renBTC',
+      'renBTC',
+      renBtcIcon,
+      18,
+      new Map([
+        [
+          NetworkChainId.RSK_TESTNET,
+          '0x434D5b134d4c4cbdC6be5F862E3196e62eeE2364'.toLowerCase(),
+        ],
+        [
+          NetworkChainId.ETH_TESTNET,
+          '0x588BB5a9F9b99e66d2B8c0fc5c840839f4Ca2e0a'.toLowerCase(),
+        ],
+      ]),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 8],
+          [NetworkChainId.ETH_TESTNET, 8],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.RSK_MAINNET, 'rRenBTC'],
+          [NetworkChainId.ETH_MAINNET, 'RenBTC'],
+          [NetworkChainId.RSK_TESTNET, 'rRenWBTC'],
+          [NetworkChainId.ETH_TESTNET, 'RenBTC'],
         ]),
       ),
   ];
