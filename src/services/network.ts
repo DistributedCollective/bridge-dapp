@@ -6,6 +6,9 @@ import { NetworkType } from '../types';
 import { NetworkDictionary } from '../dictionaries';
 import { wallet } from './wallet';
 import { toaster } from './toaster';
+import { debug } from '../utils/debug';
+
+const { error, log } = debug('network');
 
 type Web3s = { [chainId: string]: Web3 };
 type Contracts = { [contractAddress: string]: Contract };
@@ -23,6 +26,7 @@ class Network {
     args: string[],
     options: TransactionConfig = {},
   ): Promise<string> {
+    log(`call ${network} ${contractAddress} ${methodName}`, args, options);
     const contract = await this.getContractForNetwork(
       network,
       contractAddress,
@@ -39,7 +43,9 @@ class Network {
     args: string[],
     options: TransactionConfig = {},
   ) {
+    log(`send ${network} ${contractAddress} ${methodName}`, args, options);
     if (!wallet.isConnected()) {
+      error('user was was not connected.');
       toaster.error('Wallet is not connected.');
       return Promise.reject('Wallet is not connected');
     }
@@ -81,16 +87,19 @@ class Network {
   }
 
   public async nonce(network: NetworkType, address: string) {
+    log(`nonce ${network} ${address}`);
     const web3 = await this.getWeb3ForNetwork(network);
     return web3.eth.getTransactionCount(address);
   }
 
   public async receipt(network: NetworkType, transactionHash: string) {
+    log(`receipt ${network} ${transactionHash}`);
     const web3 = await this.getWeb3ForNetwork(network);
     return web3.eth.getTransactionReceipt(transactionHash);
   }
 
   public async blockNumber(network: NetworkType) {
+    log(`blockNumber ${network}`);
     const web3 = await this.getWeb3ForNetwork(network);
     return web3.eth.getBlockNumber();
   }
@@ -115,10 +124,7 @@ class Network {
       try {
         listening = await this.web3s[chainId].eth.net.isListening();
       } catch (e) {
-        console.error(
-          `web3 connection for ${network} was closed, will reconnect.`,
-          e,
-        );
+        error(`web3 connection for ${network} was closed, will reconnect.`, e);
       }
 
       if (!listening) {

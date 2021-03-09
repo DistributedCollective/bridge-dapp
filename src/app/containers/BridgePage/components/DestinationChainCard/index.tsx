@@ -110,10 +110,21 @@ export function DestinationChainCard() {
           )}
           <FormGroup
             label="Receive Asset:"
-            describe={<>Total Cost: {toNumberFormat(cost, 4)}</>}
+            describe={
+              <>
+                Total Cost:{' '}
+                {toNumberFormat(
+                  cost,
+                  AssetDictionary.getDecimals(targetNetwork.value, asset.value),
+                )}
+              </>
+            }
           >
             <Input
-              value={toNumberFormat(value, 4)}
+              value={toNumberFormat(
+                value,
+                AssetDictionary.getDecimals(targetNetwork.value, asset.value),
+              )}
               readOnly
               appendElem={
                 <>
