@@ -10,6 +10,7 @@ export function useBalanceOf(asset: Asset, network?: NetworkType) {
   const { address } = useSelector(selectBridgePage);
   return useNetworkCall(
     token.balanceOf,
+    'token_balanceOf',
     [networkType, asset, address],
     '0',
     address.length === 42,

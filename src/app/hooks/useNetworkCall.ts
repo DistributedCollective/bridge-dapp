@@ -6,10 +6,10 @@ import { useCachedCallState } from './useCachedCallState';
 export function useNetworkCall<
   T = string,
   Fn extends (...args: any[]) => any = any
->(fn: Fn, args: Parameters<Fn>, value: T, condition?: boolean) {
+>(fn: Fn, name: string, args: Parameters<Fn>, value: T, condition?: boolean) {
   const { blockNumber } = useSelector(selectBridgePage);
 
-  const { item, set } = useCachedCallState([fn.name, ...args]);
+  const { item, set } = useCachedCallState([name, ...args]);
   const [state, setState] = useState({ value, loading: false });
 
   useEffect(() => {

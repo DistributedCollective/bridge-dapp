@@ -1,9 +1,9 @@
 import React from 'react';
 import { Spinner } from '@blueprintjs/core';
-import { Asset, NetworkType } from '../../../../../types';
-import { fromWei, toNumberFormat } from '../../../../../utils/math';
-import { AssetDictionary } from '../../../../../dictionaries';
-import { useBridgeState } from '../../../../hooks/useBridgeState';
+import { Asset, NetworkType } from 'types';
+import { fromWei, toNumberFormat } from 'utils/math';
+import { AssetDictionary } from 'dictionaries';
+import { useBridgeState } from 'app/hooks/useBridgeState';
 
 interface Props {
   networkType: NetworkType;
