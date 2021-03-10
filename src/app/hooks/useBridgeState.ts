@@ -1,8 +1,11 @@
-import { Asset, NetworkType } from '../../types';
-import { createState, useState } from '@hookstate/core/dist';
 import { useEffect } from 'react';
+import { createState, useState } from '@hookstate/core/dist';
+import { Asset, NetworkType } from 'types';
+import { bridge } from 'services/interactions/bridge';
 import { useNetworkCall } from './useNetworkCall';
-import { bridge } from '../../services/interactions/bridge';
+import debug from 'utils/debug';
+
+const { log } = debug('useBridgeState');
 
 interface CallValue<T = string> {
   value: T;
@@ -91,24 +94,28 @@ export function useBuildBridgeState(
   );
 
   useEffect(() => {
+    log('get bridge min', min.value);
     state.nested('min').nested('value').set(min.value);
     state.nested('min').nested('loading').set(min.loading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [min]);
 
   useEffect(() => {
+    log('get bridge max', max.value);
     state.nested('max').nested('value').set(max.value);
     state.nested('max').nested('loading').set(max.loading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [max]);
 
   useEffect(() => {
+    log('get bridge fee', fee.value);
     state.nested('fee').nested('value').set(fee.value);
     state.nested('fee').nested('loading').set(fee.loading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fee]);
 
   useEffect(() => {
+    log('get bridge daily', daily.value);
     state.nested('daily').nested('value').set(daily.value);
     state.nested('daily').nested('loading').set(daily.loading);
     // eslint-disable-next-line react-hooks/exhaustive-deps

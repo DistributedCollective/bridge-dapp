@@ -12,3 +12,5 @@ export function debug(namespace: string) {
     error,
   };
 }
+
+export default debug;

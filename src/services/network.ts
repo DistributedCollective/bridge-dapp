@@ -32,7 +32,17 @@ class Network {
       contractAddress,
       abiInterface,
     );
-    return await contract.methods[methodName](...args).call(options);
+    return await contract.methods[methodName](...args)
+      .call(options)
+      .then(result => {
+        log(
+          `call result ${network} ${contractAddress} ${methodName}`,
+          result,
+          args,
+          options,
+        );
+        return result;
+      });
   }
 
   public async send(
@@ -83,7 +93,15 @@ class Network {
       options,
     );
 
-    return wallet.send(opt);
+    return wallet.send(opt).then(tx => {
+      log(
+        `send result ${network} ${contractAddress} ${methodName}`,
+        tx,
+        args,
+        options,
+      );
+      return tx;
+    });
   }
 
   public async nonce(network: NetworkType, address: string) {
