@@ -19,19 +19,10 @@ export function makeId(length: number = 8): string {
   return result;
 }
 
-export function isChecked(value: any) {
-  value = String(value || false).toLowerCase();
-  return ['true', '1', 'on', 'yes'].includes(value);
-}
-
 export const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent,
   );
-};
-
-export const handleNumberInput = (value, onlyPositive = true) => {
-  return handleNumber(value.currentTarget.value, onlyPositive);
 };
 
 export const handleNumber = (value, onlyPositive = true) => {
