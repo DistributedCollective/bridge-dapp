@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import cn from 'classnames';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
 import { NetworkType } from '../../../../../types';
@@ -13,11 +14,14 @@ import { useBalanceOf } from '../../../../hooks/useBalanceOf';
 import { toNumberFormat, fromWei } from 'utils/math';
 import { Spinner } from '@blueprintjs/core';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
+import { useSelector } from 'react-redux';
+import { selectBridgePage } from '../../selectors';
 
 const networks = NetworkDictionary.list();
 
 export function StartingChainCard() {
   const { sourceNetwork, targetNetwork, asset, amount } = useBridgeState();
+  const { address, networkType } = useSelector(selectBridgePage);
 
   // Filters only assets that are available in both source and target networks.
   const assetList = useMemo(() => {
@@ -36,7 +40,11 @@ export function StartingChainCard() {
     <div className="bridge-card xl:bridge-card-m-400 order-1">
       <Card>
         <h1>Starting Chain</h1>
-        <FormGroup>
+        <FormGroup
+          className={cn({
+            'opacity-25': !address,
+          })}
+        >
           <RadioGroup
             className="radio-group--secondary"
             value={sourceNetwork.get()}
@@ -62,31 +70,41 @@ export function StartingChainCard() {
             ))}
           </RadioGroup>
         </FormGroup>
-        <FormGroup
-          label="Send Asset:"
-          describe={
-            <div className="flex flex-row items-center justify-start">
-              Available balance: {toNumberFormat(Number(fromWei(value)), 4)}{' '}
-              {loading && <Spinner size={12} className="inline-block ml-1" />}
-            </div>
-          }
+        <div
+          className={cn({
+            'opacity-25': !address || networkType !== sourceNetwork.value,
+          })}
         >
-          <AssetSelect
-            value={asset.get()}
-            onChange={value => asset.set(value)}
-            placeholder="Select Asset"
-            options={assetList}
-            networkType={sourceNetwork.get()}
-          />
-        </FormGroup>
-        <FormGroup label="Amount:">
-          <AmountInput
-            value={amount.get()}
-            onChange={value => amount.set(value)}
-            asset={asset.get()}
-            networkType={sourceNetwork.get()}
-          />
-        </FormGroup>
+          <FormGroup
+            label="Send Asset:"
+            describe={
+              <div className="flex flex-row items-center justify-start">
+                Available balance:{' '}
+                {toNumberFormat(
+                  Number(fromWei(value, asset.value, sourceNetwork.value)),
+                  4,
+                )}{' '}
+                {loading && <Spinner size={12} className="inline-block ml-1" />}
+              </div>
+            }
+          >
+            <AssetSelect
+              value={asset.get()}
+              onChange={value => asset.set(value)}
+              placeholder="Select Asset"
+              options={assetList}
+              networkType={sourceNetwork.get()}
+            />
+          </FormGroup>
+          <FormGroup label="Amount:">
+            <AmountInput
+              value={amount.get()}
+              onChange={value => amount.set(value)}
+              asset={asset.get()}
+              networkType={sourceNetwork.get()}
+            />
+          </FormGroup>
+        </div>
       </Card>
     </div>
   );

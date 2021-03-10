@@ -16,6 +16,8 @@ export class NetworkDictionary {
       rskLogo,
       'https://mainnet.sovryn.app/rpc',
       '0x',
+      'https://explorer.rsk.co/tx/:value',
+      'https://explorer.rsk.co/address/:value',
     ),
     new NetworkDetails(
       NetworkType.RSK,
@@ -25,6 +27,8 @@ export class NetworkDictionary {
       rskLogo,
       'wss://testnet.sovryn.app/ws',
       '0x0c8bdab4b9d86d4ab5b1c484675d95fc8ee00f06',
+      'https://explorer.testnet.rsk.co/tx/:value',
+      'https://explorer.testnet.rsk.co/address/:value',
     ),
     /* Ethereum networks */
     new NetworkDetails(
@@ -35,6 +39,8 @@ export class NetworkDictionary {
       ethLogo,
       'https://mainnet.sovryn.app/rpc',
       '0x',
+      'https://etherscan.com/tx/:value',
+      'https://etherscan.com/address/:value',
     ),
     new NetworkDetails(
       NetworkType.ETH,
@@ -44,6 +50,8 @@ export class NetworkDictionary {
       ethLogo,
       'wss://kovan.infura.io/ws/v3/237d5a5403134af7b7211fd6996c15d3',
       '0x0648fe75d764c37d8624dd8c99b8223344eb77e8',
+      'https://kovan.etherscan.com/tx/:value',
+      'https://kovan.etherscan.com/address/:value',
     ),
   ];
 

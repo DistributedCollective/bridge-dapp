@@ -2,63 +2,73 @@ import { Asset, NetworkChainId, NetworkType } from 'types';
 import { AssetDetails } from 'models/AssetDetails';
 import { NetworkDictionary } from './index';
 
-import docIcon from 'assets/tokens/doc.svg';
-import sovIcon from 'assets/tokens/sov.svg';
-import btcIcon from 'assets/tokens/rbtc.png';
+import wbtcIcon from 'assets/tokens/wbtc.svg';
+import renBtcIcon from 'assets/tokens/renBTC.svg';
 
 export class AssetDictionary {
   public static assets: AssetDetails[] = [
     new AssetDetails(
-      Asset.DOC,
-      'DOC',
-      'DOC Stablecoin',
-      docIcon,
-      18,
-      new Map([
-        [
-          NetworkChainId.RSK_TESTNET,
-          '0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0'.toLowerCase(),
-        ],
-        [
-          NetworkChainId.ETH_TESTNET,
-          '0x1365c9cCA0BF5948A1d75c5D63aBBF1018993D4c'.toLowerCase(),
-        ],
-      ]),
-    ),
-    new AssetDetails(
-      Asset.DAI,
-      'DAI',
-      'DAI Stablecoin',
-      sovIcon,
-      18,
-      new Map([
-        [
-          NetworkChainId.RSK_TESTNET,
-          '0x31FE2DF1e74c54a7d8753dd4317c118c5B9A6507'.toLowerCase(),
-        ],
-        [
-          NetworkChainId.ETH_TESTNET,
-          '0x1365c9cCA0BF5948A1d75c5D63aBBF1018993D4c'.toLowerCase(),
-        ],
-      ]),
-    ),
-    new AssetDetails(
       Asset.WBTC,
-      'wBTC',
+      'WBTC',
       'Wrapped Bitcoin',
-      btcIcon,
+      wbtcIcon,
       18,
       new Map([
-        // [
-        //   NetworkChainId.RSK_TESTNET,
-        //   '0x6a9A07972D07e58F0daf5122d11E069288A375fb'.toLowerCase(),
-        // ],
+        [
+          NetworkChainId.RSK_TESTNET,
+          '0xAe8349865a010a597d8Cfda3f2356A5fbC6FBD77'.toLowerCase(),
+        ],
         [
           NetworkChainId.ETH_TESTNET,
-          '0x3565C6217A9311294A8502dBe1e1f7B8816ed038'.toLowerCase(),
+          '0x3565c6217a9311294a8502dbe1e1f7b8816ed038'.toLowerCase(),
         ],
       ]),
-    ),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 8],
+          [NetworkChainId.ETH_TESTNET, 8],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.RSK_MAINNET, 'rWBTC'],
+          [NetworkChainId.ETH_MAINNET, 'WBTC'],
+          [NetworkChainId.RSK_TESTNET, 'rWBTC'],
+          [NetworkChainId.ETH_TESTNET, 'WBTC'],
+        ]),
+      ),
+    new AssetDetails(
+      Asset.renBTC,
+      'renBTC',
+      'renBTC',
+      renBtcIcon,
+      18,
+      new Map([
+        [
+          NetworkChainId.RSK_TESTNET,
+          '0x434D5b134d4c4cbdC6be5F862E3196e62eeE2364'.toLowerCase(),
+        ],
+        [
+          NetworkChainId.ETH_TESTNET,
+          '0x588BB5a9F9b99e66d2B8c0fc5c840839f4Ca2e0a'.toLowerCase(),
+        ],
+      ]),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 8],
+          [NetworkChainId.ETH_TESTNET, 8],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.RSK_MAINNET, 'rRenBTC'],
+          [NetworkChainId.ETH_MAINNET, 'RenBTC'],
+          [NetworkChainId.RSK_TESTNET, 'rRenBTC'],
+          [NetworkChainId.ETH_TESTNET, 'RenBTC'],
+        ]),
+      ),
   ];
 
   public static list(network: NetworkType) {
@@ -87,6 +97,37 @@ export class AssetDictionary {
     const item = this.get(network, asset);
     if (item) {
       return item.contracts.get(NetworkDictionary.getChainId(network));
+    }
+    return undefined;
+  }
+
+  public static getSymbol(network: NetworkType, asset: Asset) {
+    const item = this.get(network, asset);
+    if (item) {
+      return (
+        item.symbols.get(NetworkDictionary.getChainId(network)) || item.symbol
+      );
+    }
+    return undefined;
+  }
+
+  public static isNativeCoin(network: NetworkType, asset: Asset) {
+    const item = this.get(network, asset);
+    if (item) {
+      return (
+        item.nativeCoins.get(NetworkDictionary.getChainId(network)) || false
+      );
+    }
+    return false;
+  }
+
+  public static getDecimals(network: NetworkType, asset: Asset) {
+    const item = this.get(network, asset);
+    if (item) {
+      return (
+        item.decimalMap.get(NetworkDictionary.getChainId(network)) ||
+        item.decimals
+      );
     }
     return undefined;
   }

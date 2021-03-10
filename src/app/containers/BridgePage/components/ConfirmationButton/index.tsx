@@ -11,7 +11,9 @@ import { NetworkDictionary } from '../../../../../dictionaries';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { BridgeInformation } from '../DestinationChainCard/BridgeInformation';
 import { actions } from '../../slice';
-import { toWei } from '../../../../../utils/math';
+import { fromWei, toWei } from '../../../../../utils/math';
+import { useBalanceOf } from '../../../../hooks/useBalanceOf';
+import { WalletButton } from '../../../../components/Form/WalletButton';
 
 interface Props {
   state: BridgePageState;
@@ -19,7 +21,13 @@ interface Props {
 }
 
 export function ConfirmationButton({ state, dispatch }: Props) {
-  const { sourceNetwork, asset } = useBridgeState();
+  const { sourceNetwork, targetNetwork, asset } = useBridgeState();
+  const swapNetworks = () => {
+    const source = sourceNetwork.value;
+    const target = targetNetwork.value;
+    sourceNetwork.set(target);
+    targetNetwork.set(source);
+  };
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
       {state.address.length === 0 ? (
@@ -30,11 +38,12 @@ export function ConfirmationButton({ state, dispatch }: Props) {
             src={swapLogo}
             alt="Swap Icon"
             className={cn(
-              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300',
+              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
               {
                 'opacity-25': state.networkType !== sourceNetwork.value,
               },
             )}
+            onClick={() => swapNetworks()}
           />
           {state.networkType !== sourceNetwork.value ? (
             <WrongNetwork sourceNetwork={sourceNetwork.value} />
@@ -54,9 +63,8 @@ export function ConfirmationButton({ state, dispatch }: Props) {
 function ConnectWallet({ loading }: { loading: boolean }) {
   return (
     <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      <Button
+      <WalletButton
         text="Connect Wallet"
-        className="btn-action w-full"
         onClick={() => wallet.connect()}
         loading={loading}
         disabled={loading}
@@ -103,16 +111,30 @@ function FormButton({
     }
   }, [data, state.tx.loading, dispatch]);
 
+  const { value, loading } = useBalanceOf(
+    data.asset.value,
+    data.sourceNetwork.value,
+  );
+
   return (
-    <div>
+    <div className="w-full text-center">
       <Button
         text="Transfer"
         loading={state.tx.loading}
+        className="btn-trade mx-auto"
         disabled={
+          (loading && !value) ||
           state.tx.loading ||
-          bignumber(toWei(data.amount.value)).lessThan(
-            data.min.nested('value').value,
-          )
+          bignumber(data.amount.value || '0').lessThan(
+            fromWei(data.min.nested('value').value),
+          ) ||
+          bignumber(
+            toWei(
+              data.amount.value,
+              data.asset.value,
+              data.sourceNetwork.value,
+            ),
+          ).greaterThan(value)
         }
         onClick={handleSubmit}
       />

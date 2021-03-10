@@ -37,8 +37,8 @@ export function BridgePage(props: Props) {
   const { sourceNetwork } = useBuildBridgeState(
     NetworkType.RSK,
     NetworkType.ETH,
-    Asset.DOC,
-    '1',
+    Asset.WBTC,
+    '0.001',
   );
 
   useEffect(() => {
@@ -47,6 +47,10 @@ export function BridgePage(props: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bridgePage.networkType]);
+
+  useEffect(() => {
+    dispatch(actions.changeNetwork(sourceNetwork.value));
+  }, [sourceNetwork.value, dispatch]);
 
   return (
     <>

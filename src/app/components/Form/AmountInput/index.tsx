@@ -31,7 +31,7 @@ export function AmountInput({
         placeholder={placeholder || '0.0000'}
         appendElem={
           asset !== undefined
-            ? AssetDictionary.get(networkType, asset)?.symbol
+            ? AssetDictionary.getSymbol(networkType, asset)
             : null
         }
         {...props}
@@ -68,7 +68,7 @@ function AmountSelector(props: AmountSelectorProps) {
         .mul(percent / 100)
         .toString();
     }
-    props.onChange(fromWei(value));
+    props.onChange(fromWei(value, props.asset, props.network));
   };
   return (
     <div className="mt-4 flex flex-row items-center justify-between border border-secondary rounded-lg divide-x divide-secondary">

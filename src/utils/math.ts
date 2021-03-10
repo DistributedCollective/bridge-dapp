@@ -1,5 +1,7 @@
 import { bignumber } from 'mathjs';
-import { Unit } from 'web3-utils';
+import { Asset, NetworkType } from '../types';
+import { AssetDictionary } from '../dictionaries';
+import { wallet } from '../services/wallet';
 
 export function toNumberFormat(amount: number, decimals: number = 2) {
   return amount.toLocaleString(undefined, {
@@ -9,7 +11,7 @@ export function toNumberFormat(amount: number, decimals: number = 2) {
 }
 
 export const weiTo = (amount: any, decimals: number = 0): string => {
-  return roundToSmaller(bignumber(fromWei(amount, 'ether')), decimals);
+  return roundToSmaller(bignumber(fromWei(amount)), decimals);
 };
 
 export const roundToSmaller = (amount: any, decimals: number): string => {
@@ -32,27 +34,43 @@ export const roundToSmaller = (amount: any, decimals: number): string => {
   return `${integer}`;
 };
 
-export const fromWei = (amount: any, unit: Unit = 'ether') => {
+export const fromWei = (amount: any, asset?: Asset, network?: NetworkType) => {
   let decimals = 0;
-  switch (unit) {
-    case 'ether':
+
+  if (asset === undefined) {
+    decimals = 18;
+  } else {
+    const _decimals = AssetDictionary.getDecimals(
+      network || wallet.networkType,
+      asset,
+    );
+
+    if (_decimals !== undefined) {
+      decimals = _decimals;
+    } else {
       decimals = 18;
-      break;
-    default:
-      throw new Error('Unsupported unit (custom fromWei helper)');
+    }
   }
 
   return roundToSmaller(bignumber(amount || '0').div(10 ** decimals), decimals);
 };
 
-export const toWei = (amount: any, unit: Unit = 'ether') => {
+export const toWei = (amount: any, asset?: Asset, network?: NetworkType) => {
   let decimals = 0;
-  switch (unit) {
-    case 'ether':
+
+  if (asset === undefined) {
+    decimals = 18;
+  } else {
+    const _decimals = AssetDictionary.getDecimals(
+      network || wallet.networkType,
+      asset,
+    );
+
+    if (_decimals !== undefined) {
+      decimals = _decimals;
+    } else {
       decimals = 18;
-      break;
-    default:
-      throw new Error('Unsupported unit (custom fromWei helper)');
+    }
   }
 
   return roundToSmaller(bignumber(amount || '0').mul(10 ** decimals), 0);

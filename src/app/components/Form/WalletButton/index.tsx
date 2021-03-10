@@ -13,7 +13,7 @@ export interface ButtonProps {
   onClick?: () => void;
 }
 
-export function Button({
+export function WalletButton({
   text,
   loading,
   onClick,
@@ -52,7 +52,7 @@ export function Button({
   );
 }
 
-Button.defaultProps = {
+WalletButton.defaultProps = {
   type: 'button',
-  className: 'btn-trade',
+  className: 'btn-wallet',
 };
