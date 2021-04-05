@@ -45,7 +45,7 @@ export function StartingChainCard() {
         <h1>Starting Chain</h1>
         <FormGroup
           className={cn({
-            'opacity-25': !address,
+            'opacity-25 pointer-events-none': !address,
           })}
         >
           <RadioGroup
@@ -75,7 +75,8 @@ export function StartingChainCard() {
         </FormGroup>
         <div
           className={cn({
-            'opacity-25': !address || networkType !== sourceNetwork.value,
+            'opacity-25 pointer-events-none':
+              !address || networkType !== sourceNetwork.value,
           })}
         >
           <FormGroup

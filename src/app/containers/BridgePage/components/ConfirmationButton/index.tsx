@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
 import { useWalletContext } from '@sovryn/react-wallet';
-import { WalletProvider, walletService } from '@sovryn/react-wallet';
+import { WalletProvider } from '@sovryn/react-wallet';
 import { bignumber } from 'mathjs';
 import { NetworkType } from 'types';
 import swapLogo from 'assets/swap.svg';
@@ -29,34 +29,33 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
-  console.log('sourceNetwork', sourceNetwork.value);
-  console.log('state', state);
-  console.log('walletService', walletService);
 
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
-      {walletService.address.length === 0 ? (
-        <ConnectWallet />
-      ) : (
-        <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
-          <img
-            src={swapLogo}
-            alt="Swap Icon"
-            className={cn(
-              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
-              {
-                'opacity-25': state.networkType !== sourceNetwork.value,
-              },
+      <WalletProvider remember>
+        {state.address.length === 0 ? (
+          <ConnectWallet />
+        ) : (
+          <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
+            <img
+              src={swapLogo}
+              alt="Swap Icon"
+              className={cn(
+                'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
+                {
+                  'opacity-25': state.networkType !== sourceNetwork.value,
+                },
+              )}
+              onClick={() => swapNetworks()}
+            />
+            {state.networkType !== sourceNetwork.value ? (
+              <WrongNetwork sourceNetwork={sourceNetwork.value} />
+            ) : (
+              <FormButton state={state} dispatch={dispatch} />
             )}
-            onClick={() => swapNetworks()}
-          />
-          {state.networkType !== sourceNetwork.value ? (
-            <WrongNetwork sourceNetwork={sourceNetwork.value} />
-          ) : (
-            <FormButton state={state} dispatch={dispatch} />
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </WalletProvider>
       <BridgeInformation
         networkType={sourceNetwork.value}
         asset={asset.value}
@@ -71,27 +70,17 @@ function ConnectWallet() {
     loading: connecting,
     address,
     connect,
-    disconnect,
   } = useWalletContext();
   return (
     <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      <WalletProvider remember>
-        {!connected && !address ? (
-          <WalletButton
-            text="Connect Wallet"
-            onClick={() => connect()}
-            loading={connecting}
-            disabled={connecting}
-          />
-        ) : (
-          <WalletButton
-            text="Disconect"
-            onClick={() => disconnect()}
-            loading={connecting}
-            disabled={connecting}
-          />
-        )}
-      </WalletProvider>
+      {!connected && !address && (
+        <WalletButton
+          text="Connect Wallet"
+          onClick={() => connect()}
+          loading={connecting}
+          disabled={connecting}
+        />
+      )}
     </div>
   );
 }
@@ -137,7 +126,6 @@ function FormButton({
     data.asset.value,
     data.sourceNetwork.value,
   );
-  console.log('value', value);
 
   return (
     <div className="w-full text-center">
