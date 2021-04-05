@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
+import { useWalletContext } from '@sovryn/react-wallet';
+import { WalletProvider, walletService } from '@sovryn/react-wallet';
 import { bignumber } from 'mathjs';
 import { NetworkType } from 'types';
 import swapLogo from 'assets/swap.svg';
 import { Button } from '../../../../components/Form/Button';
-import { wallet } from '../../../../../services/wallet';
 import { BridgePageState } from '../../types';
 import { NetworkDictionary } from '../../../../../dictionaries';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
@@ -28,10 +29,14 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
+  console.log('sourceNetwork', sourceNetwork.value);
+  console.log('state', state);
+  console.log('walletService', walletService);
+
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
-      {state.address.length === 0 ? (
-        <ConnectWallet loading={state.connecting} />
+      {walletService.address.length === 0 ? (
+        <ConnectWallet />
       ) : (
         <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
           <img
@@ -60,16 +65,33 @@ export function ConfirmationButton({ state, dispatch }: Props) {
   );
 }
 
-function ConnectWallet({ loading }: { loading: boolean }) {
+function ConnectWallet() {
+  const {
+    connected,
+    loading: connecting,
+    address,
+    connect,
+    disconnect,
+  } = useWalletContext();
   return (
     <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      <WalletButton
-        text="Connect Wallet"
-        onClick={() => wallet.connect()}
-        loading={loading}
-        disabled={loading}
-      />
-      <button className="mt-4 link">Need help connecting?</button>
+      <WalletProvider remember>
+        {!connected && !address ? (
+          <WalletButton
+            text="Connect Wallet"
+            onClick={() => connect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        ) : (
+          <WalletButton
+            text="Disconect"
+            onClick={() => disconnect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        )}
+      </WalletProvider>
     </div>
   );
 }
@@ -115,6 +137,7 @@ function FormButton({
     data.asset.value,
     data.sourceNetwork.value,
   );
+  console.log('value', value);
 
   return (
     <div className="w-full text-center">

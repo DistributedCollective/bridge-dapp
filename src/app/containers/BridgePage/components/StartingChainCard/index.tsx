@@ -16,12 +16,13 @@ import { Spinner } from '@blueprintjs/core';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { useSelector } from 'react-redux';
 import { selectBridgePage } from '../../selectors';
+import { useWalletContext } from '@sovryn/react-wallet';
 
 const networks = NetworkDictionary.list();
 
 export function StartingChainCard() {
   const { sourceNetwork, targetNetwork, asset, amount } = useBridgeState();
-  const { address, networkType } = useSelector(selectBridgePage);
+  const { networkType } = useSelector(selectBridgePage);
 
   // Filters only assets that are available in both source and target networks.
   const assetList = useMemo(() => {
@@ -34,7 +35,9 @@ export function StartingChainCard() {
       .map(item => item.asset);
   }, [sourceNetwork.value, targetNetwork.value]);
 
-  const { value, loading } = useBalanceOf(asset.get(), sourceNetwork.get());
+  const { value } = useBalanceOf(asset.get(), sourceNetwork.get());
+
+  const { loading: connecting, address } = useWalletContext();
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-1">
@@ -84,7 +87,9 @@ export function StartingChainCard() {
                   Number(fromWei(value, asset.value, sourceNetwork.value)),
                   4,
                 )}{' '}
-                {loading && <Spinner size={12} className="inline-block ml-1" />}
+                {connecting && (
+                  <Spinner size={12} className="inline-block ml-1" />
+                )}
               </div>
             }
           >

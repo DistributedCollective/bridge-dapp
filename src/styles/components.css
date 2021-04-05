@@ -167,6 +167,9 @@
     .bridge-actions {
         @apply w-full flex-shrink-0 flex-grow-0;
     }
+    button:focus, input:focus {
+        outline: none;
+    }
 
     @responsive {
         .bridge-card-m-400 {
