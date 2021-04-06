@@ -29,11 +29,12 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
+  const { address } = useWalletContext();
 
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
       <WalletProvider remember>
-        {state.address.length === 0 ? (
+        {address.length === 0 ? (
           <ConnectWallet />
         ) : (
           <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
@@ -53,6 +54,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
             ) : (
               <FormButton state={state} dispatch={dispatch} />
             )}
+            <ConnectWallet />
           </div>
         )}
       </WalletProvider>
@@ -70,18 +72,30 @@ function ConnectWallet() {
     loading: connecting,
     address,
     connect,
+    disconnect,
   } = useWalletContext();
   return (
-    <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      {!connected && !address && (
-        <WalletButton
-          text="Connect Wallet"
-          onClick={() => connect()}
-          loading={connecting}
-          disabled={connecting}
-        />
+    <>
+      {!connected && !address ? (
+        <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
+          <WalletButton
+            text="Connect Wallet"
+            onClick={() => connect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        </div>
+      ) : (
+        <div className="xl:pt-5 w-full flex flex-col items-center justify-center">
+          <WalletButton
+            text="Switch Wallet"
+            onClick={() => disconnect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
