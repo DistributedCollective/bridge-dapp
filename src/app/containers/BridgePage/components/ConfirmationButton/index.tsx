@@ -32,7 +32,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
 
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
-      <WalletProvider remember>
+      <WalletProvider options={{ remember: true }}>
         {address.length === 0 ? (
           <ConnectWallet />
         ) : (
