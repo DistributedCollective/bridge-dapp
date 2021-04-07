@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
-import { useWalletContext } from '@sovryn/react-wallet';
-import { WalletProvider } from '@sovryn/react-wallet';
+import { WalletProvider, useWalletContext } from '@sovryn/react-wallet';
 import { bignumber } from 'mathjs';
 import { NetworkType } from 'types';
 import swapLogo from 'assets/swap.svg';
