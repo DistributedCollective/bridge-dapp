@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
+import { WalletProvider, useWalletContext } from '@sovryn/react-wallet';
 import { bignumber } from 'mathjs';
 import { NetworkType } from 'types';
 import swapLogo from 'assets/swap.svg';
 import { Button } from '../../../../components/Form/Button';
-import { wallet } from '../../../../../services/wallet';
 import { BridgePageState } from '../../types';
 import { NetworkDictionary } from '../../../../../dictionaries';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
@@ -28,30 +28,35 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
+  const { address } = useWalletContext();
+
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
-      {state.address.length === 0 ? (
-        <ConnectWallet loading={state.connecting} />
-      ) : (
-        <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
-          <img
-            src={swapLogo}
-            alt="Swap Icon"
-            className={cn(
-              'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
-              {
-                'opacity-25': state.networkType !== sourceNetwork.value,
-              },
+      <WalletProvider options={{ remember: true }}>
+        {address.length === 0 ? (
+          <ConnectWallet />
+        ) : (
+          <div className="xl:pt-12 w-full flex flex-col items-center justify-center">
+            <img
+              src={swapLogo}
+              alt="Swap Icon"
+              className={cn(
+                'w-48 h-48 xl:w-full xl:h-full object-fit transition duration-300 cursor-pointer',
+                {
+                  'opacity-25': state.networkType !== sourceNetwork.value,
+                },
+              )}
+              onClick={() => swapNetworks()}
+            />
+            {state.networkType !== sourceNetwork.value ? (
+              <WrongNetwork sourceNetwork={sourceNetwork.value} />
+            ) : (
+              <FormButton state={state} dispatch={dispatch} />
             )}
-            onClick={() => swapNetworks()}
-          />
-          {state.networkType !== sourceNetwork.value ? (
-            <WrongNetwork sourceNetwork={sourceNetwork.value} />
-          ) : (
-            <FormButton state={state} dispatch={dispatch} />
-          )}
-        </div>
-      )}
+            <ConnectWallet />
+          </div>
+        )}
+      </WalletProvider>
       <BridgeInformation
         networkType={sourceNetwork.value}
         asset={asset.value}
@@ -60,17 +65,36 @@ export function ConfirmationButton({ state, dispatch }: Props) {
   );
 }
 
-function ConnectWallet({ loading }: { loading: boolean }) {
+function ConnectWallet() {
+  const {
+    connected,
+    loading: connecting,
+    address,
+    connect,
+    disconnect,
+  } = useWalletContext();
   return (
-    <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
-      <WalletButton
-        text="Connect Wallet"
-        onClick={() => wallet.connect()}
-        loading={loading}
-        disabled={loading}
-      />
-      <button className="mt-4 link">Need help connecting?</button>
-    </div>
+    <>
+      {!connected && !address ? (
+        <div className="xl:pt-44 w-full flex flex-col items-center justify-center">
+          <WalletButton
+            text="Connect Wallet"
+            onClick={() => connect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        </div>
+      ) : (
+        <div className="xl:pt-5 w-full flex flex-col items-center justify-center">
+          <WalletButton
+            text="Switch Wallet"
+            onClick={() => disconnect()}
+            loading={connecting}
+            disabled={connecting}
+          />
+        </div>
+      )}
+    </>
   );
 }
 

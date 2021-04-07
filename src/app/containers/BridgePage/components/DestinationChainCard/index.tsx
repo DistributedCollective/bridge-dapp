@@ -14,6 +14,7 @@ import { toNumberFormat } from '../../../../../utils/math';
 import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
+import { useWalletContext } from '@sovryn/react-wallet';
 
 const networks = NetworkDictionary.list();
 
@@ -26,7 +27,7 @@ export function DestinationChainCard() {
     fee,
     asset,
   } = useBridgeState();
-  const { address, networkType } = useSelector(selectBridgePage);
+  const { networkType } = useSelector(selectBridgePage);
 
   const [cost, setCost] = useState(0);
   const [value, setValue] = useState(Number(amount.value));
@@ -35,6 +36,8 @@ export function DestinationChainCard() {
   const networkList = useMemo(() => {
     return networks.filter(item => item.network !== sourceNetwork.value);
   }, [sourceNetwork.value]);
+
+  const { address } = useWalletContext();
 
   useEffect(() => {
     if (!networkList.map(item => item.network).includes(targetNetwork.value)) {
@@ -62,7 +65,8 @@ export function DestinationChainCard() {
         <h1>Destination chain</h1>
         <div
           className={cn({
-            'opacity-25': !address || networkType !== sourceNetwork.value,
+            'opacity-25 pointer-events-none':
+              !address || networkType !== sourceNetwork.value,
           })}
         >
           <FormGroup>
