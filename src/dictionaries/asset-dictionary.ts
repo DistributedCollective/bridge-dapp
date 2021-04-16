@@ -4,6 +4,9 @@ import { NetworkDictionary } from './index';
 
 import wbtcIcon from 'assets/tokens/wbtc.svg';
 import renBtcIcon from 'assets/tokens/renBTC.svg';
+import daiIcon from 'assets/tokens/dai.svg';
+import usdtIcon from 'assets/tokens/usdt.svg';
+import usdcIcon from 'assets/tokens/usdc.svg';
 
 export class AssetDictionary {
   public static assets: AssetDetails[] = [
@@ -67,6 +70,97 @@ export class AssetDictionary {
           [NetworkChainId.ETH_MAINNET, 'RenBTC'],
           [NetworkChainId.RSK_TESTNET, 'rRenBTC'],
           [NetworkChainId.ETH_TESTNET, 'RenBTC'],
+        ]),
+      ),
+
+    // DAI tokens
+    new AssetDetails(
+      Asset.DAI,
+      'DAI',
+      'DAI',
+      daiIcon,
+      18,
+      new Map([
+        [
+          NetworkChainId.RSK_MAINNET,
+          '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'.toLowerCase(),
+        ],
+        [
+          NetworkChainId.ETH_MAINNET,
+          '0x6b175474e89094c44da98b954eedeac495271d0f'.toLowerCase(),
+        ],
+      ]),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 18],
+          [NetworkChainId.RSK_MAINNET, 18],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.ETH_MAINNET, 'DAI'],
+          [NetworkChainId.RSK_MAINNET, 'DAIes'],
+        ]),
+      ),
+    // USDC tokens
+    new AssetDetails(
+      Asset.USDC,
+      'USDC',
+      'USDC',
+      usdcIcon,
+      18,
+      new Map([
+        [
+          NetworkChainId.RSK_MAINNET,
+          '0x8D1f7CbC6391D95E2774380e80A666FEbf655D6b'.toLowerCase(),
+        ],
+        [
+          NetworkChainId.ETH_MAINNET,
+          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'.toLowerCase(),
+        ],
+      ]),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 6],
+          [NetworkChainId.RSK_MAINNET, 18],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.ETH_MAINNET, 'USDC'],
+          [NetworkChainId.RSK_MAINNET, 'USDCes'],
+        ]),
+      ),
+    // USDT tokens
+    new AssetDetails(
+      Asset.USDT,
+      'USDT',
+      'USDT',
+      usdtIcon,
+      18,
+      new Map([
+        [
+          NetworkChainId.RSK_MAINNET,
+          '0x8D1f7CbC6391D95E2774380e80A666FEbf655D6b'.toLowerCase(),
+        ],
+        [
+          NetworkChainId.ETH_MAINNET,
+          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'.toLowerCase(),
+        ],
+      ]),
+    )
+      .setDecimals(
+        new Map<NetworkChainId, number>([
+          [NetworkChainId.ETH_MAINNET, 6],
+          [NetworkChainId.RSK_MAINNET, 18],
+        ]),
+      )
+      .setSymbols(
+        new Map<NetworkChainId, string>([
+          [NetworkChainId.ETH_MAINNET, 'USDT'],
+          [NetworkChainId.RSK_MAINNET, 'USDTes'],
         ]),
       ),
   ];
