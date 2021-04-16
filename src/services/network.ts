@@ -2,11 +2,12 @@ import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-core';
 import { AbiItem, toWei } from 'web3-utils';
-import { NetworkType } from '../types';
+import { AppMode, NetworkType } from '../types';
 import { NetworkDictionary } from '../dictionaries';
 import { wallet } from './wallet';
 import { toaster } from './toaster';
 import { debug } from '../utils/debug';
+import { APP_MODE } from '../utils/network-utils';
 
 const { error, log } = debug('network');
 
@@ -87,7 +88,12 @@ class Network {
         data,
         gas: options?.gas || gasLimit,
         ...(network === NetworkType.RSK
-          ? { gasPrice: toWei('0.065', 'gwei') }
+          ? {
+              gasPrice: toWei(
+                APP_MODE === AppMode.MAINNET ? '0.06' : '0.065',
+                'gwei',
+              ),
+            }
           : {}),
       },
       options,

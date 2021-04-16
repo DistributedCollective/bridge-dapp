@@ -39,8 +39,8 @@ export class NetworkDictionary {
       ethLogo,
       'https://mainnet.sovryn.app/rpc',
       '0x',
-      'https://etherscan.com/tx/:value',
-      'https://etherscan.com/address/:value',
+      'https://etherscan.io/tx/:value',
+      'https://etherscan.io/address/:value',
     ),
     new NetworkDetails(
       NetworkType.ETH,
@@ -50,8 +50,8 @@ export class NetworkDictionary {
       ethLogo,
       'wss://kovan.infura.io/ws/v3/237d5a5403134af7b7211fd6996c15d3',
       '0x0648fe75d764c37d8624dd8c99b8223344eb77e8',
-      'https://kovan.etherscan.com/tx/:value',
-      'https://kovan.etherscan.com/address/:value',
+      'https://kovan.etherscan.io/tx/:value',
+      'https://kovan.etherscan.io/address/:value',
     ),
   ];
 
