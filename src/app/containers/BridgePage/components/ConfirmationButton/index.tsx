@@ -54,6 +54,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
       )}
       <BridgeInformation
         networkType={sourceNetwork.value}
+        sideNetworkType={targetNetwork.value}
         asset={asset.value}
       />
     </div>

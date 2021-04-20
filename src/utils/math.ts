@@ -34,7 +34,12 @@ export const roundToSmaller = (amount: any, decimals: number): string => {
   return `${integer}`;
 };
 
-export const fromWei = (amount: any, asset?: Asset, network?: NetworkType) => {
+export const fromWei = (
+  amount: any,
+  asset?: Asset,
+  network?: NetworkType,
+  sideNetwork?: NetworkType,
+) => {
   let decimals = 0;
 
   if (asset === undefined) {
@@ -42,6 +47,7 @@ export const fromWei = (amount: any, asset?: Asset, network?: NetworkType) => {
   } else {
     const _decimals = AssetDictionary.getDecimals(
       network || wallet.networkType,
+      sideNetwork || wallet.networkType,
       asset,
     );
 
@@ -55,7 +61,12 @@ export const fromWei = (amount: any, asset?: Asset, network?: NetworkType) => {
   return roundToSmaller(bignumber(amount || '0').div(10 ** decimals), decimals);
 };
 
-export const toWei = (amount: any, asset?: Asset, network?: NetworkType) => {
+export const toWei = (
+  amount: any,
+  asset?: Asset,
+  network?: NetworkType,
+  sideNetwork?: NetworkType,
+) => {
   let decimals = 0;
 
   if (asset === undefined) {
@@ -63,6 +74,7 @@ export const toWei = (amount: any, asset?: Asset, network?: NetworkType) => {
   } else {
     const _decimals = AssetDictionary.getDecimals(
       network || wallet.networkType,
+      sideNetwork || wallet.networkType,
       asset,
     );
 

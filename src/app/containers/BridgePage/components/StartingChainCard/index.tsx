@@ -1,13 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import cn from 'classnames';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
 import { NetworkType } from '../../../../../types';
 import { AssetSelect } from '../../../../components/Form/AssetSelect';
-import {
-  AssetDictionary,
-  NetworkDictionary,
-} from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
 import { AmountInput } from '../../../../components/Form/AmountInput';
 import { useBalanceOf } from '../../../../hooks/useBalanceOf';
@@ -16,25 +12,42 @@ import { Spinner } from '@blueprintjs/core';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { useSelector } from 'react-redux';
 import { selectBridgePage } from '../../selectors';
+import { BridgeDictionary } from '../../../../../dictionaries';
 
-const networks = NetworkDictionary.list();
+const networks = BridgeDictionary.listNetworks();
 
 export function StartingChainCard() {
   const { sourceNetwork, targetNetwork, asset, amount } = useBridgeState();
   const { address, networkType } = useSelector(selectBridgePage);
 
-  // Filters only assets that are available in both source and target networks.
   const assetList = useMemo(() => {
-    const targetChain = NetworkDictionary.getChainId(targetNetwork.value);
-    if (targetChain === undefined) {
+    const bridge = BridgeDictionary.get(
+      sourceNetwork.value,
+      targetNetwork.value,
+    );
+    if (bridge === undefined) {
       return [];
     }
-    return AssetDictionary.list(sourceNetwork.value)
-      .filter(item => Array.from(item.contracts.keys()).includes(targetChain))
-      .map(item => item.asset);
+    return bridge.assets.map(item => item.asset);
   }, [sourceNetwork.value, targetNetwork.value]);
 
   const { value, loading } = useBalanceOf(asset.get(), sourceNetwork.get());
+
+  const changeSourceNetwork = useCallback(
+    (value: string) => {
+      const source = value as NetworkType;
+      const sideNetworks = BridgeDictionary.getSideNetworks(source);
+      let target = targetNetwork.value;
+
+      if (!sideNetworks.map(item => item.network).includes(source)) {
+        target = sideNetworks[0].network;
+      }
+
+      sourceNetwork.set(source);
+      targetNetwork.set(target);
+    },
+    [sourceNetwork, targetNetwork],
+  );
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-1">
@@ -48,9 +61,7 @@ export function StartingChainCard() {
           <RadioGroup
             className="radio-group--secondary"
             value={sourceNetwork.get()}
-            onChange={value =>
-              sourceNetwork.set((value as unknown) as NetworkType)
-            }
+            onChange={changeSourceNetwork}
           >
             {networks.map(item => (
               <RadioGroup.Button
@@ -94,6 +105,7 @@ export function StartingChainCard() {
               placeholder="Select Asset"
               options={assetList}
               networkType={sourceNetwork.get()}
+              sideNetworkType={targetNetwork.get()}
             />
           </FormGroup>
           <FormGroup label="Amount:">
@@ -102,6 +114,7 @@ export function StartingChainCard() {
               onChange={value => amount.set(value)}
               asset={asset.get()}
               networkType={sourceNetwork.get()}
+              sideNetworkType={targetNetwork.get()}
             />
           </FormGroup>
         </div>
