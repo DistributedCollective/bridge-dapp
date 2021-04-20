@@ -66,7 +66,7 @@ export class NetworkDictionary {
       AppMode.TESTNET,
       NetworkChainId.BSC_TESTNET,
       'Binance',
-      ethLogo,
+      bscLogo,
       'https://data-seed-prebsc-1-s1.binance.org:8545/',
       'https://testnet.bscscan.com/tx/:value',
       'https://testnet.bscscan.com/address/:value',

@@ -14,14 +14,14 @@ export class BridgeDictionary {
       NetworkType.RSK,
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.BSC_TESTNET,
-      '0xc0e7a7fff4aba5e7286d5d67dd016b719dcc9156',
+      '0x39500B3864ddda31633319C8A570176a79977A42',
       rskBscTestnetAssets,
     ),
     new BridgeDetails(
       NetworkType.BSC,
       NetworkChainId.BSC_TESTNET,
       NetworkChainId.RSK_TESTNET,
-      '0x97e57588c479324c8c645501e707671100badc72',
+      '0x97E57588C479324C8C645501e707671100baDc72',
       rskBscTestnetAssets,
     ),
     // RSK-ETH bridges
