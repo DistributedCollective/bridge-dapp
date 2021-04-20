@@ -21,7 +21,7 @@ export class BridgeDictionary {
       NetworkType.BSC,
       NetworkChainId.BSC_TESTNET,
       NetworkChainId.RSK_TESTNET,
-      '0x97E57588C479324C8C645501e707671100baDc72',
+      '0x97e57588c479324c8c645501e707671100badc72',
       rskBscTestnetAssets,
     ),
     // RSK-ETH bridges

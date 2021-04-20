@@ -46,7 +46,7 @@ export class NetworkDictionary {
       NetworkChainId.ETH_TESTNET,
       'Ropsten',
       ethLogo,
-      'wss://ropsten.infura.io/ws/v3/237d5a5403134af7b7211fd6996c15d3',
+      'wss://ropsten.infura.io/ws/v3/8a669f27b05a457b880dfa89b536c220',
       'https://ropsten.etherscan.io/tx/:value',
       'https://ropsten.etherscan.io/address/:value',
     ),
