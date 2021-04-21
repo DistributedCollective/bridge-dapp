@@ -6,10 +6,11 @@ import { NetworkDictionary } from './index';
 import { APP_MODE } from '../utils/network-utils';
 import { NetworkDetails } from '../models/NetworkDetails';
 import { unique } from '../utils/helpers';
+import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
 
 export class BridgeDictionary {
   public static bridges: BridgeDetails[] = [
-    // RSK-BSC bridges
+    // RSK-BSC testnet bridges
     new BridgeDetails(
       NetworkType.RSK,
       NetworkChainId.RSK_TESTNET,
@@ -24,7 +25,22 @@ export class BridgeDictionary {
       '0x97E57588C479324C8C645501e707671100baDc72',
       rskBscTestnetAssets,
     ),
-    // RSK-ETH bridges
+    // RSK-ETH mainnet bridges
+    new BridgeDetails(
+      NetworkType.RSK,
+      NetworkChainId.RSK_MAINNET,
+      NetworkChainId.ETH_MAINNET,
+      '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581',
+      rskEthMainnetAssets,
+    ),
+    new BridgeDetails(
+      NetworkType.ETH,
+      NetworkChainId.ETH_MAINNET,
+      NetworkChainId.RSK_MAINNET,
+      '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1',
+      rskEthMainnetAssets,
+    ),
+    // RSK-ETH testnet bridges
     new BridgeDetails(
       NetworkType.RSK,
       NetworkChainId.RSK_TESTNET,

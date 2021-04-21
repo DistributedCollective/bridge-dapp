@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
 import { bignumber } from 'mathjs';
@@ -28,6 +28,12 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
+
+  const sourceChainId = useMemo(
+    () => NetworkDictionary.getChainId(sourceNetwork.value),
+    [sourceNetwork.value],
+  );
+
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
       {state.address.length === 0 ? (
@@ -45,7 +51,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
             )}
             onClick={() => swapNetworks()}
           />
-          {state.networkType !== sourceNetwork.value ? (
+          {state.networkChain !== sourceChainId ? (
             <WrongNetwork sourceNetwork={sourceNetwork.value} />
           ) : (
             <FormButton state={state} dispatch={dispatch} />

@@ -14,7 +14,7 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x232db8D9F1B3558E692DA6210645bc8755a8f7d5'.toLowerCase(), //  todo
+        '0x2b17f1c780b230Ec150bb52EA401F14F0cdb1449'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
@@ -33,7 +33,7 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x9eA9fdA7892637d9240e9489D4a6c878ce8f4F8C'.toLowerCase(), // todo
+        '0xA839c6F6b3C636CDD34F72AD830Cde42e651076E'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
@@ -52,11 +52,11 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0xCd4c312495d426faE3dd09822D8a52fb8841dbA2'.toLowerCase(), // todo
+        '0x68c10be7bA4Ecb3e5Adb0B100D75061BD76B9411'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
-        '0x013e679f3d66e227e843cd865b317f55a68481fd'.toLowerCase(),
+        '0x268e3bf855cbcdf8fe31ba3557a554ab2283351f'.toLowerCase(),
       ],
     ]),
   ).setSymbols(

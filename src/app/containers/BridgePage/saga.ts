@@ -33,7 +33,7 @@ function createWeb3Connection(wallet: Wallet) {
     wallet.on('addressChanged', handleAddressChange);
     wallet.on('chainChanged', handleChainChange);
     return () => {
-      wallet.off('connecting', handleAddressChange);
+      wallet.off('connecting', handleConnecting);
       wallet.off('addressChanged', handleAddressChange);
       wallet.off('chainChanged', handleChainChange);
     };
