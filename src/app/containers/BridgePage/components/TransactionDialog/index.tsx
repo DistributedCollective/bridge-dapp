@@ -8,6 +8,7 @@ import { Spinner } from '@blueprintjs/core';
 import { Asset, NetworkType } from '../../../../../types';
 import { AssetDictionary } from '../../../../../dictionaries';
 import { TransactionBadge } from '../../../../components/TransactionBadge';
+import { useBridgeState } from '../../../../hooks/useBridgeState';
 
 export function TransactionDialog() {
   const { tx, networkType } = useSelector(selectBridgePage);
@@ -59,7 +60,8 @@ function StepApprove({
   asset: Asset;
   network: NetworkType;
 }) {
-  const symbol = AssetDictionary.getSymbol(network, asset);
+  const { targetNetwork } = useBridgeState();
+  const symbol = AssetDictionary.getSymbol(network, targetNetwork.value, asset);
   return (
     <>
       <h1>Confirm in your browser wallet</h1>
@@ -97,6 +99,10 @@ function StepPending({ tx, network }: TxProps) {
       <div className="mt-12 text-center">
         <TransactionBadge transactionHash={tx.hash} networkType={network} />
       </div>
+      <div className="mt-12 text-center text-xs opacity-75">
+        After the transaction is confirmed, it will take up to 20 minutes for
+        assets to be moved between the chains. Please be patient.
+      </div>
     </>
   );
 }
@@ -108,6 +114,10 @@ function StepConfirmed({ tx, network }: TxProps) {
       <p className="lead">Your transaction confirmed.</p>
       <div className="mt-12 text-center">
         <TransactionBadge transactionHash={tx.hash} networkType={network} />
+      </div>
+      <div className="mt-12 text-center text-xs opacity-75">
+        After the transaction is confirmed, it will take up to 20 minutes for
+        assets to be moved between the chains. Please be patient.
       </div>
     </>
   );

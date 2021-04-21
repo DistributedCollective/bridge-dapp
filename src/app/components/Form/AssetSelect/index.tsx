@@ -10,6 +10,7 @@ interface Props {
   value: Nullable<Asset> | undefined;
   onChange: (value: Asset, item: Option) => void;
   networkType: NetworkType;
+  sideNetworkType: NetworkType;
   options: Asset[];
   placeholder?: React.ReactNode;
 }
@@ -19,6 +20,7 @@ export function AssetSelect(props: Props) {
     return props.options.map(item => {
       const asset = AssetDictionary.get(
         props.networkType,
+        props.sideNetworkType,
         item,
       ) as AssetDetails;
       return {
@@ -27,7 +29,7 @@ export function AssetSelect(props: Props) {
         data: asset.image,
       };
     });
-  }, [props.options, props.networkType]);
+  }, [props.options, props.networkType, props.sideNetworkType]);
   return (
     <Select
       value={props.value as any}

@@ -7,11 +7,17 @@ import { useBridgeState } from 'app/hooks/useBridgeState';
 
 interface Props {
   networkType: NetworkType;
+  sideNetworkType: NetworkType;
   asset: Asset;
 }
 
-export function BridgeInformation({ networkType, asset }: Props) {
-  const symbol = AssetDictionary.getSymbol(networkType, asset) || 'Token';
+export function BridgeInformation({
+  networkType,
+  sideNetworkType,
+  asset,
+}: Props) {
+  const symbol =
+    AssetDictionary.getSymbol(networkType, sideNetworkType, asset) || 'Token';
   const { min, max, fee, daily } = useBridgeState();
   return (
     <div className="mt-16 w-full opacity-50 text-xs">

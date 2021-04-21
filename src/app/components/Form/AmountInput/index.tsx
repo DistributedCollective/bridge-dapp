@@ -12,6 +12,7 @@ interface Props {
   asset?: Asset;
   placeholder?: string;
   networkType: NetworkType;
+  sideNetworkType: NetworkType;
 }
 
 export function AmountInput({
@@ -20,6 +21,7 @@ export function AmountInput({
   asset,
   placeholder,
   networkType,
+  sideNetworkType,
   ...props
 }: Props) {
   return (
@@ -31,7 +33,7 @@ export function AmountInput({
         placeholder={placeholder || '0.0000'}
         appendElem={
           asset !== undefined
-            ? AssetDictionary.getSymbol(networkType, asset)
+            ? AssetDictionary.getSymbol(networkType, sideNetworkType, asset)
             : null
         }
         {...props}

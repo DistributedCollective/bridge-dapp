@@ -33,7 +33,7 @@ function createWeb3Connection(wallet: Wallet) {
     wallet.on('addressChanged', handleAddressChange);
     wallet.on('chainChanged', handleChainChange);
     return () => {
-      wallet.off('connecting', handleAddressChange);
+      wallet.off('connecting', handleConnecting);
       wallet.off('addressChanged', handleAddressChange);
       wallet.off('chainChanged', handleChainChange);
     };
@@ -72,6 +72,7 @@ function* approveTransfer() {
       const approveHash = yield call(
         [token, token.approve],
         payload.sourceNetwork,
+        payload.targetNetwork,
         payload.asset,
         amountToApprove,
       );
@@ -109,11 +110,13 @@ function* confirmTransfer() {
 
       const tokenAddress = AssetDictionary.getContractAddress(
         payload.form.sourceNetwork,
+        payload.form.targetNetwork,
         payload.form.asset,
       ) as string;
 
       const isNative = AssetDictionary.isNativeCoin(
         payload.form.sourceNetwork,
+        payload.form.targetNetwork,
         payload.form.asset,
       );
       const value = isNative
@@ -128,6 +131,7 @@ function* confirmTransfer() {
         transferTx = yield call(
           [bridge, bridge.receiveTokens],
           payload.form.sourceNetwork,
+          payload.form.targetNetwork,
           tokenAddress,
           toWei(
             payload.form.amount,
@@ -144,6 +148,7 @@ function* confirmTransfer() {
         transferTx = yield call(
           [bridge, bridge.receiveTokensAt],
           payload.form.sourceNetwork,
+          payload.form.targetNetwork,
           tokenAddress,
           toWei(
             payload.form.amount,
@@ -185,7 +190,13 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
     yield fork(confirmedTransfer);
     yield fork(failedTransfer);
 
-    if (AssetDictionary.isNativeCoin(payload.sourceNetwork, payload.asset)) {
+    if (
+      AssetDictionary.isNativeCoin(
+        payload.sourceNetwork,
+        payload.targetNetwork,
+        payload.asset,
+      )
+    ) {
       yield put(actions.confirmTransfer({ form: payload }));
       return;
     }
@@ -193,6 +204,7 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
     const allowance = yield call(
       [token, token.allowance],
       payload.sourceNetwork,
+      payload.targetNetwork,
       payload.asset,
       wallet.address,
     );

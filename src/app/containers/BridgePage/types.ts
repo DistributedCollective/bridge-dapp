@@ -1,10 +1,11 @@
 /* --- STATE --- */
-import { Asset, NetworkChainId, NetworkType } from '../../../types';
+import type { Asset, NetworkChainId, NetworkType } from '../../../types';
 
 export interface BridgePageState {
   address: string;
   connecting: boolean;
   networkType: NetworkType;
+  sideNetworkType: NetworkType;
   networkChain: NetworkChainId;
   blockNumber: number;
   tx: TxState;
