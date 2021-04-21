@@ -31,8 +31,8 @@ const globalBridgeState = createState<BridgeState>({
   daily: createValue(0),
   sourceNetwork: NetworkType.RSK,
   targetNetwork: NetworkType.ETH,
-  asset: Asset.WBTC,
-  amount: '0.001',
+  asset: Asset.USDT,
+  amount: '50',
   receiver: '',
 });
 
