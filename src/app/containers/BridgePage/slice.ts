@@ -10,6 +10,7 @@ export const initialState: ContainerState = {
   address: wallet.address,
   connecting: false,
   networkType: wallet.networkType,
+  sideNetworkType: NetworkType.ETH,
   networkChain: wallet.chainId,
   blockNumber: 0,
   tx: {

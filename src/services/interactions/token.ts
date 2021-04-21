@@ -1,15 +1,20 @@
-import { Asset, NetworkType } from 'types';
+import type { Asset, NetworkType } from 'types';
 import { network } from 'services';
-import { AssetDictionary, NetworkDictionary } from 'dictionaries';
+import { AssetDictionary, BridgeDictionary } from 'dictionaries';
 import erc20Abi from 'assets/abi/ERC20Abi.json';
 
 class Token {
   public async balanceOf(
     networkType: NetworkType,
+    sideNetworkType: NetworkType,
     asset: Asset,
     owner: string,
   ) {
-    const token = AssetDictionary.getContractAddress(networkType, asset);
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
     if (token) {
       return network.call(networkType, token, erc20Abi as any, 'balanceOf', [
         owner,
@@ -20,11 +25,19 @@ class Token {
 
   public async allowance(
     networkType: NetworkType,
+    sideNetworkType: NetworkType,
     asset: Asset,
     owner: string,
   ) {
-    const { bridgeContractAddress } = NetworkDictionary.get(networkType);
-    const token = AssetDictionary.getContractAddress(networkType, asset);
+    const { bridgeContractAddress } = BridgeDictionary.get(
+      networkType,
+      sideNetworkType,
+    );
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
     if (token) {
       return network.call(networkType, token, erc20Abi as any, 'allowance', [
         owner,
@@ -34,9 +47,21 @@ class Token {
     return '0';
   }
 
-  public async approve(networkType: NetworkType, asset: Asset, amount: string) {
-    const { bridgeContractAddress } = NetworkDictionary.get(networkType);
-    const token = AssetDictionary.getContractAddress(networkType, asset);
+  public async approve(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+    amount: string,
+  ) {
+    const { bridgeContractAddress } = BridgeDictionary.get(
+      networkType,
+      sideNetworkType,
+    );
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
     if (token) {
       return network.send(
         networkType,

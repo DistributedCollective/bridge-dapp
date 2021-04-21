@@ -71,28 +71,28 @@ export function useBuildBridgeState(
   const min = useNetworkCall(
     bridge.allowTokens_getMin.bind(bridge),
     'bridge_allowTokens_min',
-    [state.sourceNetwork.get()],
+    [state.sourceNetwork.get(), state.targetNetwork.get()],
     0,
     !!state.sourceNetwork.get(),
   );
   const max = useNetworkCall(
     bridge.allowTokens_getMax.bind(bridge),
     'bridge_allowTokens_max',
-    [state.sourceNetwork.get()],
+    [state.sourceNetwork.get(), state.targetNetwork.get()],
     0,
     !!state.sourceNetwork.get(),
   );
   const fee = useNetworkCall(
     bridge.getFeePercentage.bind(bridge),
     'bridge_fee',
-    [state.sourceNetwork.get()],
+    [state.sourceNetwork.get(), state.targetNetwork.get()],
     0,
     !!state.sourceNetwork.get(),
   );
   const daily = useNetworkCall(
     bridge.allowTokens_getDailyLimit.bind(bridge),
     'bridge_allowTokens_daily',
-    [state.sourceNetwork.get()],
+    [state.sourceNetwork.get(), state.targetNetwork.get()],
     0,
     !!state.sourceNetwork.get(),
   );
