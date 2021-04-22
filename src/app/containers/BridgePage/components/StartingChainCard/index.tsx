@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import cn from 'classnames';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
-import { NetworkType } from '../../../../../types';
+import { AppMode, NetworkType } from '../../../../../types';
 import { AssetSelect } from '../../../../components/Form/AssetSelect';
 import { Card } from '../../../../components/Form/Card';
 import { AmountInput } from '../../../../components/Form/AmountInput';
@@ -13,6 +13,7 @@ import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { useSelector } from 'react-redux';
 import { selectBridgePage } from '../../selectors';
 import { BridgeDictionary } from '../../../../../dictionaries';
+import { APP_MODE } from '../../../../../utils/network-utils';
 
 const networks = BridgeDictionary.listNetworks();
 
@@ -89,13 +90,27 @@ export function StartingChainCard() {
           <FormGroup
             label="Send Asset:"
             describe={
-              <div className="flex flex-row items-center justify-start">
-                Available balance:{' '}
-                {toNumberFormat(
-                  Number(fromWei(value, asset.value, sourceNetwork.value)),
-                  4,
-                )}{' '}
-                {loading && <Spinner size={12} className="inline-block ml-1" />}
+              <div className="flex flex-row items-center justify-between">
+                <div>
+                  Available balance:{' '}
+                  {toNumberFormat(
+                    Number(fromWei(value, asset.value, sourceNetwork.value)),
+                    4,
+                  )}{' '}
+                  {loading && (
+                    <Spinner size={12} className="inline-block ml-1" />
+                  )}
+                </div>
+                {APP_MODE === AppMode.TESTNET && (
+                  <a
+                    className="ml-3"
+                    href="https://faucet.sovryn.app"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Faucet
+                  </a>
+                )}
               </div>
             }
           >
