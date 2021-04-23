@@ -3,8 +3,28 @@ import { Asset, NetworkChainId } from '../../types';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const rskBscTestnetAssets = [
+  new AssetDetails(
+    Asset.SOV,
+    'SOV',
+    'SOV',
+    sovIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.BSC_TESTNET,
+        '0x167e3cd9c626dcd642eed6d791d69e6982a5f50a'.toLowerCase(),
+      ],
+    ]),
+  ).setSymbols(
+    new Map<NetworkChainId, string>([[NetworkChainId.BSC_TESTNET, 'bSOV']]),
+  ),
   new AssetDetails(
     Asset.DAI,
     'DAI',

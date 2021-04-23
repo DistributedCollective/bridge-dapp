@@ -3,8 +3,28 @@ import { Asset, NetworkChainId } from '../../types';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const rskEthTesnetAssets = [
+  new AssetDetails(
+    Asset.SOV,
+    'SOV',
+    'SOV',
+    sovIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.ETH_TESTNET,
+        '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04'.toLowerCase(),
+      ],
+    ]),
+  ).setSymbols(
+    new Map<NetworkChainId, string>([[NetworkChainId.ETH_TESTNET, 'eSOV']]),
+  ),
   new AssetDetails(
     Asset.DAI,
     'DAI',

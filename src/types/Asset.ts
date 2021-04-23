@@ -1,4 +1,5 @@
 export enum Asset {
+  SOV,
   WBTC,
   renBTC,
   DAI,
