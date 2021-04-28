@@ -7,9 +7,25 @@ import { APP_MODE } from '../utils/network-utils';
 import { NetworkDetails } from '../models/NetworkDetails';
 import { unique } from '../utils/helpers';
 import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
+// import { rskBscMainnetAssets } from './assets/rsk-bsc-mainnet-assets';
 
 export class BridgeDictionary {
   public static bridges: BridgeDetails[] = [
+    // // RSK-BSC mainnet bridges
+    // new BridgeDetails(
+    //   NetworkType.RSK,
+    //   NetworkChainId.RSK_MAINNET,
+    //   NetworkChainId.BSC_MAINNET,
+    //   '0xB8411dc9B723e322CE08E2596881B77733F0694e',
+    //   rskBscMainnetAssets,
+    // ),
+    // new BridgeDetails(
+    //   NetworkType.BSC,
+    //   NetworkChainId.BSC_MAINNET,
+    //   NetworkChainId.RSK_MAINNET,
+    //   '0x1b5fe0CDD01FA7278244B4B2d7b434fe83D88dB4',
+    //   rskBscMainnetAssets,
+    // ),
     // RSK-BSC testnet bridges
     new BridgeDetails(
       NetworkType.RSK,
