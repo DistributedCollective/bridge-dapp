@@ -78,10 +78,19 @@ export class AssetDictionary {
   ) {
     const item = this.get(network, sideNetwork, asset);
     if (item) {
-      return (
-        item.decimalMap.get(NetworkDictionary.getChainId(network)) ||
-        item.decimals
-      );
+      return item.getDecimals(network);
+    }
+    return undefined;
+  }
+
+  public static getLimits(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+  ) {
+    const item = this.get(network, sideNetwork, asset);
+    if (item) {
+      return item.getLimits(network);
     }
     return undefined;
   }

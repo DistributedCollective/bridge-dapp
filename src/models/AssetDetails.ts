@@ -1,6 +1,14 @@
 import { Asset, NetworkChainId, NetworkType } from '../types';
 import { NetworkDictionary } from '../dictionaries';
 
+// min, max, fee, daily limit
+type Limits = [
+  string | undefined,
+  string | undefined,
+  string | undefined,
+  string | undefined,
+];
+
 export class AssetDetails {
   public symbols: Map<NetworkChainId, string> = new Map<
     NetworkChainId,
@@ -13,6 +21,10 @@ export class AssetDetails {
   public nativeCoins: Map<NetworkChainId, boolean> = new Map<
     NetworkChainId,
     boolean
+  >();
+  public limits: Map<NetworkChainId, Limits> = new Map<
+    NetworkChainId,
+    Limits
   >();
   constructor(
     public asset: Asset,
@@ -48,5 +60,22 @@ export class AssetDetails {
   public getDecimals(networkType: NetworkType) {
     const chainId = NetworkDictionary.getChainId(networkType);
     return this.decimalMap.get(chainId) || this.decimals;
+  }
+  public setLimits(items: Map<NetworkChainId, Limits>) {
+    this.limits = items;
+    return this;
+  }
+  public getLimits(networkType: NetworkType) {
+    const chainId = NetworkDictionary.getChainId(networkType);
+    const limits = this.limits.get(chainId);
+    if (limits) {
+      return {
+        min: limits[0],
+        max: limits[1],
+        fee: limits[2],
+        daily: limits[3],
+      };
+    }
+    return undefined;
   }
 }

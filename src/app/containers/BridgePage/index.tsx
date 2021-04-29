@@ -38,7 +38,7 @@ export function BridgePage(props: Props) {
   const { sourceNetwork, targetNetwork } = useBuildBridgeState(
     NetworkType.ETH,
     NetworkType.RSK,
-    Asset.USDT,
+    Asset.SOV,
     '50',
   );
 
