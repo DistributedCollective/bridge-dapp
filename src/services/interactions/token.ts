@@ -10,6 +10,16 @@ class Token {
     asset: Asset,
     owner: string,
   ) {
+    const isNative =
+      AssetDictionary.get(networkType, sideNetworkType, asset)?.isNativeCoin(
+        networkType,
+      ) || false;
+
+    if (isNative) {
+      const web3 = await network.getWeb3ForNetwork(networkType);
+      return web3.eth.getBalance(owner);
+    }
+
     const token = AssetDictionary.getContractAddress(
       networkType,
       sideNetworkType,

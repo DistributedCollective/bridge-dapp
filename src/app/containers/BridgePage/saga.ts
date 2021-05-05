@@ -121,7 +121,7 @@ function* confirmTransfer() {
       );
       const value = isNative
         ? toWei(
-            payload.form.value,
+            payload.form.amount,
             payload.form.asset,
             payload.form.sourceNetwork,
           )

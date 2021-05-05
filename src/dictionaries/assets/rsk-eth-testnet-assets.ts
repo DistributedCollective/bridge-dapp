@@ -4,8 +4,32 @@ import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
 import sovIcon from '../../assets/tokens/sov.svg';
+import ethIcon from '../../assets/tokens/eth.svg';
 
 export const rskEthTesnetAssets = [
+  new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.ETH_TESTNET,
+        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+      ],
+    ]),
+  )
+    .setSymbols(
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'rETH']]),
+    )
+    .setNativeCoins(
+      new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_TESTNET, true]]),
+    ),
   new AssetDetails(
     Asset.SOV,
     'SOV',
