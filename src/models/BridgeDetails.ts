@@ -7,8 +7,10 @@ export class BridgeDetails {
     public mainChainId: NetworkChainId,
     public sideChainId: NetworkChainId,
     public bridgeContractAddress: string,
+    public babelfishContractAddress: string, // masset proxy
     public assets: AssetDetails[],
   ) {
     this.bridgeContractAddress = bridgeContractAddress.toLowerCase();
+    this.babelfishContractAddress = babelfishContractAddress.toLowerCase();
   }
 }

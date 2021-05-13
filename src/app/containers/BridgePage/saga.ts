@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import {
   take,
   call,
@@ -22,6 +23,10 @@ import { AppMode, NetworkType } from '../../../types';
 import { bridge } from '../../../services/interactions/bridge';
 import { AssetDictionary } from '../../../dictionaries';
 import { selectBridgePage } from './selectors';
+import { babelFishService } from '../../../services/interactions/babelfish';
+
+const web3 = new Web3();
+const abiCoder = web3.eth.abi;
 
 function createWeb3Connection(wallet: Wallet) {
   return eventChannel(emit => {
@@ -119,25 +124,43 @@ function* confirmTransfer() {
         payload.form.targetNetwork,
         payload.form.asset,
       );
-      const value = isNative
-        ? toWei(
-            payload.form.amount,
-            payload.form.asset,
-            payload.form.sourceNetwork,
-          )
-        : '0';
 
-      if (payload.form.receiver === '') {
+      const tokenAmount = toWei(
+        payload.form.amount,
+        payload.form.asset,
+        payload.form.sourceNetwork,
+      );
+
+      const babelFishData = babelFishService.mintTo(
+        payload.form.sourceNetwork,
+        payload.form.targetNetwork,
+        tokenAddress,
+        tokenAmount,
+        (payload.form.receiver === ''
+          ? wallet.address
+          : payload.form.receiver
+        ).toLowerCase(),
+      );
+
+      const encodedReceiver = abiCoder.encodeParameter(
+        'address',
+        (payload.form.receiver === ''
+          ? wallet.address
+          : payload.form.receiver
+        ).toLowerCase(),
+      );
+
+      if (isNative) {
+        const value = isNative ? tokenAmount : '0';
         transferTx = yield call(
-          [bridge, bridge.receiveTokens],
+          [bridge, bridge.receiveEthAt],
           payload.form.sourceNetwork,
           payload.form.targetNetwork,
-          tokenAddress,
-          toWei(
-            payload.form.amount,
-            payload.form.asset,
-            payload.form.sourceNetwork,
-          ),
+          tokenAmount,
+          babelFishData?.address ||
+            payload.form.receiver.toLowerCase() ||
+            wallet.address,
+          babelFishData?.data ? encodedReceiver : '0x',
           {
             nonce,
             gas: payload.nonce !== undefined ? 250000 : undefined,
@@ -150,22 +173,20 @@ function* confirmTransfer() {
           payload.form.sourceNetwork,
           payload.form.targetNetwork,
           tokenAddress,
-          toWei(
-            payload.form.amount,
-            payload.form.asset,
-            payload.form.sourceNetwork,
-          ),
-          payload.form.receiver.toLowerCase(),
+          tokenAmount,
+          babelFishData?.address ||
+            payload.form.receiver.toLowerCase() ||
+            wallet.address,
+          babelFishData?.data || '0x',
           {
             nonce,
             gas: payload.nonce !== undefined ? 250000 : undefined,
-            value,
           },
         );
       }
-
       yield put(actions.pendingTransfer(transferTx));
     } catch (e) {
+      console.error(e);
       yield put(actions.forceTransferState(TxStep.USER_DENIED));
     }
   }

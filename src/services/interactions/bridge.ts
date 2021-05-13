@@ -35,6 +35,7 @@ class Bridge {
     tokenAddress: string,
     amount: string,
     receiver: string,
+    data: string = '0x',
     config?: TransactionConfig,
   ): Promise<string> {
     const { address, abi } = this.getBridgeData(networkType, sideNetworkType);
@@ -43,7 +44,30 @@ class Bridge {
       address,
       abi,
       'receiveTokensAt',
-      [tokenAddress, amount, receiver, '0x'],
+      [tokenAddress, amount, receiver, data],
+      config,
+    );
+  }
+
+  public async receiveEthAt(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    amount: string,
+    receiver: string,
+    data: string = '0x',
+    config?: TransactionConfig,
+  ): Promise<string> {
+    const { address, abi } = this.getBridgeData(networkType, sideNetworkType);
+    if (!config) {
+      config = {};
+    }
+    config.value = amount;
+    return network.send(
+      networkType,
+      address,
+      abi,
+      'recieveEthAt', // yes, typo is in the contract
+      [receiver, data],
       config,
     );
   }

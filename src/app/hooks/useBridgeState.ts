@@ -30,10 +30,10 @@ const globalBridgeState = createState<BridgeState>({
   min: createValue(0),
   max: createValue(0),
   daily: createValue(0),
-  sourceNetwork: NetworkType.RSK,
-  targetNetwork: NetworkType.ETH,
-  asset: Asset.SOV,
-  amount: '50',
+  sourceNetwork: NetworkType.ETH,
+  targetNetwork: NetworkType.RSK,
+  asset: Asset.ETH,
+  amount: '0.01',
   receiver: '',
 });
 
