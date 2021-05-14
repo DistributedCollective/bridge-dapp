@@ -74,7 +74,7 @@ export class BridgeDictionary {
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
-      '0x1327D8e4207Cfa33d8ead45235D24d5b823723cC', // babelfish contract is of a side chain, so rsk
+      '0xC855FD4aF3526215d37b39Cc33fa3C352d42e6F8', // babelfish contract is of a side chain, so rsk
       rskEthTesnetAssets,
     ),
   ];
