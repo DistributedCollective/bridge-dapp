@@ -602,6 +602,42 @@
   },
   {
     "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_basset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_massetQuantity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_bridge",
+        "type": "address"
+      }
+    ],
+    "name": "redeemToBridge",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "massetRedeemed",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [],
     "name": "lockForgeValidator",
     "outputs": [],

@@ -70,9 +70,9 @@ export function useBuildBridgeState(
   }, [amount]);
 
   const min = useNetworkCall(
-    bridge.allowTokens_getMin.bind(bridge),
-    'bridge_allowTokens_min',
-    [state.sourceNetwork.get(), state.targetNetwork.get()],
+    bridge.allowTokens_getMinPerToken.bind(bridge),
+    'bridge_allowTokens_min_token',
+    [state.sourceNetwork.get(), state.targetNetwork.get(), state.asset.get()],
     0,
     !!state.sourceNetwork.get(),
   );
@@ -84,9 +84,9 @@ export function useBuildBridgeState(
     !!state.sourceNetwork.get(),
   );
   const fee = useNetworkCall(
-    bridge.getFeePercentage.bind(bridge),
-    'bridge_fee',
-    [state.sourceNetwork.get(), state.targetNetwork.get()],
+    bridge.getFeePerToken.bind(bridge),
+    'bridge_token_fee',
+    [state.sourceNetwork.get(), state.targetNetwork.get(), state.asset.get()],
     0,
     !!state.sourceNetwork.get(),
   );

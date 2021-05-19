@@ -1,6 +1,7 @@
 import { /*Asset,*/ NetworkChainId, NetworkType } from 'types';
 import { BridgeDetails } from '../models/BridgeDetails';
 import { rskEthTesnetAssets } from './assets/rsk-eth-testnet-assets';
+// import { rskBscTestnetAssets } from './assets/rsk-bsc-testnet-assets';
 import { NetworkDictionary } from './index';
 import { APP_MODE } from '../utils/network-utils';
 import { NetworkDetails } from '../models/NetworkDetails';
@@ -31,7 +32,6 @@ export class BridgeDictionary {
     //   NetworkChainId.RSK_TESTNET,
     //   NetworkChainId.BSC_TESTNET,
     //   '0x39500B3864ddda31633319C8A570176a79977A42',
-    //   '',
     //   rskBscTestnetAssets,
     // ),
     // new BridgeDetails(
@@ -39,7 +39,6 @@ export class BridgeDictionary {
     //   NetworkChainId.BSC_TESTNET,
     //   NetworkChainId.RSK_TESTNET,
     //   '0x97E57588C479324C8C645501e707671100baDc72',
-    //   '',
     //   rskBscTestnetAssets,
     // ),
     // RSK-ETH mainnet bridges
@@ -48,7 +47,6 @@ export class BridgeDictionary {
     //   NetworkChainId.RSK_MAINNET,
     //   NetworkChainId.ETH_MAINNET,
     //   '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581',
-    //   '',
     //   rskEthMainnetAssets,
     // ),
     // new BridgeDetails(
@@ -56,7 +54,6 @@ export class BridgeDictionary {
     //   NetworkChainId.ETH_MAINNET,
     //   NetworkChainId.RSK_MAINNET,
     //   '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1',
-    //   '',
     //   rskEthMainnetAssets,
     // ),
     // RSK-ETH testnet bridges
@@ -65,16 +62,13 @@ export class BridgeDictionary {
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.ETH_TESTNET,
       '0xC0E7A7FfF4aBa5e7286D5d67dD016B719DCc9156',
-      '',
-      // rskEthTesnetAssets,
-      [], // Providing empty array because we dont support sending esETH back to the eth chain yet.
+      rskEthTesnetAssets,
     ),
     new BridgeDetails(
       NetworkType.ETH,
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
-      '0xC855FD4aF3526215d37b39Cc33fa3C352d42e6F8', // babelfish contract is of a side chain, so rsk
       rskEthTesnetAssets,
     ),
   ];

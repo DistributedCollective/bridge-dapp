@@ -38,7 +38,19 @@ export class AssetDictionary {
   ) {
     const item = this.get(network, sideNetwork, asset);
     if (item) {
-      return item.contracts.get(NetworkDictionary.getChainId(network));
+      return item.getContractAddress(network);
+    }
+    return undefined;
+  }
+
+  public static getTokenContractAddress(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+  ) {
+    const item = this.get(network, sideNetwork, asset);
+    if (item) {
+      return item.getTokenContractAddress(network);
     }
     return undefined;
   }
@@ -50,9 +62,7 @@ export class AssetDictionary {
   ) {
     const item = this.get(network, sideNetwork, asset);
     if (item) {
-      return (
-        item.symbols.get(NetworkDictionary.getChainId(network)) || item.symbol
-      );
+      return item.getSymbol(network);
     }
     return undefined;
   }

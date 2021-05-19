@@ -1,5 +1,6 @@
 import { Asset, NetworkChainId, NetworkType } from '../types';
 import { NetworkDictionary } from '../dictionaries';
+import { BabelFishDetails } from './BabelFishDetails';
 
 // min, max, fee, daily limit
 type Limits = [
@@ -26,6 +27,7 @@ export class AssetDetails {
     NetworkChainId,
     Limits
   >();
+  public babelFishDetails?: BabelFishDetails;
   constructor(
     public asset: Asset,
     public symbol: string,
@@ -42,8 +44,29 @@ export class AssetDetails {
     return this;
   }
   public getSymbol(networkType: NetworkType) {
+    if (networkType === NetworkType.RSK && this.getBabelFish()?.rskAssetName)
+      return this.getBabelFish()?.rskAssetName;
     const chainId = NetworkDictionary.getChainId(networkType);
     return this.symbols.get(chainId) || this.symbol;
+  }
+  /**
+   * Get bridged token contract address, ignore babelfish
+   * @param networkType
+   */
+  public getContractAddress(networkType: NetworkType) {
+    return this.contracts.get(NetworkDictionary.getChainId(networkType));
+  }
+  /**
+   * Get actual contract address
+   * @param networkType
+   */
+  public getTokenContractAddress(networkType: NetworkType) {
+    if (
+      networkType === NetworkType.RSK &&
+      this.getBabelFish()?.rskContractAddress
+    )
+      return this.getBabelFish()?.rskContractAddress;
+    return this.getContractAddress(networkType);
   }
   public setNativeCoins(items: Map<NetworkChainId, boolean>) {
     this.nativeCoins = items;
@@ -77,5 +100,12 @@ export class AssetDetails {
       };
     }
     return undefined;
+  }
+  public setBabelFish(details: BabelFishDetails) {
+    this.babelFishDetails = details;
+    return this;
+  }
+  public getBabelFish() {
+    return this.babelFishDetails;
   }
 }

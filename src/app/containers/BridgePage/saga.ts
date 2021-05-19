@@ -134,6 +134,7 @@ function* confirmTransfer() {
       const babelFishData = babelFishService.mintTo(
         payload.form.sourceNetwork,
         payload.form.targetNetwork,
+        payload.form.asset,
         tokenAddress,
         tokenAmount,
         (payload.form.receiver === ''

@@ -20,15 +20,16 @@ class Token {
       return web3.eth.getBalance(owner);
     }
 
-    const token = AssetDictionary.getContractAddress(
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,
     );
+
     if (token) {
-      return network.call(networkType, token, erc20Abi as any, 'balanceOf', [
-        owner,
-      ]);
+      return network
+        .call(networkType, token, erc20Abi as any, 'balanceOf', [owner])
+        .catch(e => console.error(e));
     }
     return '0';
   }
@@ -43,7 +44,7 @@ class Token {
       networkType,
       sideNetworkType,
     );
-    const token = AssetDictionary.getContractAddress(
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,
@@ -67,7 +68,7 @@ class Token {
       networkType,
       sideNetworkType,
     );
-    const token = AssetDictionary.getContractAddress(
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,

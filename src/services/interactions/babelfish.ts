@@ -1,18 +1,19 @@
 import type { AbiItem } from 'web3-utils';
 import CContract, { Contract } from 'web3-eth-contract';
-import type { NetworkType } from '../../types';
-import { BridgeDictionary } from '../../dictionaries';
+import type { Asset, NetworkType } from '../../types';
+import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';
 
 class Babelfish {
   public mintTo(
     networkType: NetworkType,
     sideNetworkType: NetworkType,
+    asset: Asset,
     bAsset: string,
     bAssetQuanity: string,
     recipient: string,
   ) {
-    const contract = this.getContract(networkType, sideNetworkType);
+    const contract = this.getContract(networkType, sideNetworkType, asset);
     if (!contract) return null;
     return {
       address: contract.options.address,
@@ -22,8 +23,35 @@ class Babelfish {
     };
   }
 
-  private getContract(networkType: NetworkType, sideNetworkType: NetworkType) {
-    const { address, abi } = this.getMassetData(networkType, sideNetworkType);
+  public redeemToBridge(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+    bAsset: string,
+    mAssetQuanity: string,
+    recipient: string,
+    bridge: string,
+  ) {
+    const contract = this.getContract(networkType, sideNetworkType, asset);
+    if (!contract) return null;
+    return {
+      address: contract.options.address,
+      data: contract.methods
+        .redeemToBridge(bAsset, mAssetQuanity, recipient, bridge)
+        .encodeABI() as string,
+    };
+  }
+
+  private getContract(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+  ) {
+    const { address, abi } = this.getMassetData(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
     if (address === '') return null;
     // @ts-ignore
     return new CContract(abi, address) as Contract;
@@ -32,10 +60,12 @@ class Babelfish {
   private getMassetData(
     networkType: NetworkType,
     sideNetworkType: NetworkType,
+    asset: Asset,
   ): { address: string; abi: AbiItem[] } {
     return {
-      address: BridgeDictionary.get(networkType, sideNetworkType)
-        .babelfishContractAddress,
+      address:
+        AssetDictionary.get(networkType, sideNetworkType, asset)?.getBabelFish()
+          ?.rskContractAddress || '',
       abi: massetAbi as AbiItem[],
     };
   }

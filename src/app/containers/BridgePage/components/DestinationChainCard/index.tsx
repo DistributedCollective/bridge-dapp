@@ -7,7 +7,7 @@ import RadioGroup from '../../../../components/Form/RadioGroup';
 import { AssetDictionary } from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
 import { NetworkType } from '../../../../../types';
-import { toNumberFormat } from '../../../../../utils/math';
+import { fromWei, toNumberFormat } from '../../../../../utils/math';
 import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
@@ -49,12 +49,10 @@ export function DestinationChainCard() {
   );
 
   useEffect(() => {
-    let _cost = bignumber(amount.value || 0)
-      .mul((fee.nested('value').value || 0) / 100)
-      .toNumber();
+    let _cost = fee.nested('value').value;
     if (_cost < 0 || isNaN(_cost)) _cost = 0;
     const _value = bignumber(amount.value || 0)
-      .minus(_cost)
+      .minus(fromWei(_cost))
       .toNumber();
     setCost(_cost);
     setValue(_value < 0 ? 0 : _value);
@@ -117,7 +115,7 @@ export function DestinationChainCard() {
               <>
                 Total Cost:{' '}
                 {toNumberFormat(
-                  cost,
+                  Number(fromWei(cost, asset.value)),
                   AssetDictionary.getDecimals(
                     targetNetwork.value,
                     sourceNetwork.value,

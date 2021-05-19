@@ -1,8 +1,8 @@
 import { AbiItem } from 'web3-utils';
 import { TransactionConfig } from 'web3-core';
-import { NetworkType } from 'types';
+import { Asset, NetworkType } from 'types';
 import { network } from 'services';
-import { BridgeDictionary } from 'dictionaries';
+import { AssetDictionary, BridgeDictionary } from 'dictionaries';
 import bridgeAbi from 'assets/abi/BridgeAbi.json';
 import allowTokensAbi from 'assets/abi/AllowTokensAbi.json';
 
@@ -82,6 +82,26 @@ class Bridge {
       .then(result => Number(result) / 100);
   }
 
+  public async getFeePerToken(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+  ) {
+    const address = await this.allowTokens(networkType, sideNetworkType);
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    ) as string;
+    return network.call(
+      networkType,
+      address,
+      allowTokensAbi as AbiItem[],
+      'getFeePerToken',
+      [token],
+    );
+  }
+
   /**
    * Get address of 'allowTokens' contract
    */
@@ -137,6 +157,48 @@ class Bridge {
       allowTokensAbi as AbiItem[],
       'getMaxTokensAllowed',
       [],
+    );
+  }
+
+  public async allowTokens_getMinPerToken(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+  ) {
+    const address = await this.allowTokens(networkType, sideNetworkType);
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    ) as string;
+
+    return await network.call(
+      networkType,
+      address,
+      allowTokensAbi as AbiItem[],
+      'getMinPerToken',
+      [token],
+    );
+  }
+
+  public async allowTokens_getMaxPerToken(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    asset: Asset,
+  ) {
+    const address = await this.allowTokens(networkType, sideNetworkType);
+    const token = AssetDictionary.getContractAddress(
+      networkType,
+      sideNetworkType,
+      asset,
+    ) as string;
+
+    return await network.call(
+      networkType,
+      address,
+      allowTokensAbi as AbiItem[],
+      'getMaxPerToken',
+      [token],
     );
   }
 
