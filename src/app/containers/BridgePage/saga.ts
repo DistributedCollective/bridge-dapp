@@ -1,12 +1,13 @@
+import Web3 from 'web3';
 import {
-  take,
   call,
-  put,
-  takeLatest,
-  fork,
   cancel,
   cancelled,
+  fork,
+  put,
   select,
+  take,
+  takeLatest,
 } from 'redux-saga/effects';
 import delay from '@redux-saga/delay-p';
 import { bignumber } from 'mathjs';
@@ -18,10 +19,31 @@ import { FormPayload, TxStep } from './types';
 import { token } from '../../../services/interactions/token';
 import { toWei } from '../../../utils/math';
 import { network } from '../../../services';
-import { AppMode, NetworkType } from '../../../types';
+import { AppMode, Asset, NetworkType } from '../../../types';
 import { bridge } from '../../../services/interactions/bridge';
-import { AssetDictionary } from '../../../dictionaries';
+import { AssetDictionary, BridgeDictionary } from '../../../dictionaries';
 import { selectBridgePage } from './selectors';
+import { babelFishService } from '../../../services/interactions/babelfish';
+
+const web3 = new Web3();
+const abiCoder = web3.eth.abi;
+
+function getSpenderAddress(payload: {
+  sourceNetwork: NetworkType;
+  targetNetwork: NetworkType;
+  asset: Asset;
+}) {
+  const asset = AssetDictionary.get(
+    payload.sourceNetwork,
+    payload.targetNetwork,
+    payload.asset,
+  );
+
+  if (payload.sourceNetwork === NetworkType.RSK && asset?.getBabelFish()) {
+    return asset?.getBabelFish()?.rskContractAddress;
+  }
+  return undefined;
+}
 
 function createWeb3Connection(wallet: Wallet) {
   return eventChannel(emit => {
@@ -75,6 +97,7 @@ function* approveTransfer() {
         payload.targetNetwork,
         payload.asset,
         amountToApprove,
+        getSpenderAddress(payload),
       );
 
       yield put(
@@ -119,53 +142,88 @@ function* confirmTransfer() {
         payload.form.targetNetwork,
         payload.form.asset,
       );
-      const value = isNative
-        ? toWei(
-            payload.form.amount,
-            payload.form.asset,
-            payload.form.sourceNetwork,
-          )
-        : '0';
 
-      if (payload.form.receiver === '') {
+      const tokenAmount = toWei(
+        payload.form.amount,
+        payload.form.asset,
+        payload.form.sourceNetwork,
+      );
+
+      const asset = AssetDictionary.get(
+        payload.form.sourceNetwork,
+        payload.form.targetNetwork,
+        payload.form.asset,
+      );
+
+      const receiverAddress = (payload.form.receiver === ''
+        ? wallet.address
+        : payload.form.receiver
+      ).toLowerCase();
+
+      if (
+        payload.form.sourceNetwork === NetworkType.RSK &&
+        asset?.getBabelFish()
+      ) {
         transferTx = yield call(
-          [bridge, bridge.receiveTokens],
+          [babelFishService, babelFishService.redeemToBridge],
           payload.form.sourceNetwork,
           payload.form.targetNetwork,
+          payload.form.asset,
           tokenAddress,
-          toWei(
-            payload.form.amount,
-            payload.form.asset,
+          tokenAmount,
+          receiverAddress,
+          BridgeDictionary.get(
             payload.form.sourceNetwork,
-          ),
-          {
-            nonce,
-            gas: payload.nonce !== undefined ? 250000 : undefined,
-            value,
-          },
+            payload.form.targetNetwork,
+          ).bridgeContractAddress,
         );
       } else {
-        transferTx = yield call(
-          [bridge, bridge.receiveTokensAt],
-          payload.form.sourceNetwork,
-          payload.form.targetNetwork,
-          tokenAddress,
-          toWei(
-            payload.form.amount,
-            payload.form.asset,
+        let receiver = receiverAddress;
+        let extraData: string | undefined = undefined;
+
+        if (
+          payload.form.targetNetwork === NetworkType.RSK &&
+          asset?.getBabelFish()
+        ) {
+          receiver = asset.getBabelFish()?.rskContractAddress;
+          extraData = abiCoder.encodeParameter('address', receiverAddress);
+        }
+
+        if (isNative) {
+          const value = isNative ? tokenAmount : '0';
+          transferTx = yield call(
+            [bridge, bridge.receiveEthAt],
             payload.form.sourceNetwork,
-          ),
-          payload.form.receiver.toLowerCase(),
-          {
-            nonce,
-            gas: payload.nonce !== undefined ? 250000 : undefined,
-            value,
-          },
-        );
+            payload.form.targetNetwork,
+            tokenAmount,
+            receiver,
+            extraData || '0x',
+            {
+              nonce,
+              gas: payload.nonce !== undefined ? 250000 : undefined,
+              value,
+            },
+          );
+        } else {
+          transferTx = yield call(
+            [bridge, bridge.receiveTokensAt],
+            payload.form.sourceNetwork,
+            payload.form.targetNetwork,
+            tokenAddress,
+            tokenAmount,
+            receiver,
+            extraData,
+            {
+              nonce,
+              gas: payload.nonce !== undefined ? 250000 : undefined,
+            },
+          );
+        }
       }
 
       yield put(actions.pendingTransfer(transferTx));
     } catch (e) {
+      console.error(e);
       yield put(actions.forceTransferState(TxStep.USER_DENIED));
     }
   }
@@ -207,6 +265,7 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
       payload.targetNetwork,
       payload.asset,
       wallet.address,
+      getSpenderAddress(payload),
     );
 
     if (

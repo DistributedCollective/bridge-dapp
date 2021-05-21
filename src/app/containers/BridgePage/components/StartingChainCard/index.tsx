@@ -26,6 +26,9 @@ export function StartingChainCard() {
       sourceNetwork.value,
       targetNetwork.value,
     );
+
+    console.log('bridge is?', bridge);
+
     if (bridge === undefined) {
       return [];
     }

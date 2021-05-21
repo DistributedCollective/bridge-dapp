@@ -130,6 +130,8 @@ function FormButton({
         loading={state.tx.loading}
         className="btn-trade mx-auto"
         disabled={
+          !data.fee.value ||
+          !data.min.value ||
           (loading && !value) ||
           state.tx.loading ||
           bignumber(data.amount.value || '0').lessThan(

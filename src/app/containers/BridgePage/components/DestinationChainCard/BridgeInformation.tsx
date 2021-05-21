@@ -45,7 +45,8 @@ export function BridgeInformation({
         <div className="flex flex-row w-full space-x-4 mb-2">
           <div className="w-1/2">Bridge Fee:</div>
           <div className="w-1/2 flex flex-row items-center justify-start">
-            {toNumberFormat(fee.nested('value').get(), 4)} %{' '}
+            {toNumberFormat(Number(fromWei(fee.nested('value').get())), 4)}{' '}
+            {symbol}{' '}
             {fee.nested('loading').get() && (
               <Spinner size={12} className="ml-1" />
             )}

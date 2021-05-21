@@ -38,8 +38,8 @@ export function BridgePage(props: Props) {
   const { sourceNetwork, targetNetwork } = useBuildBridgeState(
     NetworkType.ETH,
     NetworkType.RSK,
-    Asset.SOV,
-    '50',
+    Asset.ETH,
+    '0.01',
   );
 
   useEffect(() => {

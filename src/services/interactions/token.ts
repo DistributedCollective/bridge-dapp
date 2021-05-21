@@ -20,15 +20,22 @@ class Token {
       return web3.eth.getBalance(owner);
     }
 
-    const token = AssetDictionary.getContractAddress(
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,
     );
+
+    const abi = AssetDictionary.getTokenContractAbi(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
+
     if (token) {
-      return network.call(networkType, token, erc20Abi as any, 'balanceOf', [
-        owner,
-      ]);
+      return network
+        .call(networkType, token, abi as any, 'balanceOf', [owner])
+        .catch(e => console.error(e));
     }
     return '0';
   }
@@ -38,12 +45,16 @@ class Token {
     sideNetworkType: NetworkType,
     asset: Asset,
     owner: string,
+    spender?: string,
   ) {
-    const { bridgeContractAddress } = BridgeDictionary.get(
-      networkType,
-      sideNetworkType,
-    );
-    const token = AssetDictionary.getContractAddress(
+    if (spender === undefined) {
+      const { bridgeContractAddress } = BridgeDictionary.get(
+        networkType,
+        sideNetworkType,
+      );
+      spender = bridgeContractAddress;
+    }
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,
@@ -51,7 +62,7 @@ class Token {
     if (token) {
       return network.call(networkType, token, erc20Abi as any, 'allowance', [
         owner,
-        bridgeContractAddress,
+        spender.toLowerCase(),
       ]);
     }
     return '0';
@@ -62,12 +73,17 @@ class Token {
     sideNetworkType: NetworkType,
     asset: Asset,
     amount: string,
+    spender?: string,
   ) {
-    const { bridgeContractAddress } = BridgeDictionary.get(
-      networkType,
-      sideNetworkType,
-    );
-    const token = AssetDictionary.getContractAddress(
+    if (spender === undefined) {
+      const { bridgeContractAddress } = BridgeDictionary.get(
+        networkType,
+        sideNetworkType,
+      );
+      spender = bridgeContractAddress;
+    }
+
+    const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
       asset,
@@ -78,7 +94,7 @@ class Token {
         token,
         erc20Abi as any,
         'approve',
-        [bridgeContractAddress, amount],
+        [spender.toLowerCase(), amount],
         {
           value: '0',
         },

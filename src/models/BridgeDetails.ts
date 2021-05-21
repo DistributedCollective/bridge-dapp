@@ -3,11 +3,11 @@ import type { AssetDetails } from './AssetDetails';
 
 export class BridgeDetails {
   constructor(
-    public network: NetworkType,
-    public mainChainId: NetworkChainId,
-    public sideChainId: NetworkChainId,
-    public bridgeContractAddress: string,
-    public assets: AssetDetails[],
+    public readonly network: NetworkType,
+    public readonly mainChainId: NetworkChainId,
+    public readonly sideChainId: NetworkChainId,
+    public readonly bridgeContractAddress: string,
+    public readonly assets: AssetDetails[],
   ) {
     this.bridgeContractAddress = bridgeContractAddress.toLowerCase();
   }
