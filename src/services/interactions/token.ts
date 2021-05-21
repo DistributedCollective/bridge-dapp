@@ -39,11 +39,15 @@ class Token {
     sideNetworkType: NetworkType,
     asset: Asset,
     owner: string,
+    spender?: string,
   ) {
-    const { bridgeContractAddress } = BridgeDictionary.get(
-      networkType,
-      sideNetworkType,
-    );
+    if (spender === undefined) {
+      const { bridgeContractAddress } = BridgeDictionary.get(
+        networkType,
+        sideNetworkType,
+      );
+      spender = bridgeContractAddress;
+    }
     const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
@@ -52,7 +56,7 @@ class Token {
     if (token) {
       return network.call(networkType, token, erc20Abi as any, 'allowance', [
         owner,
-        bridgeContractAddress,
+        spender.toLowerCase(),
       ]);
     }
     return '0';
@@ -63,11 +67,16 @@ class Token {
     sideNetworkType: NetworkType,
     asset: Asset,
     amount: string,
+    spender?: string,
   ) {
-    const { bridgeContractAddress } = BridgeDictionary.get(
-      networkType,
-      sideNetworkType,
-    );
+    if (spender === undefined) {
+      const { bridgeContractAddress } = BridgeDictionary.get(
+        networkType,
+        sideNetworkType,
+      );
+      spender = bridgeContractAddress;
+    }
+
     const token = AssetDictionary.getTokenContractAddress(
       networkType,
       sideNetworkType,
@@ -79,7 +88,7 @@ class Token {
         token,
         erc20Abi as any,
         'approve',
-        [bridgeContractAddress, amount],
+        [spender.toLowerCase(), amount],
         {
           value: '0',
         },
