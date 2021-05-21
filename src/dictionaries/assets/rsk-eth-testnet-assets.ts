@@ -4,8 +4,39 @@ import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
 import sovIcon from '../../assets/tokens/sov.svg';
+import ethIcon from '../../assets/tokens/eth.svg';
+import { BabelFishDetails } from '../../models/BabelFishDetails';
 
 export const rskEthTesnetAssets = [
+  new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x4F2Fc8d55c1888A5AcA2503e2F3E5d74eef37C33'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.ETH_TESTNET,
+        '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792'.toLowerCase(),
+      ],
+    ]),
+  )
+    .setSymbols(
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'esETH']]),
+    )
+    .setNativeCoins(
+      new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_TESTNET, true]]),
+    )
+    .setBabelFish(
+      new BabelFishDetails(
+        '0x04D92DaA8f3Ef7bD222195e8D1DbE8D89A8CebD3',
+        'ETHs',
+      ),
+    ),
   new AssetDetails(
     Asset.SOV,
     'SOV',
@@ -76,7 +107,7 @@ export const rskEthTesnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x10C5A7930fC417e728574E334b1488b7895c4B81'.toLowerCase(), // todo
+        '0x10C5A7930fC417e728574E334b1488b7895c4B81'.toLowerCase(),
       ],
       [
         NetworkChainId.ETH_TESTNET,

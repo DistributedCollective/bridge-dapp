@@ -14,8 +14,8 @@ type EventNames =
 class Wallet {
   private _address: string = '';
   private _chainId: NetworkChainId =
-    NetworkDictionary.getChainId(NetworkType.RSK) || NetworkChainId.RSK_TESTNET;
-  private _networkType: NetworkType = NetworkType.RSK;
+    NetworkDictionary.getChainId(NetworkType.ETH) || NetworkChainId.ETH_TESTNET;
+  private _networkType: NetworkType = NetworkType.ETH;
 
   private _triggers: { [key: string]: Array<any> } = {};
 
