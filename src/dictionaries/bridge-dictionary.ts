@@ -1,4 +1,4 @@
-import { /*Asset,*/ NetworkChainId, NetworkType } from 'types';
+import { Asset, NetworkChainId, NetworkType } from 'types';
 import { BridgeDetails } from '../models/BridgeDetails';
 import { rskEthTesnetAssets } from './assets/rsk-eth-testnet-assets';
 // import { rskBscTestnetAssets } from './assets/rsk-bsc-testnet-assets';
@@ -47,14 +47,14 @@ export class BridgeDictionary {
     //   NetworkChainId.RSK_MAINNET,
     //   NetworkChainId.ETH_MAINNET,
     //   '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581',
-    //   rskEthMainnetAssets,
+    //   rskEthMainnetAssets.filter(item => item.asset === Asset.ETH),
     // ),
     // new BridgeDetails(
     //   NetworkType.ETH,
     //   NetworkChainId.ETH_MAINNET,
     //   NetworkChainId.RSK_MAINNET,
     //   '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1',
-    //   rskEthMainnetAssets,
+    //   rskEthMainnetAssets.filter(item => item.asset === Asset.ETH),
     // ),
     // RSK-ETH testnet bridges
     new BridgeDetails(
@@ -62,14 +62,14 @@ export class BridgeDictionary {
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.ETH_TESTNET,
       '0xC0E7A7FfF4aBa5e7286D5d67dD016B719DCc9156',
-      rskEthTesnetAssets,
+      rskEthTesnetAssets.filter(item => item.asset === Asset.ETH),
     ),
     new BridgeDetails(
       NetworkType.ETH,
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
-      rskEthTesnetAssets,
+      rskEthTesnetAssets.filter(item => item.asset === Asset.ETH),
     ),
   ];
 
