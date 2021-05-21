@@ -26,9 +26,15 @@ class Token {
       asset,
     );
 
+    const abi = AssetDictionary.getTokenContractAbi(
+      networkType,
+      sideNetworkType,
+      asset,
+    );
+
     if (token) {
       return network
-        .call(networkType, token, erc20Abi as any, 'balanceOf', [owner])
+        .call(networkType, token, abi as any, 'balanceOf', [owner])
         .catch(e => console.error(e));
     }
     return '0';

@@ -1,6 +1,8 @@
 import { Asset, NetworkChainId, NetworkType } from '../types';
 import { NetworkDictionary } from '../dictionaries';
 import { BabelFishDetails } from './BabelFishDetails';
+import massetAbi from 'assets/abi/BabelFish_MassetAbi.json';
+import erc20Abi from 'assets/abi/ERC20Abi.json';
 
 // min, max, fee, daily limit
 type Limits = [
@@ -67,6 +69,14 @@ export class AssetDetails {
     )
       return this.getBabelFish()?.rskContractAddress;
     return this.getContractAddress(networkType);
+  }
+  public getTokenContractAbi(networkType: NetworkType) {
+    if (
+      networkType === NetworkType.RSK &&
+      this.getBabelFish()?.rskContractAddress
+    )
+      return massetAbi;
+    return erc20Abi;
   }
   public setNativeCoins(items: Map<NetworkChainId, boolean>) {
     this.nativeCoins = items;

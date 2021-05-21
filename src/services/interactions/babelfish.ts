@@ -1,8 +1,8 @@
 import type { AbiItem } from 'web3-utils';
-import CContract, { Contract } from 'web3-eth-contract';
 import type { Asset, NetworkType } from '../../types';
 import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';
+import { network } from '../index';
 
 class Babelfish {
   public mintTo(
@@ -13,14 +13,7 @@ class Babelfish {
     bAssetQuanity: string,
     recipient: string,
   ) {
-    const contract = this.getContract(networkType, sideNetworkType, asset);
-    if (!contract) return null;
-    return {
-      address: contract.options.address,
-      data: contract.methods
-        .mintTo(bAsset, bAssetQuanity, recipient)
-        .encodeABI() as string,
-    };
+    throw new Error('Not implemented (babelfish mint).');
   }
 
   public redeemToBridge(
@@ -32,29 +25,17 @@ class Babelfish {
     recipient: string,
     bridge: string,
   ) {
-    const contract = this.getContract(networkType, sideNetworkType, asset);
-    if (!contract) return null;
-    return {
-      address: contract.options.address,
-      data: contract.methods
-        .redeemToBridge(bAsset, mAssetQuanity, recipient, bridge)
-        .encodeABI() as string,
-    };
-  }
-
-  private getContract(
-    networkType: NetworkType,
-    sideNetworkType: NetworkType,
-    asset: Asset,
-  ) {
     const { address, abi } = this.getMassetData(
       networkType,
       sideNetworkType,
       asset,
     );
-    if (address === '') return null;
-    // @ts-ignore
-    return new CContract(abi, address) as Contract;
+    return network.send(networkType, address, abi, 'redeemToBridge', [
+      bAsset,
+      mAssetQuanity,
+      recipient,
+      bridge,
+    ]);
   }
 
   private getMassetData(

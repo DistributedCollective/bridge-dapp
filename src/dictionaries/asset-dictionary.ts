@@ -1,6 +1,7 @@
 import type { Asset, NetworkChainId, NetworkType } from 'types';
 import { NetworkDictionary } from './index';
 import { BridgeDictionary } from './bridge-dictionary';
+import erc20Abi from 'assets/abi/ERC20Abi.json';
 
 export class AssetDictionary {
   public static list(network: NetworkType, sideNetwork: NetworkType) {
@@ -53,6 +54,18 @@ export class AssetDictionary {
       return item.getTokenContractAddress(network);
     }
     return undefined;
+  }
+
+  public static getTokenContractAbi(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+  ) {
+    const item = this.get(network, sideNetwork, asset);
+    if (item) {
+      return item.getTokenContractAbi(network);
+    }
+    return erc20Abi;
   }
 
   public static getSymbol(

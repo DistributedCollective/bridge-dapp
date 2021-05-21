@@ -34,7 +34,7 @@ export const rskEthTesnetAssets = [
     .setBabelFish(
       new BabelFishDetails(
         '0x04D92DaA8f3Ef7bD222195e8D1DbE8D89A8CebD3',
-        'ETHx',
+        'ETHs',
       ),
     ),
   new AssetDetails(

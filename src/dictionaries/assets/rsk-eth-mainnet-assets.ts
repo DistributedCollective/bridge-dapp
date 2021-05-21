@@ -2,6 +2,7 @@ import { AssetDetails } from '../../models/AssetDetails';
 import { Asset, NetworkChainId } from '../../types';
 import daiIcon from '../../assets/tokens/dai.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
+import { BabelFishDetails } from '../../models/BabelFishDetails';
 // import usdcIcon from '../../assets/tokens/usdc.svg';
 // import usdtIcon from '../../assets/tokens/usdt.svg';
 // import sovIcon from '../../assets/tokens/sov.svg';
@@ -23,11 +24,12 @@ export const rskEthMainnetAssets = [
     ]),
   )
     .setSymbols(
-      new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'rETH']]),
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'ETHes']]),
     )
     .setNativeCoins(
       new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_MAINNET, true]]),
-    ),
+    )
+    .setBabelFish(new BabelFishDetails('0x123', 'ETHs')),
   // new AssetDetails(
   //   Asset.SOV,
   //   'SOV',
