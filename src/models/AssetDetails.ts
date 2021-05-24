@@ -78,6 +78,14 @@ export class AssetDetails {
       return massetAbi;
     return erc20Abi;
   }
+  public getAggregatorContractAddress(networkType: NetworkType) {
+    if (
+      networkType === NetworkType.RSK &&
+      this.getBabelFish()?.rskAggregatorAddress
+    )
+      return this.getBabelFish()?.rskAggregatorAddress;
+    return undefined;
+  }
   public setNativeCoins(items: Map<NetworkChainId, boolean>) {
     this.nativeCoins = items;
     return this;

@@ -46,7 +46,7 @@ class Babelfish {
     return {
       address:
         AssetDictionary.get(networkType, sideNetworkType, asset)?.getBabelFish()
-          ?.rskContractAddress || '',
+          ?.rskAggregatorAddress || '',
       abi: massetAbi as AbiItem[],
     };
   }

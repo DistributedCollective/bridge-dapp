@@ -99,8 +99,6 @@ class Network {
       options,
     );
 
-    console.log('sending data', opt);
-
     return wallet.send(opt).then(tx => {
       log(
         `send result ${network} ${contractAddress} ${methodName}`,

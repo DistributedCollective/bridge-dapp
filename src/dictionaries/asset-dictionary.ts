@@ -68,6 +68,18 @@ export class AssetDictionary {
     return erc20Abi;
   }
 
+  public static getAggregatorContractAddress(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+  ) {
+    const item = this.get(network, sideNetwork, asset);
+    if (item) {
+      return item.getAggregatorContractAddress(network);
+    }
+    return undefined;
+  }
+
   public static getSymbol(
     network: NetworkType,
     sideNetwork: NetworkType,

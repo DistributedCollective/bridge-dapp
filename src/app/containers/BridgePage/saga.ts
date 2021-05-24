@@ -185,7 +185,7 @@ function* confirmTransfer() {
           payload.form.targetNetwork === NetworkType.RSK &&
           asset?.getBabelFish()
         ) {
-          receiver = asset.getBabelFish()?.rskContractAddress;
+          receiver = asset.getBabelFish()?.rskAggregatorAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
 
