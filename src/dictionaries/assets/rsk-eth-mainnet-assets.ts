@@ -32,7 +32,13 @@ export const rskEthMainnetAssets = [
     .setNativeCoins(
       new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_MAINNET, true]]),
     )
-    .setBabelFish(new BabelFishDetails('0x123', '0x123', 'ETHs')),
+    .setBabelFish(
+      new BabelFishDetails(
+        '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
+        '0x4BF113905d7F69202106F613308bb02C84AaDF2F',
+        'ETHs',
+      ),
+    ),
   // new AssetDetails(
   //   Asset.SOV,
   //   'SOV',
