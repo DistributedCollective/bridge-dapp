@@ -54,3 +54,7 @@ export const handleNumber = (value, onlyPositive = true) => {
 
   return number.toString();
 };
+
+export function unique(value, index, self) {
+  return self.indexOf(value) === index;
+}

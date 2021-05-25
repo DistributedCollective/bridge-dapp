@@ -23,7 +23,11 @@ export const renderItem: ItemRenderer<Option> = (
           tagName="div"
           className="flex flex-row items-center justify-start"
         >
-          <img src={item.data} className="w-6 mr-2" alt={item.label} />
+          <img
+            src={item.data}
+            className="w-6 h-6 object-contain mr-2"
+            alt={item.label}
+          />
           {highlightText(item.label || item.key, query)}
         </Text>
       }
@@ -38,7 +42,11 @@ export const valueRenderer = (item: Option) => {
       tagName="div"
       className="flex flex-row items-center justify-start"
     >
-      <img src={item.data} className="w-6 mr-2" alt={item.label} />
+      <img
+        src={item.data}
+        className="w-6 h-6 object-contain mr-2"
+        alt={item.label}
+      />
       {item.label || item.key}
     </Text>
   );

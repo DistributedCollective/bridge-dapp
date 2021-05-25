@@ -1,21 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { bignumber } from 'mathjs';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
-import {
-  AssetDictionary,
-  NetworkDictionary,
-} from '../../../../../dictionaries';
+import { AssetDictionary } from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
 import { NetworkType } from '../../../../../types';
-import { toNumberFormat } from '../../../../../utils/math';
+import { fromWei, toNumberFormat } from '../../../../../utils/math';
 import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
-
-const networks = NetworkDictionary.list();
+import { BridgeDictionary } from 'dictionaries';
 
 export function DestinationChainCard() {
   const {
@@ -33,23 +29,30 @@ export function DestinationChainCard() {
   const [receiveAtExternalWallet, setReceiveAtExternalWallet] = useState(false);
 
   const networkList = useMemo(() => {
-    return networks.filter(item => item.network !== sourceNetwork.value);
+    return BridgeDictionary.getSideNetworks(sourceNetwork.value);
   }, [sourceNetwork.value]);
 
-  useEffect(() => {
-    if (!networkList.map(item => item.network).includes(targetNetwork.value)) {
-      targetNetwork.set(networkList[0].network);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [networkList, targetNetwork.value]);
+  const changeTargetNetwork = useCallback(
+    (value: string) => {
+      const target = value as NetworkType;
+      const sideNetworks = BridgeDictionary.getMainNetworks(target);
+      let source = targetNetwork.value;
+
+      if (!sideNetworks.map(item => item.network).includes(target)) {
+        source = sideNetworks[0].network;
+      }
+
+      sourceNetwork.set(source);
+      targetNetwork.set(target);
+    },
+    [sourceNetwork, targetNetwork],
+  );
 
   useEffect(() => {
-    let _cost = bignumber(amount.value || 0)
-      .mul((fee.nested('value').value || 0) / 100)
-      .toNumber();
+    let _cost = fee.nested('value').value;
     if (_cost < 0 || isNaN(_cost)) _cost = 0;
     const _value = bignumber(amount.value || 0)
-      .minus(_cost)
+      .minus(fromWei(_cost))
       .toNumber();
     setCost(_cost);
     setValue(_value < 0 ? 0 : _value);
@@ -68,9 +71,7 @@ export function DestinationChainCard() {
           <FormGroup>
             <RadioGroup
               value={targetNetwork.value}
-              onChange={value =>
-                targetNetwork.set((value as unknown) as NetworkType)
-              }
+              onChange={changeTargetNetwork}
             >
               {networkList.map(item => (
                 <RadioGroup.Button
@@ -114,8 +115,12 @@ export function DestinationChainCard() {
               <>
                 Total Cost:{' '}
                 {toNumberFormat(
-                  cost,
-                  AssetDictionary.getDecimals(targetNetwork.value, asset.value),
+                  Number(fromWei(cost, asset.value)),
+                  AssetDictionary.getDecimals(
+                    targetNetwork.value,
+                    sourceNetwork.value,
+                    asset.value,
+                  ),
                 )}
               </>
             }
@@ -123,12 +128,20 @@ export function DestinationChainCard() {
             <Input
               value={toNumberFormat(
                 value,
-                AssetDictionary.getDecimals(targetNetwork.value, asset.value),
+                AssetDictionary.getDecimals(
+                  targetNetwork.value,
+                  sourceNetwork.value,
+                  asset.value,
+                ),
               )}
               readOnly
               appendElem={
                 <>
-                  {AssetDictionary.getSymbol(targetNetwork.value, asset.value)}
+                  {AssetDictionary.getSymbol(
+                    targetNetwork.value,
+                    sourceNetwork.value,
+                    asset.value,
+                  )}
                 </>
               }
             />

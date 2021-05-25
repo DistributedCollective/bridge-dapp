@@ -10,6 +10,7 @@ export const initialState: ContainerState = {
   address: wallet.address,
   connecting: false,
   networkType: wallet.networkType,
+  sideNetworkType: NetworkType.RSK,
   networkChain: wallet.chainId,
   blockNumber: 0,
   tx: {
@@ -21,8 +22,8 @@ export const initialState: ContainerState = {
       asset: Asset.WBTC,
       amount: '',
       receiver: '',
-      sourceNetwork: NetworkType.RSK,
-      targetNetwork: NetworkType.ETH,
+      sourceNetwork: NetworkType.ETH,
+      targetNetwork: NetworkType.RSK,
     },
   },
 };

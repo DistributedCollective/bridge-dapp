@@ -20,6 +20,7 @@ import { DestinationChainCard } from './components/DestinationChainCard';
 import { ConfirmationButton } from './components/ConfirmationButton';
 import { useBuildBridgeState } from '../../hooks/useBridgeState';
 import { TransactionDialog } from './components/TransactionDialog';
+import { BridgeDictionary } from '../../../dictionaries';
 
 interface Props {}
 
@@ -34,16 +35,23 @@ export function BridgePage(props: Props) {
     dispatch(actions.init());
   }, [dispatch]);
 
-  const { sourceNetwork } = useBuildBridgeState(
-    NetworkType.RSK,
+  const { sourceNetwork, targetNetwork } = useBuildBridgeState(
     NetworkType.ETH,
-    Asset.WBTC,
-    '0.001',
+    NetworkType.RSK,
+    Asset.ETH,
+    '0.01',
   );
 
   useEffect(() => {
     if (bridgePage.networkType !== undefined) {
-      sourceNetwork.set(bridgePage.networkType);
+      const source = bridgePage.networkType;
+      const sideNetworks = BridgeDictionary.getMainNetworks(source);
+      let target = targetNetwork.value;
+      if (!sideNetworks.map(item => item.network).includes(source)) {
+        target = sideNetworks[0].network;
+      }
+      sourceNetwork.set(source);
+      targetNetwork.set(target);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bridgePage.networkType]);

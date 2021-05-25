@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Dispatch } from 'redux';
 import cn from 'classnames';
 import { bignumber } from 'mathjs';
@@ -28,6 +28,12 @@ export function ConfirmationButton({ state, dispatch }: Props) {
     sourceNetwork.set(target);
     targetNetwork.set(source);
   };
+
+  const sourceChainId = useMemo(
+    () => NetworkDictionary.getChainId(sourceNetwork.value),
+    [sourceNetwork.value],
+  );
+
   return (
     <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
       {state.address.length === 0 ? (
@@ -45,7 +51,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
             )}
             onClick={() => swapNetworks()}
           />
-          {state.networkType !== sourceNetwork.value ? (
+          {state.networkChain !== sourceChainId ? (
             <WrongNetwork sourceNetwork={sourceNetwork.value} />
           ) : (
             <FormButton state={state} dispatch={dispatch} />
@@ -54,6 +60,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
       )}
       <BridgeInformation
         networkType={sourceNetwork.value}
+        sideNetworkType={targetNetwork.value}
         asset={asset.value}
       />
     </div>
@@ -69,7 +76,14 @@ function ConnectWallet({ loading }: { loading: boolean }) {
         loading={loading}
         disabled={loading}
       />
-      <button className="mt-4 link">Need help connecting?</button>
+      <a
+        href="https://wiki.sovryn.app/en/sovryn-dapp/ethereum-bridge"
+        className="mt-4 link"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Need help connecting?
+      </a>
     </div>
   );
 }
@@ -83,7 +97,14 @@ function WrongNetwork({ sourceNetwork }: { sourceNetwork: NetworkType }) {
         Please select the <strong>{network.name}</strong> network in your
         browser wallet
       </p>
-      <button className="mt-4 link">Need help connecting?</button>
+      <a
+        href="https://wiki.sovryn.app/en/sovryn-dapp/ethereum-bridge"
+        className="mt-4 link"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Need help connecting?
+      </a>
     </>
   );
 }
@@ -123,6 +144,8 @@ function FormButton({
         loading={state.tx.loading}
         className="btn-trade mx-auto"
         disabled={
+          !data.fee.value ||
+          !data.min.value ||
           (loading && !value) ||
           state.tx.loading ||
           bignumber(data.amount.value || '0').lessThan(
