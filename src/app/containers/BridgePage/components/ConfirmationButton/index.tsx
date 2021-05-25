@@ -76,7 +76,14 @@ function ConnectWallet({ loading }: { loading: boolean }) {
         loading={loading}
         disabled={loading}
       />
-      <button className="mt-4 link">Need help connecting?</button>
+      <a
+        href="https://wiki.sovryn.app/en/sovryn-dapp/ethereum-bridge"
+        className="mt-4 link"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Need help connecting?
+      </a>
     </div>
   );
 }
@@ -90,7 +97,14 @@ function WrongNetwork({ sourceNetwork }: { sourceNetwork: NetworkType }) {
         Please select the <strong>{network.name}</strong> network in your
         browser wallet
       </p>
-      <button className="mt-4 link">Need help connecting?</button>
+      <a
+        href="https://wiki.sovryn.app/en/sovryn-dapp/ethereum-bridge"
+        className="mt-4 link"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Need help connecting?
+      </a>
     </>
   );
 }
