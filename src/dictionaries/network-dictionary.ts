@@ -4,7 +4,7 @@ import { APP_MODE } from 'utils/network-utils';
 
 import rskLogo from 'assets/chains/rsk.svg';
 import ethLogo from 'assets/chains/eth.svg';
-// import bscLogo from 'assets/chains/bsc.svg';
+import bscLogo from 'assets/chains/bsc.svg';
 
 export class NetworkDictionary {
   public static networks: NetworkDetails[] = [
@@ -50,27 +50,27 @@ export class NetworkDictionary {
       'https://ropsten.etherscan.io/tx/:value',
       'https://ropsten.etherscan.io/address/:value',
     ),
-    // /* Binance networks */
-    // new NetworkDetails(
-    //   NetworkType.BSC,
-    //   AppMode.MAINNET,
-    //   NetworkChainId.BSC_MAINNET,
-    //   'Binance',
-    //   bscLogo,
-    //   'https://bsc-dataseed.binance.org/',
-    //   'https://bscscan.com/tx/:value',
-    //   'https://bscscan.com/address/:value',
-    // ),
-    // new NetworkDetails(
-    //   NetworkType.BSC,
-    //   AppMode.TESTNET,
-    //   NetworkChainId.BSC_TESTNET,
-    //   'Binance',
-    //   bscLogo,
-    //   'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    //   'https://testnet.bscscan.com/tx/:value',
-    //   'https://testnet.bscscan.com/address/:value',
-    // ),
+    /* Binance networks */
+    new NetworkDetails(
+      NetworkType.BSC,
+      AppMode.MAINNET,
+      NetworkChainId.BSC_MAINNET,
+      'Binance',
+      bscLogo,
+      'https://bsc-dataseed.binance.org/',
+      'https://bscscan.com/tx/:value',
+      'https://bscscan.com/address/:value',
+    ),
+    new NetworkDetails(
+      NetworkType.BSC,
+      AppMode.TESTNET,
+      NetworkChainId.BSC_TESTNET,
+      'Binance',
+      bscLogo,
+      'https://data-seed-prebsc-1-s1.binance.org:8545/',
+      'https://testnet.bscscan.com/tx/:value',
+      'https://testnet.bscscan.com/address/:value',
+    ),
   ];
 
   public static list() {
