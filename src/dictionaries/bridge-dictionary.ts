@@ -3,6 +3,7 @@ import { BridgeDetails } from '../models/BridgeDetails';
 import { rskEthTesnetAssets } from './assets/rsk-eth-testnet-assets';
 import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
 import { rskBscTestnetAssets } from './assets/rsk-bsc-testnet-assets';
+import { rskBscMainnetAssets } from './assets/rsk-bsc-mainnet-assets';
 import { NetworkDictionary } from './index';
 import { APP_MODE } from '../utils/network-utils';
 import { NetworkDetails } from '../models/NetworkDetails';
@@ -11,20 +12,20 @@ import { unique } from '../utils/helpers';
 export class BridgeDictionary {
   public static bridges: BridgeDetails[] = [
     // RSK-BSC mainnet bridges
-    // new BridgeDetails(
-    //   NetworkType.RSK,
-    //   NetworkChainId.RSK_MAINNET,
-    //   NetworkChainId.BSC_MAINNET,
-    //   '0xB8411dc9B723e322CE08E2596881B77733F0694e',
-    //   rskBscMainnetAssets,
-    // ),
-    // new BridgeDetails(
-    //   NetworkType.BSC,
-    //   NetworkChainId.BSC_MAINNET,
-    //   NetworkChainId.RSK_MAINNET,
-    //   '0x1b5fe0CDD01FA7278244B4B2d7b434fe83D88dB4',
-    //   rskBscMainnetAssets,
-    // ),
+    new BridgeDetails(
+      NetworkType.RSK,
+      NetworkChainId.RSK_MAINNET,
+      NetworkChainId.BSC_MAINNET,
+      '0x971b97c8cc82e7d27bc467c2dc3f219c6ee2e350',
+      rskBscMainnetAssets,
+    ),
+    new BridgeDetails(
+      NetworkType.BSC,
+      NetworkChainId.BSC_MAINNET,
+      NetworkChainId.RSK_MAINNET,
+      '0xdfc7127593c8af1a17146893f10e08528f4c2aa7',
+      rskBscMainnetAssets,
+    ),
     // RSK-BSC testnet bridges
     new BridgeDetails(
       NetworkType.RSK,
