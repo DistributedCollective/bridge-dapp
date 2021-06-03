@@ -1,60 +1,37 @@
 import { AssetDetails } from '../../models/AssetDetails';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { Asset, NetworkChainId } from '../../types';
+import bnbIcon from '../../assets/tokens/bnb.svg';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
-import sovIcon from '../../assets/tokens/sov.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
+import busdIcon from '../../assets/tokens/busd.svg';
 
 export const rskBscTestnetAssets = [
   new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
+    Asset.BNB,
+    'BNB',
+    'BNB',
+    bnbIcon,
     18,
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x793CE6F95912D5b43532c2116e1b68993d902272'.toLowerCase(),
+        '0xafa6A1eb7E2282E8854822d2bB412b6db2cabA4E'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
-        '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B'.toLowerCase(),
+        '0x68bD35422b457f315AA176743325a9F7C9830c68'.toLowerCase(),
       ],
     ]),
   )
-    .setSymbols(
-      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsETH']]),
+    .setNativeCoins(
+      new Map<NetworkChainId, boolean>([[NetworkChainId.BSC_TESTNET, true]]),
     )
-    .setBabelFish(
-      new BabelFishDetails(
-        // '0x499bB1355B36aDeb93706B08A897CE6022de6aC9',
-        '0x0Fd0d8D78Ce9299Ee0e5676a8d51F938C234162c',
-        '0x5BB6De260127306741D93dB9D92079499F09e452',
-        'ETHs',
-      ),
+    .setSymbols(
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsBNB']]),
     ),
-  new AssetDetails(
-    Asset.SOV,
-    'SOV',
-    'SOV',
-    sovIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_TESTNET,
-        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.BSC_TESTNET,
-        '0x167e3cd9c626dcd642eed6d791d69e6982a5f50a'.toLowerCase(),
-      ],
-    ]),
-  ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.BSC_TESTNET, 'bSOV']]),
-  ),
   new AssetDetails(
     Asset.DAI,
     'DAI',
@@ -64,7 +41,7 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x2b17f1c780b230Ec150bb52EA401F14F0cdb1449'.toLowerCase(),
+        '0x407ff7d4760d3a81b4740d268eb04490c7dfe7f2'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
@@ -72,7 +49,7 @@ export const rskBscTestnetAssets = [
       ],
     ]),
   ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'DAIbs']]),
+    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsDAI']]),
   ),
   new AssetDetails(
     Asset.USDC,
@@ -83,7 +60,7 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0xA839c6F6b3C636CDD34F72AD830Cde42e651076E'.toLowerCase(),
+        '0x3e2cf87e7ff4048a57f9cdde9368c9f4bfb43adf'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
@@ -91,7 +68,7 @@ export const rskBscTestnetAssets = [
       ],
     ]),
   ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'USDCbs']]),
+    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsUSDC']]),
   ),
   new AssetDetails(
     Asset.USDT,
@@ -102,7 +79,7 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x68c10be7bA4Ecb3e5Adb0B100D75061BD76B9411'.toLowerCase(),
+        '0x43bc3f0ffff6c9bbf3c2eafe464c314d43f561de'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
@@ -110,6 +87,71 @@ export const rskBscTestnetAssets = [
       ],
     ]),
   ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'USDTbs']]),
+    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsUSDT']]),
   ),
+  new AssetDetails(
+    Asset.BUSD,
+    'BUSD',
+    'BUSD',
+    busdIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x137BEc8c83740920ebc4f29f51C7B65b75Beec83'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.BSC_TESTNET,
+        '0x8c9abb6c9d8d15ddb7ada2e50086e1050ab32688'.toLowerCase(),
+      ],
+    ]),
+  ).setSymbols(
+    new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsBUSD']]),
+  ),
+  new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.BSC_TESTNET,
+        '0x793CE6F95912D5b43532c2116e1b68993d902272'.toLowerCase(),
+      ],
+    ]),
+  )
+    .setSymbols(
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'bsETH']]),
+    )
+    .setBabelFish(
+      new BabelFishDetails(
+        '0x499bB1355B36aDeb93706B08A897CE6022de6aC9',
+        '0x5BB6De260127306741D93dB9D92079499F09e452',
+        'ETHs',
+      ),
+    ),
+  // new AssetDetails(
+  //   Asset.SOV,
+  //   'SOV',
+  //   'SOV',
+  //   sovIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_TESTNET,
+  //       '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.BSC_TESTNET,
+  //       '0x167e3cd9c626dcd642eed6d791d69e6982a5f50a'.toLowerCase(),
+  //     ],
+  //   ]),
+  // ).setSymbols(
+  //   new Map<NetworkChainId, string>([[NetworkChainId.BSC_TESTNET, 'bSOV']]),
+  // ),
 ];

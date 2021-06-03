@@ -1,4 +1,4 @@
-import { Asset, NetworkChainId, NetworkType } from 'types';
+import { NetworkChainId, NetworkType } from 'types';
 import { BridgeDetails } from '../models/BridgeDetails';
 import { rskEthTesnetAssets } from './assets/rsk-eth-testnet-assets';
 import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
@@ -32,14 +32,14 @@ export class BridgeDictionary {
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.BSC_TESTNET,
       '0x2b2bcad081fa773dc655361d1bb30577caa556f8',
-      rskBscTestnetAssets.filter(item => item.asset === Asset.ETH),
+      rskBscTestnetAssets,
     ),
     new BridgeDetails(
       NetworkType.BSC,
       NetworkChainId.BSC_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x862e8aff917319594cc7faaae5350d21196c086f',
-      rskBscTestnetAssets.filter(item => item.asset === Asset.ETH),
+      rskBscTestnetAssets,
     ),
     // RSK-ETH mainnet bridges
     new BridgeDetails(
@@ -47,14 +47,14 @@ export class BridgeDictionary {
       NetworkChainId.RSK_MAINNET,
       NetworkChainId.ETH_MAINNET,
       '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581',
-      rskEthMainnetAssets.filter(item => item.asset === Asset.ETH),
+      rskEthMainnetAssets,
     ),
     new BridgeDetails(
       NetworkType.ETH,
       NetworkChainId.ETH_MAINNET,
       NetworkChainId.RSK_MAINNET,
       '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1',
-      rskEthMainnetAssets.filter(item => item.asset === Asset.ETH),
+      rskEthMainnetAssets,
     ),
     // RSK-ETH testnet bridges
     new BridgeDetails(
@@ -62,14 +62,14 @@ export class BridgeDictionary {
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.ETH_TESTNET,
       '0xC0E7A7FfF4aBa5e7286D5d67dD016B719DCc9156',
-      rskEthTesnetAssets.filter(item => item.asset === Asset.ETH),
+      rskEthTesnetAssets,
     ),
     new BridgeDetails(
       NetworkType.ETH,
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
-      rskEthTesnetAssets.filter(item => item.asset === Asset.ETH),
+      rskEthTesnetAssets,
     ),
   ];
 

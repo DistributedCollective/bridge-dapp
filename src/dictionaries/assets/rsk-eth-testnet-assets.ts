@@ -3,61 +3,10 @@ import { Asset, NetworkChainId } from '../../types';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
-import sovIcon from '../../assets/tokens/sov.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 
 export const rskEthTesnetAssets = [
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_TESTNET,
-        '0x4F2Fc8d55c1888A5AcA2503e2F3E5d74eef37C33'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.ETH_TESTNET,
-        '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792'.toLowerCase(),
-      ],
-    ]),
-  )
-    .setSymbols(
-      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'esETH']]),
-    )
-    .setNativeCoins(
-      new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_TESTNET, true]]),
-    )
-    .setBabelFish(
-      new BabelFishDetails(
-        // '0x499bB1355B36aDeb93706B08A897CE6022de6aC9',
-        '0x0Fd0d8D78Ce9299Ee0e5676a8d51F938C234162c',
-        '0x5BB6De260127306741D93dB9D92079499F09e452',
-        'ETHs',
-      ),
-    ),
-  new AssetDetails(
-    Asset.SOV,
-    'SOV',
-    'SOV',
-    sovIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_TESTNET,
-        '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.ETH_TESTNET,
-        '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04'.toLowerCase(),
-      ],
-    ]),
-  ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.ETH_TESTNET, 'eSOV']]),
-  ),
   new AssetDetails(
     Asset.DAI,
     'DAI',
@@ -123,4 +72,53 @@ export const rskEthTesnetAssets = [
     .setDecimals(
       new Map<NetworkChainId, number>([[NetworkChainId.RSK_TESTNET, 18]]),
     ),
+  new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    new Map([
+      [
+        NetworkChainId.RSK_TESTNET,
+        '0x4F2Fc8d55c1888A5AcA2503e2F3E5d74eef37C33'.toLowerCase(),
+      ],
+      [
+        NetworkChainId.ETH_TESTNET,
+        '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792'.toLowerCase(),
+      ],
+    ]),
+  )
+    .setSymbols(
+      new Map<NetworkChainId, string>([[NetworkChainId.RSK_TESTNET, 'esETH']]),
+    )
+    .setNativeCoins(
+      new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_TESTNET, true]]),
+    )
+    .setBabelFish(
+      new BabelFishDetails(
+        '0x499bB1355B36aDeb93706B08A897CE6022de6aC9',
+        '0x5BB6De260127306741D93dB9D92079499F09e452',
+        'ETHs',
+      ),
+    ),
+  // new AssetDetails(
+  //   Asset.SOV,
+  //   'SOV',
+  //   'SOV',
+  //   sovIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_TESTNET,
+  //       '0x6a9A07972D07E58f0daF5122D11e069288A375fB'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.ETH_TESTNET,
+  //       '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04'.toLowerCase(),
+  //     ],
+  //   ]),
+  // ).setSymbols(
+  //   new Map<NetworkChainId, string>([[NetworkChainId.ETH_TESTNET, 'eSOV']]),
+  // ),
 ];
