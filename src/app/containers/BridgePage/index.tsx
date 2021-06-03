@@ -39,6 +39,7 @@ export function BridgePage(props: Props) {
     NetworkType.ETH,
     NetworkType.RSK,
     Asset.ETH,
+    Asset.ETH,
     '0.01',
   );
 

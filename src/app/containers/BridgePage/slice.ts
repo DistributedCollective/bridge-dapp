@@ -19,7 +19,8 @@ export const initialState: ContainerState = {
     hash: '',
     approveHash: '',
     payload: {
-      asset: Asset.WBTC,
+      asset: Asset.ETH,
+      targetAsset: Asset.ETH,
       amount: '',
       receiver: '',
       sourceNetwork: NetworkType.ETH,

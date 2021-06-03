@@ -40,7 +40,7 @@ function getSpenderAddress(payload: {
   );
 
   if (payload.sourceNetwork === NetworkType.RSK && asset?.getBabelFish()) {
-    return asset?.getBabelFish()?.rskContractAddress;
+    return asset?.getBabelFish()?.bridgeTokenAddress;
   }
   return undefined;
 }
@@ -185,7 +185,7 @@ function* confirmTransfer() {
           payload.form.targetNetwork === NetworkType.RSK &&
           asset?.getBabelFish()
         ) {
-          receiver = asset.getBabelFish()?.rskAggregatorAddress;
+          receiver = asset.getBabelFish()?.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
 

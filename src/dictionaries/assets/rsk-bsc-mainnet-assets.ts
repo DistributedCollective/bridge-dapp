@@ -9,33 +9,33 @@ import ethIcon from '../../assets/tokens/eth.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 
 export const rskBscMainnetAssets = [
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_MAINNET,
-        '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.BSC_MAINNET,
-        '0x2170ed0880ac9a755fd29b2688956bd959f933f8'.toLowerCase(),
-      ],
-    ]),
-  )
-    .setSymbols(
-      new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'ETHbs']]),
-    )
-    .setBabelFish(
-      new BabelFishDetails(
-        '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
-        '0x4BF113905d7F69202106F613308bb02C84AaDF2F',
-        'ETHs',
-      ),
-    ),
+  // new AssetDetails(
+  //   Asset.ETH,
+  //   'ETH',
+  //   'ETH',
+  //   ethIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_MAINNET,
+  //       '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.BSC_MAINNET,
+  //       '0x2170ed0880ac9a755fd29b2688956bd959f933f8'.toLowerCase(),
+  //     ],
+  //   ]),
+  // )
+  //   .setSymbols(
+  //     new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'ETHbs']]),
+  //   )
+  //   .setBabelFish(
+  //     new BabelFishDetails(
+  //       '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
+  //       '0x4BF113905d7F69202106F613308bb02C84AaDF2F',
+  //       'ETHs',
+  //     ),
+  //   ),
   // new AssetDetails(
   //   Asset.BNB,
   //   'BNB',

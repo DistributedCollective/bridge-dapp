@@ -31,13 +31,17 @@ export class AssetDetails {
   >();
   public babelFishDetails?: BabelFishDetails;
   constructor(
-    public asset: Asset,
-    public symbol: string,
-    public name,
-    public image: string,
-    public decimals: number,
-    public contracts: Map<NetworkChainId, string>,
-  ) {}
+    public readonly asset: Asset,
+    public readonly symbol: string,
+    public readonly name,
+    public readonly image: string,
+    public readonly decimals: number,
+    public readonly tokenContractAddress: string,
+    public readonly isNative: boolean = false,
+    public readonly aggregatorData?: BabelFishDetails,
+  ) {
+    this.tokenContractAddress = this.tokenContractAddress.toLowerCase();
+  }
   public toString() {
     return String(this.asset);
   }
@@ -46,8 +50,6 @@ export class AssetDetails {
     return this;
   }
   public getSymbol(networkType: NetworkType) {
-    if (networkType === NetworkType.RSK && this.getBabelFish()?.rskAssetName)
-      return this.getBabelFish()?.rskAssetName;
     const chainId = NetworkDictionary.getChainId(networkType);
     return this.symbols.get(chainId) || this.symbol;
   }
@@ -65,15 +67,15 @@ export class AssetDetails {
   public getTokenContractAddress(networkType: NetworkType) {
     if (
       networkType === NetworkType.RSK &&
-      this.getBabelFish()?.rskContractAddress
+      this.getBabelFish()?.bridgeTokenAddress
     )
-      return this.getBabelFish()?.rskContractAddress;
+      return this.getBabelFish()?.bridgeTokenAddress;
     return this.getContractAddress(networkType);
   }
   public getTokenContractAbi(networkType: NetworkType) {
     if (
       networkType === NetworkType.RSK &&
-      this.getBabelFish()?.rskContractAddress
+      this.getBabelFish()?.bridgeTokenAddress
     )
       return massetAbi;
     return erc20Abi;
@@ -81,9 +83,9 @@ export class AssetDetails {
   public getAggregatorContractAddress(networkType: NetworkType) {
     if (
       networkType === NetworkType.RSK &&
-      this.getBabelFish()?.rskAggregatorAddress
+      this.getBabelFish()?.aggregatorContractAddress
     )
-      return this.getBabelFish()?.rskAggregatorAddress;
+      return this.getBabelFish()?.aggregatorContractAddress;
     return undefined;
   }
   public setNativeCoins(items: Map<NetworkChainId, boolean>) {
