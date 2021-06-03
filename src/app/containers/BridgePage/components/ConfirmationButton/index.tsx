@@ -123,6 +123,7 @@ function FormButton({
       dispatch(
         actions.submitTransfer({
           asset: data.asset.value,
+          targetAsset: data.targetAsset.value,
           amount: data.amount.value,
           receiver: data.receiver.value,
           sourceNetwork: data.sourceNetwork.value,

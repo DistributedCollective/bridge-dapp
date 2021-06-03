@@ -1,10 +1,11 @@
 export enum Asset {
   ETH,
+  ETHs,
   BNB,
   SOV,
   WBTC,
-  renBTC,
   DAI,
   USDC,
   USDT,
+  XUSD,
 }

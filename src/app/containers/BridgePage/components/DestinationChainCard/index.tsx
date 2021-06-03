@@ -6,12 +6,16 @@ import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
 import { AssetDictionary } from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
-import { NetworkType } from '../../../../../types';
+import { AppMode, NetworkType } from '../../../../../types';
 import { fromWei, toNumberFormat } from '../../../../../utils/math';
 import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
 import { BridgeDictionary } from 'dictionaries';
+import { Spinner } from '@blueprintjs/core';
+import { APP_MODE } from '../../../../../utils/network-utils';
+import { AssetSelect } from '../../../../components/Form/AssetSelect';
+import { AmountInput } from '../../../../components/Form/AmountInput';
 
 export function DestinationChainCard() {
   const {
@@ -31,6 +35,17 @@ export function DestinationChainCard() {
   const networkList = useMemo(() => {
     return BridgeDictionary.getSideNetworks(sourceNetwork.value);
   }, [sourceNetwork.value]);
+
+  const assetList = useMemo(() => {
+    const bridge = BridgeDictionary.get(
+      sourceNetwork.value,
+      targetNetwork.value,
+    );
+    if (bridge === undefined) {
+      return [];
+    }
+    return bridge.assets.map(item => item.asset);
+  }, [sourceNetwork.value, targetNetwork.value]);
 
   const changeTargetNetwork = useCallback(
     (value: string) => {
@@ -109,8 +124,20 @@ export function DestinationChainCard() {
               />
             </FormGroup>
           )}
+
+          <FormGroup label="Receive Asset:">
+            <AssetSelect
+              value={asset.get()}
+              onChange={value => asset.set(value)}
+              placeholder="Select Asset"
+              options={assetList}
+              networkType={sourceNetwork.get()}
+              sideNetworkType={targetNetwork.get()}
+            />
+          </FormGroup>
+
           <FormGroup
-            label="Receive Asset:"
+            label="Receive Amount:"
             describe={
               <>
                 Total Cost:{' '}
