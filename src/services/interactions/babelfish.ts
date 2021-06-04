@@ -1,7 +1,8 @@
-import type { AbiItem } from 'web3-utils';
-import type { Asset, NetworkType } from '../../types';
+import { AbiItem } from 'web3-utils';
+import { Asset, NetworkType } from '../../types';
 import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';
+import massetXusdAbi from '../../assets/abi/BabelFish_MassetAbi_xusd.json';
 import { network } from '../index';
 
 class Babelfish {
@@ -20,34 +21,46 @@ class Babelfish {
     networkType: NetworkType,
     sideNetworkType: NetworkType,
     asset: Asset,
+    targetAsset: Asset,
     bAsset: string,
     mAssetQuanity: string,
     recipient: string,
     bridge: string,
   ) {
-    const { address, abi } = this.getMassetData(
+    const { address, abi, useBridgeAddress } = this.getMassetData(
       networkType,
       sideNetworkType,
       asset,
     );
-    return network.send(networkType, address, abi, 'redeemToBridge', [
-      bAsset,
-      mAssetQuanity,
-      recipient,
-      bridge,
-    ]);
+
+    const args = [bAsset, mAssetQuanity, recipient];
+
+    if (useBridgeAddress) {
+      args.push(bridge);
+    }
+
+    return network.send(networkType, address, abi, 'redeemToBridge', args);
   }
 
   private getMassetData(
     networkType: NetworkType,
     sideNetworkType: NetworkType,
     asset: Asset,
-  ): { address: string; abi: AbiItem[] } {
+  ): { address: string; abi: AbiItem[]; useBridgeAddress: boolean } {
+    const aggregator = AssetDictionary.get(networkType, sideNetworkType, asset)
+      ?.aggregatorData;
+    let abi = massetAbi;
+    let useBridgeAddress = true;
+
+    if (aggregator?.version === Asset.XUSD) {
+      useBridgeAddress = false;
+      abi = massetXusdAbi;
+    }
+
     return {
-      address:
-        AssetDictionary.get(networkType, sideNetworkType, asset)?.aggregatorData
-          .aggregatorContractAddress || '',
-      abi: massetAbi as AbiItem[],
+      address: aggregator?.aggregatorContractAddress || '',
+      abi: abi as AbiItem[],
+      useBridgeAddress,
     };
   }
 }

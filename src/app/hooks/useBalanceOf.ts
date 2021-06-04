@@ -13,7 +13,7 @@ export function useBalanceOf(asset: Asset, network?: NetworkType) {
   return useNetworkCall(
     token.balanceOf,
     'token_balanceOf',
-    [networkType, targetNetwork.get(), asset, address],
+    [networkType, targetNetwork.value, asset, address],
     '0',
     address.length === 42,
   );

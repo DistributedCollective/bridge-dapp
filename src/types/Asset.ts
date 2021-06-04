@@ -7,5 +7,6 @@ export enum Asset {
   DAI = 'dai',
   USDC = 'usdc',
   USDT = 'usdt',
+  BUSD = 'busd',
   XUSD = 'xusd',
 }

@@ -57,6 +57,19 @@ export class AssetDictionary {
       .bridgeTokenAddress;
   }
 
+  public static getContractAddressForRsk(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+    targetAsset: Asset,
+  ) {
+    const source = this.get(network, sideNetwork, asset);
+    if (source) {
+      return source.aggregatorData.bridgeTokenAddresses.get(targetAsset);
+    }
+    return undefined;
+  }
+
   public static getTokenContractAddress(
     network: NetworkType,
     sideNetwork: NetworkType,

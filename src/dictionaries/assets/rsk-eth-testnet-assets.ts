@@ -21,6 +21,11 @@ export const rskEthTesnetAssets = [
       '0x10C5A7930fC417e728574E334b1488b7895c4B81', // usdtes
       true,
       [Asset.USDT, Asset.USDC, Asset.DAI],
+      new Map<Asset, string>([
+        [Asset.USDT, '0x10C5A7930fC417e728574E334b1488b7895c4B81'],
+        [Asset.USDC, '0xcc8Eec21ae75F1A2dE4aC7b32A7de888a45cF859'],
+        [Asset.DAI, '0xcb92C8D49Ec01b92F2A766C7c3C9C501C45271E0'],
+      ]),
       Asset.XUSD,
     ),
   ),
@@ -37,6 +42,9 @@ export const rskEthTesnetAssets = [
       '0x4F2Fc8d55c1888A5AcA2503e2F3E5d74eef37C33',
       false,
       [Asset.ETH],
+      new Map<Asset, string>([
+        [Asset.ETH, '0x4F2Fc8d55c1888A5AcA2503e2F3E5d74eef37C33'],
+      ]),
       Asset.ETHs,
     ),
   ),

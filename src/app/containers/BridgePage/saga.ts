@@ -147,6 +147,7 @@ function* confirmTransfer() {
         payload.form.amount,
         payload.form.asset,
         payload.form.sourceNetwork,
+        payload.form.targetNetwork,
       );
 
       const asset = AssetDictionary.get(
@@ -160,15 +161,22 @@ function* confirmTransfer() {
         : payload.form.receiver
       ).toLowerCase();
 
-
-
       if (payload.form.sourceNetwork === NetworkType.RSK) {
+        let basset = (
+          AssetDictionary.getContractAddressForRsk(
+            payload.form.sourceNetwork,
+            payload.form.targetNetwork,
+            payload.form.asset,
+            payload.form.targetAsset,
+          ) || tokenAddress
+        ).toLowerCase();
         transferTx = yield call(
           [babelFishService, babelFishService.redeemToBridge],
           payload.form.sourceNetwork,
           payload.form.targetNetwork,
           payload.form.asset,
-          tokenAddress,
+          payload.form.targetAsset,
+          basset,
           tokenAmount,
           receiverAddress,
           BridgeDictionary.get(
@@ -184,15 +192,6 @@ function* confirmTransfer() {
           receiver = asset?.aggregatorData.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
-
-        console.log({
-          tokenAddress,
-          isNative,
-          asset,
-          receiverAddress,
-          receiver,
-          extraData,
-        });
 
         if (isNative) {
           const value = isNative ? tokenAmount : '0';

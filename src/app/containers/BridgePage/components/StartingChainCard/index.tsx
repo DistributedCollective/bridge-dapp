@@ -100,7 +100,14 @@ export function StartingChainCard() {
                 <div>
                   Available balance:{' '}
                   {toNumberFormat(
-                    Number(fromWei(value, asset.value, sourceNetwork.value)),
+                    Number(
+                      fromWei(
+                        value,
+                        asset.value,
+                        sourceNetwork.value,
+                        targetNetwork.value,
+                      ),
+                    ),
                     4,
                   )}{' '}
                   {loading && (

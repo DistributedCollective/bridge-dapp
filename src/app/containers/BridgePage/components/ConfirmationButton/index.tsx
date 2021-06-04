@@ -157,6 +157,7 @@ function FormButton({
               data.amount.value,
               data.asset.value,
               data.sourceNetwork.value,
+              data.targetNetwork.value,
             ),
           ).greaterThan(value)
         }

@@ -80,12 +80,21 @@ export function DestinationChainCard() {
     let _cost = fee.nested('value').value;
     if (_cost < 0 || isNaN(_cost)) _cost = 0;
     const _value = bignumber(amount.value || 0)
-      .minus(fromWei(_cost))
+      .minus(
+        fromWei(_cost, asset.value, sourceNetwork.value, targetNetwork.value),
+      )
       .toNumber();
     setCost(_cost);
     setValue(_value < 0 ? 0 : _value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fee.nested('value').value, amount.value]);
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fee.nested('value').value,
+    amount.value,
+    asset.value,
+    sourceNetwork.value,
+    targetNetwork.value,
+  ]);
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-2 xl:order-3">
@@ -157,7 +166,14 @@ export function DestinationChainCard() {
               <>
                 Total Cost:{' '}
                 {toNumberFormat(
-                  Number(fromWei(cost, targetAsset.value)),
+                  Number(
+                    fromWei(
+                      cost,
+                      asset.value,
+                      sourceNetwork.value,
+                      targetNetwork.value,
+                    ),
+                  ),
                   AssetDictionary.getDecimals(
                     targetNetwork.value,
                     sourceNetwork.value,
