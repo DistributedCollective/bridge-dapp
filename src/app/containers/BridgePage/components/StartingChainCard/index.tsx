@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import cn from 'classnames';
 import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
@@ -31,6 +31,12 @@ export function StartingChainCard() {
     }
     return bridge.assets.map(item => item.asset);
   }, [sourceNetwork.value, targetNetwork.value]);
+
+  useEffect(() => {
+    if (assetList.length && !assetList.includes(asset.value)) {
+      asset.set(assetList[0]);
+    }
+  }, [assetList, asset]);
 
   const { value, loading } = useBalanceOf(asset.get(), sourceNetwork.get());
 
@@ -94,7 +100,14 @@ export function StartingChainCard() {
                 <div>
                   Available balance:{' '}
                   {toNumberFormat(
-                    Number(fromWei(value, asset.value, sourceNetwork.value)),
+                    Number(
+                      fromWei(
+                        value,
+                        asset.value,
+                        sourceNetwork.value,
+                        targetNetwork.value,
+                      ),
+                    ),
                     4,
                   )}{' '}
                   {loading && (

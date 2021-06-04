@@ -21,6 +21,7 @@ interface BridgeState {
   sourceNetwork: NetworkType;
   targetNetwork: NetworkType;
   asset: Asset;
+  targetAsset: Asset;
   amount: string;
   receiver: string;
 }
@@ -33,6 +34,7 @@ const globalBridgeState = createState<BridgeState>({
   sourceNetwork: NetworkType.ETH,
   targetNetwork: NetworkType.RSK,
   asset: Asset.ETH,
+  targetAsset: Asset.ETH,
   amount: '0.01',
   receiver: '',
 });
@@ -45,6 +47,7 @@ export function useBuildBridgeState(
   sourceNetwork: NetworkType,
   targetNetwork: NetworkType,
   asset: Asset,
+  targetAsset: Asset,
   amount: string,
 ) {
   const state = useState(globalBridgeState);
@@ -65,6 +68,11 @@ export function useBuildBridgeState(
   }, [asset]);
 
   useEffect(() => {
+    state.targetAsset.set(targetAsset);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetAsset]);
+
+  useEffect(() => {
     state.amount.set(amount);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount]);
@@ -72,9 +80,9 @@ export function useBuildBridgeState(
   const min = useNetworkCall(
     bridge.allowTokens_getMinPerToken.bind(bridge),
     'bridge_allowTokens_min_token',
-    [state.sourceNetwork.get(), state.targetNetwork.get(), state.asset.get()],
+    [state.sourceNetwork.value, state.targetNetwork.value, state.asset.value],
     0,
-    !!state.sourceNetwork.get(),
+    !!state.sourceNetwork.value,
   );
   const max = useNetworkCall(
     bridge.allowTokens_getMax.bind(bridge),

@@ -36,6 +36,7 @@ export interface FormPayload {
   sourceNetwork: NetworkType;
   targetNetwork: NetworkType;
   asset: Asset;
+  targetAsset: Asset;
   amount: string;
   receiver: string;
 }

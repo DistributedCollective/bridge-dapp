@@ -1,44 +1,44 @@
-import { AssetDetails } from '../../models/AssetDetails';
-import { Asset, NetworkChainId } from '../../types';
-import daiIcon from '../../assets/tokens/dai.svg';
-import ethIcon from '../../assets/tokens/eth.svg';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
+// import { AssetDetails } from '../../models/AssetDetails';
+// import { Asset, NetworkChainId } from '../../types';
+// import daiIcon from '../../assets/tokens/dai.svg';
+// import ethIcon from '../../assets/tokens/eth.svg';
+// import { BabelFishDetails } from '../../models/BabelFishDetails';
 // import usdcIcon from '../../assets/tokens/usdc.svg';
 // import usdtIcon from '../../assets/tokens/usdt.svg';
 // import sovIcon from '../../assets/tokens/sov.svg';
 // import { toWei } from '../../utils/math';
 
 export const rskEthMainnetAssets = [
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_MAINNET,
-        '0xFe878227c8F334038DAb20a99fC3B373fFe0a755'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.ETH_MAINNET,
-        '0xd412acd34a832a09c80c8a4895ff46d733f09538'.toLowerCase(),
-      ],
-    ]),
-  )
-    .setSymbols(
-      new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'ETHes']]),
-    )
-    .setNativeCoins(
-      new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_MAINNET, true]]),
-    )
-    .setBabelFish(
-      new BabelFishDetails(
-        '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
-        '0x4BF113905d7F69202106F613308bb02C84AaDF2F',
-        'ETHs',
-      ),
-    ),
+  // new AssetDetails(
+  //   Asset.ETH,
+  //   'ETH',
+  //   'ETH',
+  //   ethIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_MAINNET,
+  //       '0xFe878227c8F334038DAb20a99fC3B373fFe0a755'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.ETH_MAINNET,
+  //       '0xd412acd34a832a09c80c8a4895ff46d733f09538'.toLowerCase(),
+  //     ],
+  //   ]),
+  // )
+  //   .setSymbols(
+  //     new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'ETHes']]),
+  //   )
+  //   .setNativeCoins(
+  //     new Map<NetworkChainId, boolean>([[NetworkChainId.ETH_MAINNET, true]]),
+  //   )
+  //   .setBabelFish(
+  //     new BabelFishDetails(
+  //       '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
+  //       '0x4BF113905d7F69202106F613308bb02C84AaDF2F',
+  //       'ETHs',
+  //     ),
+  //   ),
   // new AssetDetails(
   //   Asset.SOV,
   //   'SOV',
@@ -71,25 +71,25 @@ export const rskEthMainnetAssets = [
   //       ],
   //     ]),
   //   ),
-  new AssetDetails(
-    Asset.DAI,
-    'DAI',
-    'DAI',
-    daiIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_MAINNET,
-        '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.ETH_MAINNET,
-        '0x6b175474e89094c44da98b954eedeac495271d0f'.toLowerCase(),
-      ],
-    ]),
-  ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'DAIes']]),
-  ),
+  // new AssetDetails(
+  //   Asset.DAI,
+  //   'DAI',
+  //   'DAI',
+  //   daiIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_MAINNET,
+  //       '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.ETH_MAINNET,
+  //       '0x6b175474e89094c44da98b954eedeac495271d0f'.toLowerCase(),
+  //     ],
+  //   ]),
+  // ).setSymbols(
+  //   new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'DAIes']]),
+  // ),
   // new AssetDetails(
   //   Asset.USDC,
   //   'USDC',

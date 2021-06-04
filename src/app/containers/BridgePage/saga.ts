@@ -39,8 +39,8 @@ function getSpenderAddress(payload: {
     payload.asset,
   );
 
-  if (payload.sourceNetwork === NetworkType.RSK && asset?.getBabelFish()) {
-    return asset?.getBabelFish()?.rskContractAddress;
+  if (payload.sourceNetwork === NetworkType.RSK) {
+    return asset?.aggregatorData.bridgeTokenAddress;
   }
   return undefined;
 }
@@ -147,6 +147,7 @@ function* confirmTransfer() {
         payload.form.amount,
         payload.form.asset,
         payload.form.sourceNetwork,
+        payload.form.targetNetwork,
       );
 
       const asset = AssetDictionary.get(
@@ -160,16 +161,22 @@ function* confirmTransfer() {
         : payload.form.receiver
       ).toLowerCase();
 
-      if (
-        payload.form.sourceNetwork === NetworkType.RSK &&
-        asset?.getBabelFish()
-      ) {
+      if (payload.form.sourceNetwork === NetworkType.RSK) {
+        let basset = (
+          AssetDictionary.getContractAddressForRsk(
+            payload.form.sourceNetwork,
+            payload.form.targetNetwork,
+            payload.form.asset,
+            payload.form.targetAsset,
+          ) || tokenAddress
+        ).toLowerCase();
         transferTx = yield call(
           [babelFishService, babelFishService.redeemToBridge],
           payload.form.sourceNetwork,
           payload.form.targetNetwork,
           payload.form.asset,
-          tokenAddress,
+          payload.form.targetAsset,
+          basset,
           tokenAmount,
           receiverAddress,
           BridgeDictionary.get(
@@ -181,11 +188,8 @@ function* confirmTransfer() {
         let receiver = receiverAddress;
         let extraData: string | undefined = undefined;
 
-        if (
-          payload.form.targetNetwork === NetworkType.RSK &&
-          asset?.getBabelFish()
-        ) {
-          receiver = asset.getBabelFish()?.rskAggregatorAddress;
+        if (payload.form.targetNetwork === NetworkType.RSK) {
+          receiver = asset?.aggregatorData.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
 

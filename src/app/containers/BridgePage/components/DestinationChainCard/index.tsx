@@ -12,6 +12,7 @@ import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
 import { BridgeDictionary } from 'dictionaries';
+import { AssetSelect } from '../../../../components/Form/AssetSelect';
 
 export function DestinationChainCard() {
   const {
@@ -21,6 +22,7 @@ export function DestinationChainCard() {
     receiver,
     fee,
     asset,
+    targetAsset,
   } = useBridgeState();
   const { address, networkType } = useSelector(selectBridgePage);
 
@@ -31,6 +33,32 @@ export function DestinationChainCard() {
   const networkList = useMemo(() => {
     return BridgeDictionary.getSideNetworks(sourceNetwork.value);
   }, [sourceNetwork.value]);
+
+  const assetList = useMemo(() => {
+    const currentAsset = AssetDictionary.get(
+      sourceNetwork.value,
+      targetNetwork.value,
+      asset.value,
+    );
+    const bridge = BridgeDictionary.get(
+      targetNetwork.value,
+      sourceNetwork.value,
+    );
+    if (bridge === undefined || currentAsset === undefined) {
+      return [];
+    }
+    return bridge.assets
+      .map(item => item.asset)
+      .filter(item =>
+        currentAsset.aggregatorData.aggregatedTokens.includes(item),
+      );
+  }, [sourceNetwork.value, targetNetwork.value, asset.value]);
+
+  useEffect(() => {
+    if (assetList.length && !assetList.includes(targetAsset.value)) {
+      targetAsset.set(assetList[0]);
+    }
+  }, [assetList, targetAsset]);
 
   const changeTargetNetwork = useCallback(
     (value: string) => {
@@ -52,12 +80,21 @@ export function DestinationChainCard() {
     let _cost = fee.nested('value').value;
     if (_cost < 0 || isNaN(_cost)) _cost = 0;
     const _value = bignumber(amount.value || 0)
-      .minus(fromWei(_cost))
+      .minus(
+        fromWei(_cost, asset.value, sourceNetwork.value, targetNetwork.value),
+      )
       .toNumber();
     setCost(_cost);
     setValue(_value < 0 ? 0 : _value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fee.nested('value').value, amount.value]);
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fee.nested('value').value,
+    amount.value,
+    asset.value,
+    sourceNetwork.value,
+    targetNetwork.value,
+  ]);
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-2 xl:order-3">
@@ -109,17 +146,38 @@ export function DestinationChainCard() {
               />
             </FormGroup>
           )}
+
+          {assetList.length > 1 && (
+            <FormGroup label="Receive Asset:">
+              <AssetSelect
+                value={targetAsset.value}
+                onChange={value => targetAsset.set(value)}
+                placeholder="Select Asset"
+                options={assetList}
+                networkType={targetNetwork.value}
+                sideNetworkType={sourceNetwork.value}
+              />
+            </FormGroup>
+          )}
+
           <FormGroup
-            label="Receive Asset:"
+            label="Receive Amount:"
             describe={
               <>
                 Total Cost:{' '}
                 {toNumberFormat(
-                  Number(fromWei(cost, asset.value)),
+                  Number(
+                    fromWei(
+                      cost,
+                      asset.value,
+                      sourceNetwork.value,
+                      targetNetwork.value,
+                    ),
+                  ),
                   AssetDictionary.getDecimals(
                     targetNetwork.value,
                     sourceNetwork.value,
-                    asset.value,
+                    targetAsset.value,
                   ),
                 )}
               </>
@@ -131,7 +189,7 @@ export function DestinationChainCard() {
                 AssetDictionary.getDecimals(
                   targetNetwork.value,
                   sourceNetwork.value,
-                  asset.value,
+                  targetAsset.value,
                 ),
               )}
               readOnly
@@ -140,7 +198,7 @@ export function DestinationChainCard() {
                   {AssetDictionary.getSymbol(
                     targetNetwork.value,
                     sourceNetwork.value,
-                    asset.value,
+                    targetAsset.value,
                   )}
                 </>
               }
