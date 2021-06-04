@@ -98,7 +98,7 @@ export const rskEthTesnetAssets = [
     .setBabelFish(
       new BabelFishDetails(
         '0x499bB1355B36aDeb93706B08A897CE6022de6aC9',
-        '0x5BB6De260127306741D93dB9D92079499F09e452',
+        '0x04D92DaA8f3Ef7bD222195e8D1DbE8D89A8CebD3',
         'ETHs',
       ),
     ),
