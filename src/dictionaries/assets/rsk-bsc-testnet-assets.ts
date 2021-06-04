@@ -117,11 +117,11 @@ export const rskBscTestnetAssets = [
     new Map([
       [
         NetworkChainId.RSK_TESTNET,
-        '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B'.toLowerCase(),
+        '0x793CE6F95912D5b43532c2116e1b68993d902272'.toLowerCase(),
       ],
       [
         NetworkChainId.BSC_TESTNET,
-        '0x793CE6F95912D5b43532c2116e1b68993d902272'.toLowerCase(),
+        '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B'.toLowerCase(),
       ],
     ]),
   )
