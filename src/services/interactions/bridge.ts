@@ -4,7 +4,6 @@ import { Asset, NetworkType } from 'types';
 import { network } from 'services';
 import { AssetDictionary, BridgeDictionary } from 'dictionaries';
 import bridgeAbi from 'assets/abi/BridgeAbi.json';
-import bridgeAbiTestnet from 'assets/abi/BridgeAbi_testnet.json';
 import allowTokensAbi from 'assets/abi/AllowTokensAbi.json';
 
 class Bridge {
@@ -67,9 +66,7 @@ class Bridge {
       networkType,
       address,
       abi,
-      process.env.REACT_APP_MODE === 'testnet' // testnet has typo in contract function name
-        ? 'recieveEthAt'
-        : 'receiveEthAt',
+      'receiveEthAt',
       [receiver, data],
       config,
     );
@@ -226,9 +223,7 @@ class Bridge {
     return {
       address: BridgeDictionary.get(networkType, sideNetworkType)
         .bridgeContractAddress,
-      abi: (process.env.REACT_APP_MODE === 'testnet' // testnet has typo in the contract function
-        ? bridgeAbiTestnet
-        : bridgeAbi) as AbiItem[],
+      abi: bridgeAbi as AbiItem[],
     };
   }
 }

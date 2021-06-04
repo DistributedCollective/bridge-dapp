@@ -25,7 +25,7 @@ export function AssetSelect(props: Props) {
       ) as AssetDetails;
       return {
         key: item,
-        label: asset.getSymbol(props.networkType),
+        label: asset.symbol,
         data: asset.image,
       };
     });

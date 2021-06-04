@@ -80,9 +80,9 @@ export function useBuildBridgeState(
   const min = useNetworkCall(
     bridge.allowTokens_getMinPerToken.bind(bridge),
     'bridge_allowTokens_min_token',
-    [state.sourceNetwork.get(), state.targetNetwork.get(), state.asset.get()],
+    [state.sourceNetwork.value, state.targetNetwork.value, state.asset.value],
     0,
-    !!state.sourceNetwork.get(),
+    !!state.sourceNetwork.value,
   );
   const max = useNetworkCall(
     bridge.allowTokens_getMax.bind(bridge),

@@ -6,16 +6,13 @@ import { FormGroup } from '../../../../components/Form/FormGroup';
 import RadioGroup from '../../../../components/Form/RadioGroup';
 import { AssetDictionary } from '../../../../../dictionaries';
 import { Card } from '../../../../components/Form/Card';
-import { AppMode, NetworkType } from '../../../../../types';
+import { NetworkType } from '../../../../../types';
 import { fromWei, toNumberFormat } from '../../../../../utils/math';
 import { Input } from '../../../../components/Form/Input';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
 import { BridgeDictionary } from 'dictionaries';
-import { Spinner } from '@blueprintjs/core';
-import { APP_MODE } from '../../../../../utils/network-utils';
 import { AssetSelect } from '../../../../components/Form/AssetSelect';
-import { AmountInput } from '../../../../components/Form/AmountInput';
 
 export function DestinationChainCard() {
   const {
@@ -25,6 +22,7 @@ export function DestinationChainCard() {
     receiver,
     fee,
     asset,
+    targetAsset,
   } = useBridgeState();
   const { address, networkType } = useSelector(selectBridgePage);
 
@@ -37,15 +35,30 @@ export function DestinationChainCard() {
   }, [sourceNetwork.value]);
 
   const assetList = useMemo(() => {
-    const bridge = BridgeDictionary.get(
+    const currentAsset = AssetDictionary.get(
       sourceNetwork.value,
       targetNetwork.value,
+      asset.value,
     );
-    if (bridge === undefined) {
+    const bridge = BridgeDictionary.get(
+      targetNetwork.value,
+      sourceNetwork.value,
+    );
+    if (bridge === undefined || currentAsset === undefined) {
       return [];
     }
-    return bridge.assets.map(item => item.asset);
-  }, [sourceNetwork.value, targetNetwork.value]);
+    return bridge.assets
+      .map(item => item.asset)
+      .filter(item =>
+        currentAsset.aggregatorData.aggregatedTokens.includes(item),
+      );
+  }, [sourceNetwork.value, targetNetwork.value, asset.value]);
+
+  useEffect(() => {
+    if (assetList.length && !assetList.includes(targetAsset.value)) {
+      targetAsset.set(assetList[0]);
+    }
+  }, [assetList, targetAsset]);
 
   const changeTargetNetwork = useCallback(
     (value: string) => {
@@ -125,16 +138,18 @@ export function DestinationChainCard() {
             </FormGroup>
           )}
 
-          <FormGroup label="Receive Asset:">
-            <AssetSelect
-              value={asset.get()}
-              onChange={value => asset.set(value)}
-              placeholder="Select Asset"
-              options={assetList}
-              networkType={sourceNetwork.get()}
-              sideNetworkType={targetNetwork.get()}
-            />
-          </FormGroup>
+          {assetList.length > 1 && (
+            <FormGroup label="Receive Asset:">
+              <AssetSelect
+                value={targetAsset.value}
+                onChange={value => targetAsset.set(value)}
+                placeholder="Select Asset"
+                options={assetList}
+                networkType={targetNetwork.value}
+                sideNetworkType={sourceNetwork.value}
+              />
+            </FormGroup>
+          )}
 
           <FormGroup
             label="Receive Amount:"
@@ -142,11 +157,11 @@ export function DestinationChainCard() {
               <>
                 Total Cost:{' '}
                 {toNumberFormat(
-                  Number(fromWei(cost, asset.value)),
+                  Number(fromWei(cost, targetAsset.value)),
                   AssetDictionary.getDecimals(
                     targetNetwork.value,
                     sourceNetwork.value,
-                    asset.value,
+                    targetAsset.value,
                   ),
                 )}
               </>
@@ -158,7 +173,7 @@ export function DestinationChainCard() {
                 AssetDictionary.getDecimals(
                   targetNetwork.value,
                   sourceNetwork.value,
-                  asset.value,
+                  targetAsset.value,
                 ),
               )}
               readOnly
@@ -167,7 +182,7 @@ export function DestinationChainCard() {
                   {AssetDictionary.getSymbol(
                     targetNetwork.value,
                     sourceNetwork.value,
-                    asset.value,
+                    targetAsset.value,
                   )}
                 </>
               }

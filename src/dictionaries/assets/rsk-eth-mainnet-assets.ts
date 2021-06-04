@@ -1,8 +1,8 @@
-import { AssetDetails } from '../../models/AssetDetails';
-import { Asset, NetworkChainId } from '../../types';
-import daiIcon from '../../assets/tokens/dai.svg';
-import ethIcon from '../../assets/tokens/eth.svg';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
+// import { AssetDetails } from '../../models/AssetDetails';
+// import { Asset, NetworkChainId } from '../../types';
+// import daiIcon from '../../assets/tokens/dai.svg';
+// import ethIcon from '../../assets/tokens/eth.svg';
+// import { BabelFishDetails } from '../../models/BabelFishDetails';
 // import usdcIcon from '../../assets/tokens/usdc.svg';
 // import usdtIcon from '../../assets/tokens/usdt.svg';
 // import sovIcon from '../../assets/tokens/sov.svg';
@@ -71,25 +71,25 @@ export const rskEthMainnetAssets = [
   //       ],
   //     ]),
   //   ),
-  new AssetDetails(
-    Asset.DAI,
-    'DAI',
-    'DAI',
-    daiIcon,
-    18,
-    new Map([
-      [
-        NetworkChainId.RSK_MAINNET,
-        '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'.toLowerCase(),
-      ],
-      [
-        NetworkChainId.ETH_MAINNET,
-        '0x6b175474e89094c44da98b954eedeac495271d0f'.toLowerCase(),
-      ],
-    ]),
-  ).setSymbols(
-    new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'DAIes']]),
-  ),
+  // new AssetDetails(
+  //   Asset.DAI,
+  //   'DAI',
+  //   'DAI',
+  //   daiIcon,
+  //   18,
+  //   new Map([
+  //     [
+  //       NetworkChainId.RSK_MAINNET,
+  //       '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'.toLowerCase(),
+  //     ],
+  //     [
+  //       NetworkChainId.ETH_MAINNET,
+  //       '0x6b175474e89094c44da98b954eedeac495271d0f'.toLowerCase(),
+  //     ],
+  //   ]),
+  // ).setSymbols(
+  //   new Map<NetworkChainId, string>([[NetworkChainId.RSK_MAINNET, 'DAIes']]),
+  // ),
   // new AssetDetails(
   //   Asset.USDC,
   //   'USDC',

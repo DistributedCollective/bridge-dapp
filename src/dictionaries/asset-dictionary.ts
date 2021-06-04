@@ -21,6 +21,22 @@ export class AssetDictionary {
     return this.list(network, sideNetwork).find(item => item.asset === asset);
   }
 
+  public static getForSide(
+    network: NetworkType,
+    sideNetwork: NetworkType,
+    asset: Asset,
+    targetAsset: Asset,
+  ) {
+    const source = this.get(network, sideNetwork, asset);
+    if (
+      source &&
+      source.aggregatorData.aggregatedTokens.includes(targetAsset)
+    ) {
+      return this.get(sideNetwork, network, targetAsset);
+    }
+    return undefined;
+  }
+
   public static listForChainId(
     mainChainId: NetworkChainId,
     sideChainId: NetworkChainId,
@@ -37,11 +53,8 @@ export class AssetDictionary {
     sideNetwork: NetworkType,
     asset: Asset,
   ) {
-    const item = this.get(network, sideNetwork, asset);
-    if (item) {
-      return item.getContractAddress(network);
-    }
-    return undefined;
+    return this.get(network, sideNetwork, asset)?.aggregatorData
+      .bridgeTokenAddress;
   }
 
   public static getTokenContractAddress(
@@ -51,7 +64,7 @@ export class AssetDictionary {
   ) {
     const item = this.get(network, sideNetwork, asset);
     if (item) {
-      return item.getTokenContractAddress(network);
+      return item.tokenContractAddress;
     }
     return undefined;
   }
@@ -85,11 +98,7 @@ export class AssetDictionary {
     sideNetwork: NetworkType,
     asset: Asset,
   ) {
-    const item = this.get(network, sideNetwork, asset);
-    if (item) {
-      return item.getSymbol(network);
-    }
-    return undefined;
+    return this.get(network, sideNetwork, asset)?.symbol;
   }
 
   public static isNativeCoin(
@@ -97,13 +106,7 @@ export class AssetDictionary {
     sideNetwork: NetworkType,
     asset: Asset,
   ) {
-    const item = this.get(network, sideNetwork, asset);
-    if (item) {
-      return (
-        item.nativeCoins.get(NetworkDictionary.getChainId(network)) || false
-      );
-    }
-    return false;
+    return this.get(network, sideNetwork, asset)?.isNative || false;
   }
 
   public static getDecimals(
@@ -111,11 +114,7 @@ export class AssetDictionary {
     sideNetwork: NetworkType,
     asset: Asset,
   ) {
-    const item = this.get(network, sideNetwork, asset);
-    if (item) {
-      return item.getDecimals(network);
-    }
-    return undefined;
+    return this.get(network, sideNetwork, asset)?.decimals || 18;
   }
 
   public static getLimits(

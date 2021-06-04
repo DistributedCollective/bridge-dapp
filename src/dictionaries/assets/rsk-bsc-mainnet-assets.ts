@@ -1,12 +1,12 @@
-import { AssetDetails } from '../../models/AssetDetails';
-import { Asset, NetworkChainId } from '../../types';
+// import { AssetDetails } from '../../models/AssetDetails';
+// import { Asset, NetworkChainId } from '../../types';
 // import sovIcon from '../../assets/tokens/sov.svg';
 // import daiIcon from '../../assets/tokens/dai.svg';
 // import usdcIcon from '../../assets/tokens/usdc.svg';
 // import usdtIcon from '../../assets/tokens/usdt.svg';
-import ethIcon from '../../assets/tokens/eth.svg';
+// import ethIcon from '../../assets/tokens/eth.svg';
 // import bnbIcon from '../../assets/tokens/bnb.svg';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
+// import { BabelFishDetails } from '../../models/BabelFishDetails';
 
 export const rskBscMainnetAssets = [
   // new AssetDetails(

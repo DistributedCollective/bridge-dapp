@@ -1,9 +1,9 @@
-import { Asset, NetworkChainId, NetworkType } from 'types';
+import { NetworkChainId, NetworkType } from 'types';
 import { BridgeDetails } from '../models/BridgeDetails';
 import { rskEthTesnetAssets } from './assets/rsk-eth-testnet-assets';
-import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
-import { rskBscTestnetAssets } from './assets/rsk-bsc-testnet-assets';
-import { rskBscMainnetAssets } from './assets/rsk-bsc-mainnet-assets';
+// import { rskEthMainnetAssets } from './assets/rsk-eth-mainnet-assets';
+// import { rskBscTestnetAssets } from './assets/rsk-bsc-testnet-assets';
+// import { rskBscMainnetAssets } from './assets/rsk-bsc-mainnet-assets';
 import { NetworkDictionary } from './index';
 import { APP_MODE } from '../utils/network-utils';
 import { NetworkDetails } from '../models/NetworkDetails';
@@ -70,7 +70,7 @@ export class BridgeDictionary {
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
       '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
-      ethRskTesnetAssets.filter(item => item.asset === Asset.ETH),
+      ethRskTesnetAssets,
     ),
   ];
 

@@ -11,9 +11,8 @@ class Token {
     owner: string,
   ) {
     const isNative =
-      AssetDictionary.get(networkType, sideNetworkType, asset)?.isNativeCoin(
-        networkType,
-      ) || false;
+      AssetDictionary.get(networkType, sideNetworkType, asset)?.isNative ||
+      false;
 
     if (isNative) {
       const web3 = await network.getWeb3ForNetwork(networkType);

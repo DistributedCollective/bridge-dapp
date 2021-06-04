@@ -39,8 +39,8 @@ function getSpenderAddress(payload: {
     payload.asset,
   );
 
-  if (payload.sourceNetwork === NetworkType.RSK && asset?.getBabelFish()) {
-    return asset?.getBabelFish()?.bridgeTokenAddress;
+  if (payload.sourceNetwork === NetworkType.RSK) {
+    return asset?.aggregatorData.bridgeTokenAddress;
   }
   return undefined;
 }
@@ -160,10 +160,9 @@ function* confirmTransfer() {
         : payload.form.receiver
       ).toLowerCase();
 
-      if (
-        payload.form.sourceNetwork === NetworkType.RSK &&
-        asset?.getBabelFish()
-      ) {
+
+
+      if (payload.form.sourceNetwork === NetworkType.RSK) {
         transferTx = yield call(
           [babelFishService, babelFishService.redeemToBridge],
           payload.form.sourceNetwork,
@@ -181,13 +180,19 @@ function* confirmTransfer() {
         let receiver = receiverAddress;
         let extraData: string | undefined = undefined;
 
-        if (
-          payload.form.targetNetwork === NetworkType.RSK &&
-          asset?.getBabelFish()
-        ) {
-          receiver = asset.getBabelFish()?.aggregatorContractAddress;
+        if (payload.form.targetNetwork === NetworkType.RSK) {
+          receiver = asset?.aggregatorData.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
+
+        console.log({
+          tokenAddress,
+          isNative,
+          asset,
+          receiverAddress,
+          receiver,
+          extraData,
+        });
 
         if (isNative) {
           const value = isNative ? tokenAmount : '0';

@@ -45,8 +45,8 @@ class Babelfish {
   ): { address: string; abi: AbiItem[] } {
     return {
       address:
-        AssetDictionary.get(networkType, sideNetworkType, asset)?.getBabelFish()
-          ?.aggregatorContractAddress || '',
+        AssetDictionary.get(networkType, sideNetworkType, asset)?.aggregatorData
+          .aggregatorContractAddress || '',
       abi: massetAbi as AbiItem[],
     };
   }

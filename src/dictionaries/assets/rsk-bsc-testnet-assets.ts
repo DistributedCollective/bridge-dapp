@@ -1,11 +1,11 @@
-import { AssetDetails } from '../../models/AssetDetails';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
-import { Asset, NetworkChainId } from '../../types';
-import daiIcon from '../../assets/tokens/dai.svg';
-import usdcIcon from '../../assets/tokens/usdc.svg';
-import usdtIcon from '../../assets/tokens/usdt.svg';
-import sovIcon from '../../assets/tokens/sov.svg';
-import ethIcon from '../../assets/tokens/eth.svg';
+// import { AssetDetails } from '../../models/AssetDetails';
+// import { BabelFishDetails } from '../../models/BabelFishDetails';
+// import { Asset, NetworkChainId } from '../../types';
+// import daiIcon from '../../assets/tokens/dai.svg';
+// import usdcIcon from '../../assets/tokens/usdc.svg';
+// import usdtIcon from '../../assets/tokens/usdt.svg';
+// import sovIcon from '../../assets/tokens/sov.svg';
+// import ethIcon from '../../assets/tokens/eth.svg';
 
 export const rskBscTestnetAssets = [
   // new AssetDetails(
