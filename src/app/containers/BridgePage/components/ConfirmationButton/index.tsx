@@ -7,13 +7,17 @@ import swapLogo from 'assets/swap.svg';
 import { Button } from '../../../../components/Form/Button';
 import { wallet } from '../../../../../services/wallet';
 import { BridgePageState } from '../../types';
-import { NetworkDictionary } from '../../../../../dictionaries';
+import {
+  AssetDictionary,
+  NetworkDictionary,
+} from '../../../../../dictionaries';
 import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { BridgeInformation } from '../DestinationChainCard/BridgeInformation';
 import { actions } from '../../slice';
-import { fromWei, toWei } from '../../../../../utils/math';
+import { fromWei, toNumberFormat, toWei } from '../../../../../utils/math';
 import { useBalanceOf } from '../../../../hooks/useBalanceOf';
 import { WalletButton } from '../../../../components/Form/WalletButton';
+import { useAggregatorBalanceOf } from '../../../../hooks/useAggregatorBalanceOf';
 
 interface Props {
   state: BridgePageState;
@@ -132,11 +136,81 @@ function FormButton({
       );
     }
   }, [data, state.tx.loading, dispatch]);
-
+  const weiBalance = useAggregatorBalanceOf(
+    data.asset.value,
+    data.targetAsset.value,
+  );
   const { value, loading } = useBalanceOf(
     data.asset.value,
     data.sourceNetwork.value,
   );
+
+  const balance = useMemo(
+    () =>
+      Number(
+        fromWei(
+          weiBalance.value,
+          data.targetAsset.value,
+          data.sourceNetwork.value,
+          data.targetNetwork.value,
+        ),
+      ),
+    [
+      weiBalance.value,
+      data.targetNetwork.value,
+      data.sourceNetwork.value,
+      data.targetAsset.value,
+    ],
+  );
+
+  const amount = useMemo(() => {
+    let _cost = data.fee.nested('value').value;
+    if (_cost < 0 || isNaN(_cost)) _cost = 0;
+    return bignumber(data.amount.value || 0)
+      .minus(
+        fromWei(
+          _cost,
+          data.asset.value,
+          data.sourceNetwork.value,
+          data.targetNetwork.value,
+        ),
+      )
+      .toNumber();
+  }, [
+    data.fee,
+    data.amount.value,
+    data.asset.value,
+    data.sourceNetwork.value,
+    data.targetNetwork.value,
+  ]);
+
+  const lowBalance = useMemo(
+    () =>
+      data.sourceNetwork.value === NetworkType.RSK
+        ? bignumber(amount).greaterThanOrEqualTo(balance)
+        : false,
+    [data.sourceNetwork.value, amount, balance],
+  );
+
+  const disabled = useMemo(() => {
+    return (
+      !data.fee.value ||
+      !data.min.value ||
+      (loading && !value) ||
+      state.tx.loading ||
+      bignumber(data.amount.value || '0').lessThan(
+        fromWei(data.min.nested('value').value),
+      ) ||
+      bignumber(
+        toWei(
+          data.amount.value,
+          data.asset.value,
+          data.sourceNetwork.value,
+          data.targetNetwork.value,
+        ),
+      ).greaterThan(value)
+    );
+  }, [data, loading, value, state]);
 
   return (
     <div className="w-full text-center">
@@ -144,25 +218,28 @@ function FormButton({
         text="Transfer"
         loading={state.tx.loading}
         className="btn-trade mx-auto"
-        disabled={
-          !data.fee.value ||
-          !data.min.value ||
-          (loading && !value) ||
-          state.tx.loading ||
-          bignumber(data.amount.value || '0').lessThan(
-            fromWei(data.min.nested('value').value),
-          ) ||
-          bignumber(
-            toWei(
-              data.amount.value,
-              data.asset.value,
-              data.sourceNetwork.value,
-              data.targetNetwork.value,
-            ),
-          ).greaterThan(value)
-        }
+        disabled={disabled || lowBalance}
         onClick={handleSubmit}
       />
+
+      {lowBalance && !weiBalance.loading && (
+        <p className="text-red mt-3">
+          There is not enough{' '}
+          {AssetDictionary.getSymbol(
+            data.targetNetwork.value,
+            data.sourceNetwork.value,
+            data.targetAsset.value,
+          )}{' '}
+          in the aggregator right now.
+          <br />
+          Available: {toNumberFormat(balance, 4)}{' '}
+          {AssetDictionary.getSymbol(
+            data.targetNetwork.value,
+            data.sourceNetwork.value,
+            data.targetAsset.value,
+          )}
+        </p>
+      )}
     </div>
   );
 }

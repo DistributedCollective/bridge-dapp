@@ -39,6 +39,42 @@ class Token {
     return '0';
   }
 
+  public async balanceOfBridgeToken(
+    networkType: NetworkType,
+    sideNetworkType: NetworkType,
+    sourceAsset: Asset,
+    targetAsset: Asset,
+  ) {
+    const token = AssetDictionary.get(
+      networkType,
+      sideNetworkType,
+      sourceAsset,
+    );
+
+    const abi = AssetDictionary.getTokenContractAbi(
+      sideNetworkType,
+      networkType,
+      targetAsset,
+    );
+
+    const tokenAddress = token?.aggregatorData.bridgeTokenAddresses.get(
+      targetAsset,
+    );
+
+    if (tokenAddress && token) {
+      return network
+        .call(
+          networkType,
+          tokenAddress.toLowerCase(),
+          abi as any,
+          'balanceOf',
+          [token.aggregatorData.aggregatorContractAddress.toLowerCase()],
+        )
+        .catch(e => console.error(e));
+    }
+    return '0';
+  }
+
   public async allowance(
     networkType: NetworkType,
     sideNetworkType: NetworkType,
