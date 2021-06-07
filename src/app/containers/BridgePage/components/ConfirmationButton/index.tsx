@@ -184,23 +184,8 @@ function FormButton({
     data.targetNetwork.value,
   ]);
 
-  const lowBalance = useMemo(
-    () =>
-      data.sourceNetwork.value === NetworkType.RSK
-        ? bignumber(amount).greaterThanOrEqualTo(balance)
-        : false,
-    [data.sourceNetwork.value, amount, balance],
-  );
-
-  const disabled = useMemo(() => {
-    return (
-      !data.fee.value ||
-      !data.min.value ||
-      (loading && !value) ||
-      state.tx.loading ||
-      bignumber(data.amount.value || '0').lessThan(
-        fromWei(data.min.nested('value').value),
-      ) ||
+  const errorType = useMemo(() => {
+    if (
       bignumber(
         toWei(
           data.amount.value,
@@ -209,8 +194,41 @@ function FormButton({
           data.targetNetwork.value,
         ),
       ).greaterThan(value)
+    )
+      return 'user-balance';
+
+    if (
+      data.sourceNetwork.value === NetworkType.RSK &&
+      bignumber(amount).greaterThanOrEqualTo(balance)
+    )
+      return 'aggregator-balance';
+
+    if (
+      bignumber(data.amount.value || '0').lessThan(
+        fromWei(data.min.nested('value').value),
+      )
+    )
+      return 'min-limit';
+
+    if (
+      bignumber(data.amount.value || '0').greaterThan(
+        fromWei(data.max.nested('value').value),
+      )
+    )
+      return 'max-limit';
+
+    return false;
+  }, [data, value, amount, balance]);
+
+  const disabled = useMemo(() => {
+    return (
+      !data.fee.value ||
+      !data.min.value ||
+      (loading && !value) ||
+      state.tx.loading ||
+      errorType !== false
     );
-  }, [data, loading, value, state]);
+  }, [data, loading, value, state, errorType]);
 
   return (
     <div className="w-full text-center">
@@ -218,11 +236,11 @@ function FormButton({
         text="Transfer"
         loading={state.tx.loading}
         className="btn-trade mx-auto"
-        disabled={disabled || lowBalance}
+        disabled={disabled}
         onClick={handleSubmit}
       />
 
-      {lowBalance && !weiBalance.loading && (
+      {errorType === 'aggregator-balance' && !weiBalance.loading && (
         <p className="text-red mt-3">
           There is not enough{' '}
           {AssetDictionary.getSymbol(
@@ -238,6 +256,64 @@ function FormButton({
             data.sourceNetwork.value,
             data.targetAsset.value,
           )}
+        </p>
+      )}
+
+      {errorType === 'user-balance' && !loading && (
+        <p className="text-red mt-3">
+          You don't have enough{' '}
+          {AssetDictionary.getSymbol(
+            data.targetNetwork.value,
+            data.sourceNetwork.value,
+            data.targetAsset.value,
+          )}{' '}
+          in your wallet balance.
+        </p>
+      )}
+
+      {errorType === 'min-limit' && !loading && (
+        <p className="text-red mt-3">
+          Minimum amount to be transferred is{' '}
+          {toNumberFormat(
+            Number(
+              fromWei(
+                data.min.nested('value').value,
+                data.asset.value,
+                data.targetNetwork.value,
+                data.sourceNetwork.value,
+              ),
+            ),
+            4,
+          )}{' '}
+          {AssetDictionary.getSymbol(
+            data.targetNetwork.value,
+            data.sourceNetwork.value,
+            data.targetAsset.value,
+          )}{' '}
+          .
+        </p>
+      )}
+
+      {errorType === 'max-limit' && !loading && (
+        <p className="text-red mt-3">
+          Maximum amount to be transferred is{' '}
+          {toNumberFormat(
+            Number(
+              fromWei(
+                data.max.nested('value').value,
+                data.asset.value,
+                data.targetNetwork.value,
+                data.sourceNetwork.value,
+              ),
+            ),
+            4,
+          )}{' '}
+          {AssetDictionary.getSymbol(
+            data.targetNetwork.value,
+            data.sourceNetwork.value,
+            data.targetAsset.value,
+          )}{' '}
+          .
         </p>
       )}
     </div>
