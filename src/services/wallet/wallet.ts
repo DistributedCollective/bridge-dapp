@@ -3,6 +3,7 @@ import { TransactionConfig } from 'web3-core';
 import { NetworkDictionary } from 'dictionaries';
 import { NetworkChainId, NetworkType } from 'types';
 import { toaster } from '../toaster';
+import { toHex } from 'web3-utils';
 
 type EventNames =
   | 'connected'
@@ -131,6 +132,27 @@ class Wallet {
 
   public get provider() {
     return this._provider;
+  }
+
+  public async changeChain(networkType: NetworkType) {
+    const chain = NetworkDictionary.get(networkType);
+    if (!chain) return Promise.resolve(null);
+    return this._provider.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          chainId: toHex(chain.chainId),
+          chainName: chain.longName,
+          nativeCurrency: {
+            name: chain.coinName,
+            symbol: chain.coinName,
+            decimals: chain.coinDecimals,
+          },
+          rpcUrls: [chain.nodeUrl],
+          blockExplorerUrls: [chain.explorer],
+        },
+      ],
+    });
   }
 
   private trigger(event: EventNames, ...values: any) {

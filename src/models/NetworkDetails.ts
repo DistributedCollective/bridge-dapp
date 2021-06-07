@@ -6,8 +6,12 @@ export class NetworkDetails {
     public mode: AppMode,
     public chainId: NetworkChainId,
     public name: string,
+    public readonly longName: string,
+    public readonly coinName: string,
+    public readonly coinDecimals: number,
     public image: string,
     public nodeUrl: string,
+    public readonly explorer: string,
     public explorerTx: string,
     public explorerAdr: string,
   ) {}

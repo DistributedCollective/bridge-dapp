@@ -320,6 +320,10 @@ function* watchPendingTransaction() {
 }
 
 function* watchBlockChanges({ payload }: PayloadAction<NetworkType>) {
+  try {
+    yield call([wallet, wallet.changeChain], payload);
+  } catch (e) {}
+
   while (true) {
     const block = yield call([network, network.blockNumber], payload);
     yield put(actions.block(block));
