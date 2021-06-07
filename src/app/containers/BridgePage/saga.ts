@@ -321,7 +321,9 @@ function* watchPendingTransaction() {
 
 function* watchBlockChanges({ payload }: PayloadAction<NetworkType>) {
   try {
-    yield call([wallet, wallet.changeChain], payload);
+    if (wallet.isConnected()) {
+      yield call([wallet, wallet.changeChain], payload);
+    }
   } catch (e) {}
 
   while (true) {

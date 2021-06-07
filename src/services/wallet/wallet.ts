@@ -75,7 +75,7 @@ class Wallet {
 
   public isConnected() {
     if (this.provider) {
-      return this.provider.isConnected();
+      return this.provider.isConnected() && !!this.address;
     }
     return false;
   }
