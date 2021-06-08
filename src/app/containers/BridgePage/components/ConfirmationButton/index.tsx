@@ -164,17 +164,14 @@ function FormButton({
   );
 
   const errorType = useMemo(() => {
-    if (
-      bignumber(
-        toWei(
-          data.amount.value || '0',
-          data.asset.value,
-          data.sourceNetwork.value,
-          data.targetNetwork.value,
-        ),
-      ).greaterThan(value || '0')
-    )
-      return 'user-balance';
+    const weiAmount = toWei(
+      data.amount.value || '0',
+      data.asset.value,
+      data.sourceNetwork.value,
+      data.targetNetwork.value,
+    );
+
+    if (bignumber(weiAmount).greaterThan(value || '0')) return 'user-balance';
 
     if (
       data.sourceNetwork.value === NetworkType.RSK &&
