@@ -3,10 +3,12 @@ import { Asset } from '../../types';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
-import ethIcon from '../../assets/tokens/eth.svg';
+// import ethIcon from '../../assets/tokens/eth.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
-import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
+import {
+  /* ethsAggregatorRSK, */ xusdAggregatorRSK,
+} from './rsk-eth-mainnet-assets';
 
 export const bscRskMainnetAssets = [
   new AssetDetails(
@@ -77,21 +79,21 @@ export const bscRskMainnetAssets = [
       Asset.XUSD,
     ),
   ),
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
-    false,
-    new BabelFishDetails(
-      ethsAggregatorRSK,
-      '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
-      false,
-      [Asset.ETHs],
-      new Map<Asset, string>(),
-      Asset.ETHs,
-    ),
-  ),
+  // new AssetDetails(
+  //   Asset.ETH,
+  //   'ETH',
+  //   'ETH',
+  //   ethIcon,
+  //   18,
+  //   '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+  //   false,
+  //   new BabelFishDetails(
+  //     ethsAggregatorRSK,
+  //     '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+  //     false,
+  //     [Asset.ETHs],
+  //     new Map<Asset, string>(),
+  //     Asset.ETHs,
+  //   ),
+  // ),
 ];
