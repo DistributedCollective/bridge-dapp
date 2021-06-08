@@ -4,6 +4,9 @@ import xusdIcon from '../../assets/tokens/xusd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import ethsIcon from '../../assets/tokens/eths.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
+// import bnbsIcon from '../../assets/tokens/bnbs.svg';
+
+export const bnbsAggregatorRSK = '0x000';
 
 export const rskBscMainnetAssets = [
   new AssetDetails(
@@ -47,4 +50,23 @@ export const rskBscMainnetAssets = [
       Asset.ETHs,
     ),
   ),
+  // new AssetDetails(
+  //   Asset.BNBs,
+  //   'BNBs',
+  //   'BNBs',
+  //   bnbsIcon,
+  //   18,
+  //   '0x0', // todo aggregator token
+  //   false,
+  //   new BabelFishDetails(
+  //     bnbsAggregatorRSK,
+  //     '0xd2a826b78200c8434b957913ce4067e6e3169385',
+  //     false,
+  //     [Asset.BNB],
+  //     new Map<Asset, string>([
+  //       [Asset.BNB, '0xd2a826b78200c8434b957913ce4067e6e3169385'],
+  //     ]),
+  //     Asset.BNB,
+  //   ),
+  // ),
 ];
