@@ -6,9 +6,9 @@ import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
-// import bnbIcon from '../../assets/tokens/bnb.svg';
+import bnbIcon from '../../assets/tokens/bnb.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
-// import { bnbsAggregatorRSK } from './rsk-bsc-mainnet-assets';
+import { bnbsAggregatorRSK } from './rsk-bsc-mainnet-assets';
 
 export const bscRskMainnetAssets = [
   new AssetDetails(
@@ -96,21 +96,21 @@ export const bscRskMainnetAssets = [
       Asset.ETHs,
     ),
   ),
-  // new AssetDetails(
-  //   Asset.BNB,
-  //   'BNB',
-  //   'BNB',
-  //   bnbIcon,
-  //   18,
-  //   '0xB6C313a427fa911A4C9a119e80Feea0fe20E69F0',
-  //   true,
-  //   new BabelFishDetails(
-  //     bnbsAggregatorRSK,
-  //     '0xB6C313a427fa911A4C9a119e80Feea0fe20E69F0',
-  //     false,
-  //     [Asset.BNBs],
-  //     new Map<Asset, string>(),
-  //     Asset.BNBs,
-  //   ),
-  // ),
+  new AssetDetails(
+    Asset.BNB,
+    'BNB',
+    'BNB',
+    bnbIcon,
+    18,
+    '0xB6C313a427fa911A4C9a119e80Feea0fe20E69F0',
+    true,
+    new BabelFishDetails(
+      bnbsAggregatorRSK,
+      '0xB6C313a427fa911A4C9a119e80Feea0fe20E69F0',
+      false,
+      [Asset.BNBs],
+      new Map<Asset, string>(),
+      Asset.BNBs,
+    ),
+  ),
 ];
