@@ -163,62 +163,41 @@ function FormButton({
     ],
   );
 
-  const amount = useMemo(() => {
-    let _cost = data.fee.nested('value').value;
-    if (_cost < 0 || isNaN(_cost)) _cost = 0;
-    return bignumber(data.amount.value || 0)
-      .minus(
-        fromWei(
-          _cost,
-          data.asset.value,
-          data.sourceNetwork.value,
-          data.targetNetwork.value,
-        ),
-      )
-      .toNumber();
-  }, [
-    data.fee,
-    data.amount.value,
-    data.asset.value,
-    data.sourceNetwork.value,
-    data.targetNetwork.value,
-  ]);
-
   const errorType = useMemo(() => {
     if (
       bignumber(
         toWei(
-          data.amount.value,
+          data.amount.value || '0',
           data.asset.value,
           data.sourceNetwork.value,
           data.targetNetwork.value,
         ),
-      ).greaterThan(value)
+      ).greaterThan(value || '0')
     )
       return 'user-balance';
 
     if (
       data.sourceNetwork.value === NetworkType.RSK &&
-      bignumber(amount).greaterThanOrEqualTo(balance)
+      bignumber(data.amount.value || '0').greaterThanOrEqualTo(balance || '0')
     )
       return 'aggregator-balance';
 
     if (
       bignumber(data.amount.value || '0').lessThan(
-        fromWei(data.min.nested('value').value),
+        fromWei(data.min.nested('value').value || '0'),
       )
     )
       return 'min-limit';
 
     if (
       bignumber(data.amount.value || '0').greaterThan(
-        fromWei(data.max.nested('value').value),
+        fromWei(data.max.nested('value').value || '0'),
       )
     )
       return 'max-limit';
 
     return false;
-  }, [data, value, amount, balance]);
+  }, [data, value, balance]);
 
   const disabled = useMemo(() => {
     return (
@@ -263,9 +242,9 @@ function FormButton({
         <p className="text-red mt-3">
           You don't have enough{' '}
           {AssetDictionary.getSymbol(
-            data.targetNetwork.value,
             data.sourceNetwork.value,
-            data.targetAsset.value,
+            data.targetNetwork.value,
+            data.asset.value,
           )}{' '}
           in your wallet balance.
         </p>
@@ -286,9 +265,9 @@ function FormButton({
             4,
           )}{' '}
           {AssetDictionary.getSymbol(
-            data.targetNetwork.value,
             data.sourceNetwork.value,
-            data.targetAsset.value,
+            data.targetNetwork.value,
+            data.asset.value,
           )}{' '}
           .
         </p>
@@ -309,9 +288,9 @@ function FormButton({
             4,
           )}{' '}
           {AssetDictionary.getSymbol(
-            data.targetNetwork.value,
             data.sourceNetwork.value,
-            data.targetAsset.value,
+            data.targetNetwork.value,
+            data.asset.value,
           )}{' '}
           .
         </p>
