@@ -43,6 +43,7 @@ export function AmountInput({
           asset={asset}
           onChange={onChange}
           network={networkType}
+          sideNetworkType={sideNetworkType}
         />
       )}
     </>
@@ -54,6 +55,7 @@ const amounts = [10, 25, 50, 75, 100];
 interface AmountSelectorProps {
   asset: Asset;
   network: NetworkType;
+  sideNetworkType: NetworkType;
   onChange: (value: string) => void;
 }
 
@@ -70,7 +72,9 @@ function AmountSelector(props: AmountSelectorProps) {
         .mul(percent / 100)
         .toString();
     }
-    props.onChange(fromWei(value, props.asset, props.network));
+    props.onChange(
+      fromWei(value, props.asset, props.network, props.sideNetworkType),
+    );
   };
   return (
     <div className="mt-4 flex flex-row items-center justify-between border border-secondary rounded-lg divide-x divide-secondary">
