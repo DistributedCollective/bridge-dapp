@@ -4,9 +4,11 @@ import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
+import bnbIcon from '../../assets/tokens/bnb.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
+import { bnbsAggregatorRSK } from './rsk-bsc-testnet-assets';
 
 export const bscRskTesnetAssets = [
   new AssetDetails(
@@ -92,6 +94,23 @@ export const bscRskTesnetAssets = [
       [Asset.ETHs],
       new Map<Asset, string>(),
       Asset.ETHs,
+    ),
+  ),
+  new AssetDetails(
+    Asset.BNB,
+    'BNB',
+    'BNB',
+    bnbIcon,
+    18,
+    '0x68bD35422b457f315AA176743325a9F7C9830c68',
+    true,
+    new BabelFishDetails(
+      bnbsAggregatorRSK,
+      '0x68bD35422b457f315AA176743325a9F7C9830c68',
+      false,
+      [Asset.BNBs],
+      new Map<Asset, string>(),
+      Asset.BNBs,
     ),
   ),
 ];
