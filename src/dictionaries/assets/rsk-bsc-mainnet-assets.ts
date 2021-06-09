@@ -25,7 +25,7 @@ export const rskBscMainnetAssets = [
       new Map<Asset, string>([
         [Asset.BNB, '0xd2a826b78200c8434b957913ce4067e6e3169385'],
       ]),
-      Asset.BNB,
+      Asset.BNBs,
     ),
   ),
   new AssetDetails(

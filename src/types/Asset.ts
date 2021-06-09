@@ -4,6 +4,8 @@ export enum Asset {
   BNB = 'bnb',
   BNBs = 'bnbs',
   SOV = 'sov',
+  eSOV = 'esov',
+  bSOV = 'bsov',
   WBTC = 'wbtc',
   DAI = 'dai',
   USDC = 'usdc',

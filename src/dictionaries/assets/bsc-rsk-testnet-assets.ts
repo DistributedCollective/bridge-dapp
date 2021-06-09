@@ -9,8 +9,26 @@ import busdIcon from '../../assets/tokens/busd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
 import { bnbsAggregatorRSK } from './rsk-bsc-testnet-assets';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const bscRskTesnetAssets = [
+  new AssetDetails(
+    Asset.bSOV,
+    'bSOV',
+    'bSOV',
+    sovIcon,
+    18,
+    '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+    false,
+    new BabelFishDetails(
+      false,
+      '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+      false,
+      [Asset.SOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
   new AssetDetails(
     Asset.BNB,
     'BNB',

@@ -617,11 +617,6 @@
         "internalType": "address",
         "name": "_recipient",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_bridge",
-        "type": "address"
       }
     ],
     "name": "redeemToBridge",

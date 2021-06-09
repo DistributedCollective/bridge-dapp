@@ -2,7 +2,6 @@ import { AbiItem } from 'web3-utils';
 import { Asset, NetworkType } from '../../types';
 import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';
-import massetXusdAbi from '../../assets/abi/BabelFish_MassetAbi_xusd.json';
 import { network } from '../index';
 
 class Babelfish {
@@ -27,40 +26,28 @@ class Babelfish {
     recipient: string,
     bridge: string,
   ) {
-    const { address, abi, useBridgeAddress } = this.getMassetData(
+    const { address, abi } = this.getMassetData(
       networkType,
       sideNetworkType,
       asset,
     );
-
-    const args = [bAsset, mAssetQuanity, recipient];
-
-    if (useBridgeAddress) {
-      args.push(bridge);
-    }
-
-    return network.send(networkType, address, abi, 'redeemToBridge', args);
+    return network.send(networkType, address, abi, 'redeemToBridge', [
+      bAsset,
+      mAssetQuanity,
+      recipient,
+    ]);
   }
 
   private getMassetData(
     networkType: NetworkType,
     sideNetworkType: NetworkType,
     asset: Asset,
-  ): { address: string; abi: AbiItem[]; useBridgeAddress: boolean } {
+  ): { address: string; abi: AbiItem[] } {
     const aggregator = AssetDictionary.get(networkType, sideNetworkType, asset)
       ?.aggregatorData;
-    let abi = massetAbi;
-    let useBridgeAddress = true;
-
-    if (aggregator?.version === Asset.XUSD) {
-      useBridgeAddress = false;
-      abi = massetXusdAbi;
-    }
-
     return {
       address: aggregator?.aggregatorContractAddress || '',
-      abi: abi as AbiItem[],
-      useBridgeAddress,
+      abi: massetAbi as AbiItem[],
     };
   }
 }

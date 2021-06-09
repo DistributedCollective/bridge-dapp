@@ -61,7 +61,11 @@ class Token {
       targetAsset,
     );
 
-    if (tokenAddress && token) {
+    if (
+      tokenAddress &&
+      token &&
+      token.aggregatorData.aggregatorContractAddress
+    ) {
       return network
         .call(
           networkType,
