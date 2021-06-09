@@ -34,7 +34,7 @@ class Token {
     if (token) {
       return network
         .call(networkType, token, abi as any, 'balanceOf', [owner])
-        .catch(e => console.error(e));
+        .catch(e => console.error(networkType, asset, token, e));
     }
     return '0';
   }

@@ -91,7 +91,7 @@ export class NetworkDictionary {
       't-BNB',
       18,
       bscLogo,
-      'https://data-seed-prebsc-1-s1.binance.org:8545/',
+      'https://data-seed-prebsc-2-s3.binance.org:8545/',
       'https://testnet.bscscan.com',
       'https://testnet.bscscan.com/tx/:value',
       'https://testnet.bscscan.com/address/:value',
