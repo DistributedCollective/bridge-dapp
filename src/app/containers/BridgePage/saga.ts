@@ -48,8 +48,13 @@ function getSpenderAddress(payload: {
 function createWeb3Connection(wallet: Wallet) {
   return eventChannel(emit => {
     const handleConnecting = status => emit(actions.userConnecting(status));
-    const handleAddressChange = address =>
-      emit(actions.userAddressChanged(address));
+    const handleAddressChange = async address => {
+      let accounts = [address];
+      try {
+        accounts = await wallet.web3.eth.getAccounts();
+      } catch (e) {}
+      emit(actions.userAddressChanged(address || accounts[0] || ''));
+    };
     const handleChainChange = value => emit(actions.userChainChanged(value));
     wallet.on('connecting', handleConnecting);
     wallet.on('addressChanged', handleAddressChange);

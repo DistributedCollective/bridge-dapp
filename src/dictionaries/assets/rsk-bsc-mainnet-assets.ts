@@ -10,25 +10,22 @@ export const bnbsAggregatorRSK = '0xafD905Fe2EdBF5A7367A73B0F1e6a62Cb5E27D3e';
 
 export const rskBscMainnetAssets = [
   new AssetDetails(
-    Asset.XUSD,
-    'XUSD',
-    'XUSD',
-    xusdIcon,
+    Asset.BNBs,
+    'BNBs',
+    'BNBs',
+    bnbsIcon,
     18,
-    '0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F',
+    '0x6D9659bdF5b1A1dA217f7BbAf7dBAF8190E2e71B',
     false,
     new BabelFishDetails(
-      xusdAggregatorRSK,
-      '0xFf4299bCA0313C20A61dc5eD597739743BEf3f6d', // bsusdt
-      true,
-      [Asset.USDT, Asset.USDC, Asset.DAI, Asset.BUSD],
+      bnbsAggregatorRSK,
+      '0xd2a826b78200c8434b957913ce4067e6e3169385',
+      false,
+      [Asset.BNB],
       new Map<Asset, string>([
-        [Asset.USDT, '0xFf4299bCA0313C20A61dc5eD597739743BEf3f6d'],
-        [Asset.USDC, '0x91EDceE9567cd5612c9DEDeaAE24D5e574820af1'],
-        [Asset.DAI, '0x6A42Ff12215a90f50866A5cE43A9c9C870116e76'],
-        [Asset.BUSD, '0x61e9604e31a736129d7f5C58964c75935b2d80D6'],
+        [Asset.BNB, '0xd2a826b78200c8434b957913ce4067e6e3169385'],
       ]),
-      Asset.XUSD,
+      Asset.BNB,
     ),
   ),
   new AssetDetails(
@@ -51,22 +48,25 @@ export const rskBscMainnetAssets = [
     ),
   ),
   new AssetDetails(
-    Asset.BNBs,
-    'BNBs',
-    'BNBs',
-    bnbsIcon,
+    Asset.XUSD,
+    'XUSD',
+    'XUSD',
+    xusdIcon,
     18,
-    '0x6D9659bdF5b1A1dA217f7BbAf7dBAF8190E2e71B',
+    '0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F',
     false,
     new BabelFishDetails(
-      bnbsAggregatorRSK,
-      '0xd2a826b78200c8434b957913ce4067e6e3169385',
-      false,
-      [Asset.BNB],
+      xusdAggregatorRSK,
+      '0xFf4299bCA0313C20A61dc5eD597739743BEf3f6d', // bsusdt
+      true,
+      [Asset.USDT, Asset.USDC, Asset.DAI, Asset.BUSD],
       new Map<Asset, string>([
-        [Asset.BNB, '0xd2a826b78200c8434b957913ce4067e6e3169385'],
+        [Asset.USDT, '0xFf4299bCA0313C20A61dc5eD597739743BEf3f6d'],
+        [Asset.USDC, '0x91EDceE9567cd5612c9DEDeaAE24D5e574820af1'],
+        [Asset.DAI, '0x6A42Ff12215a90f50866A5cE43A9c9C870116e76'],
+        [Asset.BUSD, '0x61e9604e31a736129d7f5C58964c75935b2d80D6'],
       ]),
-      Asset.BNB,
+      Asset.XUSD,
     ),
   ),
 ];

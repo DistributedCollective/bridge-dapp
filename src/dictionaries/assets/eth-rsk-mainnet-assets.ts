@@ -9,6 +9,23 @@ import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
 
 export const ethRskMainnetAssets = [
   new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    '0xd412acd34a832a09c80c8a4895ff46d733f09538',
+    true,
+    new BabelFishDetails(
+      ethsAggregatorRSK,
+      '0xd412acd34a832a09c80c8a4895ff46d733f09538',
+      false,
+      [Asset.ETHs],
+      new Map<Asset, string>(),
+      Asset.ETHs,
+    ),
+  ),
+  new AssetDetails(
     Asset.USDT,
     'USDT',
     'USDT',
@@ -57,23 +74,6 @@ export const ethRskMainnetAssets = [
       [Asset.XUSD],
       new Map<Asset, string>(),
       Asset.XUSD,
-    ),
-  ),
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    '0xd412acd34a832a09c80c8a4895ff46d733f09538',
-    true,
-    new BabelFishDetails(
-      ethsAggregatorRSK,
-      '0xd412acd34a832a09c80c8a4895ff46d733f09538',
-      false,
-      [Asset.ETHs],
-      new Map<Asset, string>(),
-      Asset.ETHs,
     ),
   ),
 ];
