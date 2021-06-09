@@ -2,7 +2,7 @@ import type { Asset } from '../types';
 
 export class BabelFishDetails {
   constructor(
-    public readonly aggregatorContractAddress: string,
+    public readonly aggregatorContractAddress: string | false,
     public readonly bridgeTokenAddress: string,
     public readonly isMinting: boolean,
     public readonly aggregatedTokens: Asset[],
@@ -10,6 +10,8 @@ export class BabelFishDetails {
     public readonly version: Asset,
   ) {
     this.bridgeTokenAddress = bridgeTokenAddress.toLowerCase();
-    this.aggregatorContractAddress = aggregatorContractAddress.toLowerCase();
+    this.aggregatorContractAddress = aggregatorContractAddress
+      ? aggregatorContractAddress.toLowerCase()
+      : false;
   }
 }

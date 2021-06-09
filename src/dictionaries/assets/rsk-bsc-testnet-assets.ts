@@ -1,11 +1,70 @@
 import { AssetDetails } from '../../models/AssetDetails';
 import { Asset } from '../../types';
-import xusdIcon from '../../assets/tokens/xusd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
+import xusdIcon from '../../assets/tokens/xusd.svg';
 import ethsIcon from '../../assets/tokens/eths.svg';
+import bnbsIcon from '../../assets/tokens/bnbs.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
+import sovIcon from '../../assets/tokens/sov.svg';
+
+export const bnbsAggregatorRSK = '0x790C4451c2e8e4cDC50cEdEC22756DaC993e93eb';
 
 export const rskBscTestnetAssets = [
+  new AssetDetails(
+    Asset.SOV,
+    'SOV',
+    'SOV',
+    sovIcon,
+    18,
+    '0x6a9A07972D07E58f0daF5122D11e069288A375fB',
+    false,
+    new BabelFishDetails(
+      false,
+      '0x6a9A07972D07E58f0daF5122D11e069288A375fB',
+      false,
+      [Asset.bSOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
+  new AssetDetails(
+    Asset.BNBs,
+    'BNBs',
+    'BNBs',
+    bnbsIcon,
+    18,
+    '0x801F223Def9A4e3a543eAcCEFB79dCE981Fa2Fb5',
+    false,
+    new BabelFishDetails(
+      bnbsAggregatorRSK,
+      '0xafa6A1eb7E2282E8854822d2bB412b6db2cabA4E',
+      false,
+      [Asset.BNB],
+      new Map<Asset, string>([
+        [Asset.BNB, '0xafa6A1eb7E2282E8854822d2bB412b6db2cabA4E'],
+      ]),
+      Asset.BNBs,
+    ),
+  ),
+  new AssetDetails(
+    Asset.ETHs,
+    'ETHs',
+    'ETHs',
+    ethsIcon,
+    18,
+    '0x0fd0D8D78CE9299eE0e5676A8D51f938c234162c',
+    false,
+    new BabelFishDetails(
+      ethsAggregatorRSK,
+      '0x793CE6F95912D5b43532c2116e1b68993d902272',
+      false,
+      [Asset.ETH],
+      new Map<Asset, string>([
+        [Asset.ETH, '0x793CE6F95912D5b43532c2116e1b68993d902272'],
+      ]),
+      Asset.ETHs,
+    ),
+  ),
   new AssetDetails(
     Asset.XUSD,
     'XUSD',
@@ -26,25 +85,6 @@ export const rskBscTestnetAssets = [
         [Asset.BUSD, '0x8c9abb6c9d8d15ddb7ada2e50086e1050ab32688'],
       ]),
       Asset.XUSD,
-    ),
-  ),
-  new AssetDetails(
-    Asset.ETHs,
-    'ETHs',
-    'ETHs',
-    ethsIcon,
-    18,
-    '0x0fd0D8D78CE9299eE0e5676A8D51f938c234162c',
-    false,
-    new BabelFishDetails(
-      ethsAggregatorRSK,
-      '0x793CE6F95912D5b43532c2116e1b68993d902272',
-      false,
-      [Asset.ETH],
-      new Map<Asset, string>([
-        [Asset.ETH, '0x793CE6F95912D5b43532c2116e1b68993d902272'],
-      ]),
-      Asset.ETHs,
     ),
   ),
 ];

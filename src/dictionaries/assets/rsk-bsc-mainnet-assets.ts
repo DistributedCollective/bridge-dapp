@@ -2,12 +2,51 @@ import { AssetDetails } from '../../models/AssetDetails';
 import { Asset } from '../../types';
 import xusdIcon from '../../assets/tokens/xusd.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
-// import ethsIcon from '../../assets/tokens/eths.svg';
-import {
-  /* ethsAggregatorRSK, */ xusdAggregatorRSK,
-} from './rsk-eth-mainnet-assets';
+import ethsIcon from '../../assets/tokens/eths.svg';
+import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
+import bnbsIcon from '../../assets/tokens/bnbs.svg';
+
+export const bnbsAggregatorRSK = '0xafD905Fe2EdBF5A7367A73B0F1e6a62Cb5E27D3e';
 
 export const rskBscMainnetAssets = [
+  new AssetDetails(
+    Asset.BNBs,
+    'BNBs',
+    'BNBs',
+    bnbsIcon,
+    18,
+    '0x6D9659bdF5b1A1dA217f7BbAf7dBAF8190E2e71B',
+    false,
+    new BabelFishDetails(
+      bnbsAggregatorRSK,
+      '0xd2a826b78200c8434b957913ce4067e6e3169385',
+      false,
+      [Asset.BNB],
+      new Map<Asset, string>([
+        [Asset.BNB, '0xd2a826b78200c8434b957913ce4067e6e3169385'],
+      ]),
+      Asset.BNBs,
+    ),
+  ),
+  new AssetDetails(
+    Asset.ETHs,
+    'ETHs',
+    'ETHs',
+    ethsIcon,
+    18,
+    '0x1D931BF8656D795e50Ef6d639562C5bD8AC2b78F',
+    false,
+    new BabelFishDetails(
+      ethsAggregatorRSK,
+      '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007',
+      false,
+      [Asset.ETH],
+      new Map<Asset, string>([
+        [Asset.ETH, '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007'],
+      ]),
+      Asset.ETHs,
+    ),
+  ),
   new AssetDetails(
     Asset.XUSD,
     'XUSD',
@@ -30,23 +69,4 @@ export const rskBscMainnetAssets = [
       Asset.XUSD,
     ),
   ),
-  // new AssetDetails(
-  //   Asset.ETHs,
-  //   'ETHs',
-  //   'ETHs',
-  //   ethsIcon,
-  //   18,
-  //   '0x1D931BF8656D795e50Ef6d639562C5bD8AC2b78F',
-  //   false,
-  //   new BabelFishDetails(
-  //     ethsAggregatorRSK,
-  //     '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007',
-  //     false,
-  //     [Asset.ETH],
-  //     new Map<Asset, string>([
-  //       [Asset.ETH, '0x30d1B36924c2c0CD1c03EC257D7FFf31bD8c3007'],
-  //     ]),
-  //     Asset.ETHs,
-  //   ),
-  // ),
 ];

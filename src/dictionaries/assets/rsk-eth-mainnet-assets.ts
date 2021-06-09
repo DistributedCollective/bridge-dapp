@@ -9,6 +9,25 @@ export const ethsAggregatorRSK = '0x4bF113905d7F69202106f613308bb02c84aaDF2F';
 
 export const rskEthMainnetAssets = [
   new AssetDetails(
+    Asset.ETHs,
+    'ETHs',
+    'ETHs',
+    ethsIcon,
+    18,
+    '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
+    false,
+    new BabelFishDetails(
+      ethsAggregatorRSK,
+      '0xFe878227c8F334038DAb20a99fC3B373fFe0a755',
+      false,
+      [Asset.ETH],
+      new Map<Asset, string>([
+        [Asset.ETH, '0xFe878227c8F334038DAb20a99fC3B373fFe0a755'],
+      ]),
+      Asset.ETHs,
+    ),
+  ),
+  new AssetDetails(
     Asset.XUSD,
     'XUSD',
     'XUSD',
@@ -27,25 +46,6 @@ export const rskEthMainnetAssets = [
         [Asset.DAI, '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11'],
       ]),
       Asset.XUSD,
-    ),
-  ),
-  new AssetDetails(
-    Asset.ETHs,
-    'ETHs',
-    'ETHs',
-    ethsIcon,
-    18,
-    '0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f',
-    false,
-    new BabelFishDetails(
-      ethsAggregatorRSK,
-      '0xFe878227c8F334038DAb20a99fC3B373fFe0a755',
-      false,
-      [Asset.ETH],
-      new Map<Asset, string>([
-        [Asset.ETH, '0xFe878227c8F334038DAb20a99fC3B373fFe0a755'],
-      ]),
-      Asset.ETHs,
     ),
   ),
 ];

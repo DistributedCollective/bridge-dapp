@@ -1,5 +1,6 @@
 import { AssetDetails } from '../../models/AssetDetails';
 import { Asset } from '../../types';
+import sovIcon from '../../assets/tokens/sov.svg';
 import daiIcon from '../../assets/tokens/dai.svg';
 import usdcIcon from '../../assets/tokens/usdc.svg';
 import usdtIcon from '../../assets/tokens/usdt.svg';
@@ -8,6 +9,40 @@ import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
 
 export const ethRskTesnetAssets = [
+  new AssetDetails(
+    Asset.eSOV,
+    'eSOV',
+    'eSOV',
+    sovIcon,
+    18,
+    '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+    false,
+    new BabelFishDetails(
+      false,
+      '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+      false,
+      [Asset.SOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
+  new AssetDetails(
+    Asset.ETH,
+    'ETH',
+    'ETH',
+    ethIcon,
+    18,
+    '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792',
+    true,
+    new BabelFishDetails(
+      ethsAggregatorRSK,
+      '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792',
+      false,
+      [Asset.ETHs],
+      new Map<Asset, string>(),
+      Asset.ETHs,
+    ),
+  ),
   new AssetDetails(
     Asset.USDT,
     'USDT',
@@ -57,23 +92,6 @@ export const ethRskTesnetAssets = [
       [Asset.XUSD],
       new Map<Asset, string>(),
       Asset.XUSD,
-    ),
-  ),
-  new AssetDetails(
-    Asset.ETH,
-    'ETH',
-    'ETH',
-    ethIcon,
-    18,
-    '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792',
-    true,
-    new BabelFishDetails(
-      ethsAggregatorRSK,
-      '0xa1F7EfD2B12aBa416f1c57b9a54AC92B15C3A792',
-      false,
-      [Asset.ETHs],
-      new Map<Asset, string>(),
-      Asset.ETHs,
     ),
   ),
 ];

@@ -145,6 +145,16 @@ function FormButton({
     data.sourceNetwork.value,
   );
 
+  const token = useMemo(
+    () =>
+      AssetDictionary.get(
+        data.sourceNetwork.value,
+        data.targetNetwork.value,
+        data.asset.value,
+      ),
+    [data.sourceNetwork.value, data.targetNetwork.value, data.asset.value],
+  );
+
   const balance = useMemo(
     () =>
       Number(
@@ -175,6 +185,7 @@ function FormButton({
 
     if (
       data.sourceNetwork.value === NetworkType.RSK &&
+      token?.aggregatorData.aggregatorContractAddress &&
       bignumber(data.amount.value || '0').greaterThanOrEqualTo(balance || '0')
     )
       return 'aggregator-balance';
@@ -194,7 +205,7 @@ function FormButton({
       return 'max-limit';
 
     return false;
-  }, [data, value, balance]);
+  }, [data, value, balance, token]);
 
   const disabled = useMemo(() => {
     return (

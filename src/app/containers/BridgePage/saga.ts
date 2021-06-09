@@ -39,17 +39,35 @@ function getSpenderAddress(payload: {
     payload.asset,
   );
 
-  if (payload.sourceNetwork === NetworkType.RSK) {
-    return asset?.aggregatorData.bridgeTokenAddress;
+  if (
+    payload.sourceNetwork === NetworkType.RSK &&
+    asset?.aggregatorData.aggregatorContractAddress
+  ) {
+    return asset?.aggregatorData.aggregatorContractAddress;
   }
+
+  const bridge = BridgeDictionary.get(
+    payload.sourceNetwork,
+    payload.targetNetwork,
+  );
+
+  if (bridge) {
+    return bridge.bridgeContractAddress;
+  }
+
   return undefined;
 }
 
 function createWeb3Connection(wallet: Wallet) {
   return eventChannel(emit => {
     const handleConnecting = status => emit(actions.userConnecting(status));
-    const handleAddressChange = address =>
-      emit(actions.userAddressChanged(address));
+    const handleAddressChange = async address => {
+      let accounts = [address];
+      try {
+        accounts = await wallet.web3.eth.getAccounts();
+      } catch (e) {}
+      emit(actions.userAddressChanged(address || accounts[0] || ''));
+    };
     const handleChainChange = value => emit(actions.userChainChanged(value));
     wallet.on('connecting', handleConnecting);
     wallet.on('addressChanged', handleAddressChange);
@@ -161,7 +179,10 @@ function* confirmTransfer() {
         : payload.form.receiver
       ).toLowerCase();
 
-      if (payload.form.sourceNetwork === NetworkType.RSK) {
+      if (
+        payload.form.sourceNetwork === NetworkType.RSK &&
+        asset?.aggregatorData.aggregatorContractAddress
+      ) {
         let basset = (
           AssetDictionary.getContractAddressForRsk(
             payload.form.sourceNetwork,
@@ -188,7 +209,10 @@ function* confirmTransfer() {
         let receiver = receiverAddress;
         let extraData: string | undefined = undefined;
 
-        if (payload.form.targetNetwork === NetworkType.RSK) {
+        if (
+          payload.form.targetNetwork === NetworkType.RSK &&
+          asset?.aggregatorData.aggregatorContractAddress
+        ) {
           receiver = asset?.aggregatorData.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);
         }
