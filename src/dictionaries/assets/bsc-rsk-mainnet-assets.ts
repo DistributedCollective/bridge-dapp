@@ -7,10 +7,29 @@ import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
 import bnbIcon from '../../assets/tokens/bnb.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
+
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
 import { bnbsAggregatorRSK } from './rsk-bsc-mainnet-assets';
 
 export const bscRskMainnetAssets = [
+  new AssetDetails(
+    Asset.bSOV,
+    'bSOV',
+    'bSOV',
+    sovIcon,
+    18,
+    '0x8753ede1b3a36358e4d7780f384f3f7a2d9e4359',
+    false,
+    new BabelFishDetails(
+      false,
+      '0x8753ede1b3a36358e4d7780f384f3f7a2d9e4359',
+      false,
+      [Asset.SOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
   new AssetDetails(
     Asset.BNB,
     'BNB',
