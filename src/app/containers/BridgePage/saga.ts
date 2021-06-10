@@ -19,7 +19,7 @@ import { FormPayload, TxStep } from './types';
 import { token } from '../../../services/interactions/token';
 import { toWei } from '../../../utils/math';
 import { network } from '../../../services';
-import { AppMode, Asset, NetworkType } from '../../../types';
+import { Asset, NetworkType } from '../../../types';
 import { bridge } from '../../../services/interactions/bridge';
 import { AssetDictionary, BridgeDictionary } from '../../../dictionaries';
 import { selectBridgePage } from './selectors';
@@ -104,9 +104,10 @@ function* approveTransfer() {
 
     try {
       const amountToApprove = toWei(
-        AppMode.TESTNET ? payload.amount : 1000000,
+        payload.amount,
         payload.asset,
         payload.sourceNetwork,
+        payload.targetNetwork,
       );
 
       const approveHash = yield call(
@@ -298,7 +299,12 @@ function* submitTransferSaga({ payload }: PayloadAction<FormPayload>) {
 
     if (
       bignumber(allowance).lessThan(
-        toWei(payload.amount, payload.asset, payload.sourceNetwork),
+        toWei(
+          payload.amount,
+          payload.asset,
+          payload.sourceNetwork,
+          payload.targetNetwork,
+        ),
       )
     ) {
       yield put(actions.approveTokens(payload));
