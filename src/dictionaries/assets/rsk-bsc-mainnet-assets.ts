@@ -5,10 +5,28 @@ import { BabelFishDetails } from '../../models/BabelFishDetails';
 import ethsIcon from '../../assets/tokens/eths.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
 import bnbsIcon from '../../assets/tokens/bnbs.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const bnbsAggregatorRSK = '0xafD905Fe2EdBF5A7367A73B0F1e6a62Cb5E27D3e';
 
 export const rskBscMainnetAssets = [
+  new AssetDetails(
+    Asset.SOV,
+    'SOV',
+    'SOV',
+    sovIcon,
+    18,
+    '0xEfC78FC7D48B64958315949279bA181C2114abbD',
+    false,
+    new BabelFishDetails(
+      false,
+      '0xEfC78FC7D48B64958315949279bA181C2114abbD',
+      false,
+      [Asset.bSOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
   new AssetDetails(
     Asset.BNBs,
     'BNBs',

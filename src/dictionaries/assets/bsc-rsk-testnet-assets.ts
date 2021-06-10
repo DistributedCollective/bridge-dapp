@@ -18,11 +18,11 @@ export const bscRskTesnetAssets = [
     'bSOV',
     sovIcon,
     18,
-    '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+    '0x6b8daa42b8ac9a0d826981a9990248bef60e2d4c',
     false,
     new BabelFishDetails(
       false,
-      '0xce887e72f26b61c3ddf45bd6e65abbd58437ab04',
+      '0x6b8daa42b8ac9a0d826981a9990248bef60e2d4c',
       false,
       [Asset.SOV],
       new Map<Asset, string>(),

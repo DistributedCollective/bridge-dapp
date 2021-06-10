@@ -3,11 +3,29 @@ import { Asset } from '../../types';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import ethsIcon from '../../assets/tokens/eths.svg';
 import xusdIcon from '../../assets/tokens/xusd.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const xusdAggregatorRSK = '0x1440d19436bEeaF8517896bffB957a88EC95a00F';
 export const ethsAggregatorRSK = '0x4bF113905d7F69202106f613308bb02c84aaDF2F';
 
 export const rskEthMainnetAssets = [
+  new AssetDetails(
+    Asset.SOV,
+    'SOV',
+    'SOV',
+    sovIcon,
+    18,
+    '0xEfC78FC7D48B64958315949279bA181C2114abbD',
+    false,
+    new BabelFishDetails(
+      false,
+      '0xEfC78FC7D48B64958315949279bA181C2114abbD',
+      false,
+      [Asset.eSOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
   new AssetDetails(
     Asset.ETHs,
     'ETHs',

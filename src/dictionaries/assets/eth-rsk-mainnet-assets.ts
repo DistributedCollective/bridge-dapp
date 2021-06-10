@@ -6,8 +6,26 @@ import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
+import sovIcon from '../../assets/tokens/sov.svg';
 
 export const ethRskMainnetAssets = [
+  new AssetDetails(
+    Asset.eSOV,
+    'eSOV',
+    'eSOV',
+    sovIcon,
+    18,
+    '0xbdab72602e9ad40fc6a6852caf43258113b8f7a5',
+    false,
+    new BabelFishDetails(
+      false,
+      '0xbdab72602e9ad40fc6a6852caf43258113b8f7a5',
+      false,
+      [Asset.SOV],
+      new Map<Asset, string>(),
+      Asset.SOV,
+    ),
+  ),
   new AssetDetails(
     Asset.ETH,
     'ETH',
