@@ -3,7 +3,7 @@ import { bignumber } from 'mathjs';
 import { Asset, NetworkType } from 'types';
 import { useBalanceOf } from 'app/hooks/useBalanceOf';
 import { AssetDictionary } from 'dictionaries';
-import { fromWei } from 'utils/math';
+import { fromWei, toNumberFormat } from 'utils/math';
 import { Input } from '../Input';
 
 interface Props {
@@ -30,7 +30,7 @@ export function AmountInput({
         value={value}
         onChange={onChange}
         type="number"
-        placeholder={placeholder || '0.0000'}
+        placeholder={placeholder || toNumberFormat(0, 4)}
         appendElem={
           asset !== undefined
             ? AssetDictionary.getSymbol(networkType, sideNetworkType, asset)
