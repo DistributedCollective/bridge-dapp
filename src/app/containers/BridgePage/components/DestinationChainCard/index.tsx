@@ -141,7 +141,7 @@ export function DestinationChainCard() {
             <FormGroup label="Enter Receiving Address:">
               <Input
                 value={receiver.value}
-                onChange={value => receiver.set(value)}
+                onChange={value => receiver.set((value || '').toLowerCase())}
                 placeholder="Enter or paste address"
               />
             </FormGroup>
