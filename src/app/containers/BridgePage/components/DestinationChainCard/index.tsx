@@ -72,7 +72,10 @@ export function DestinationChainCard() {
 
       sourceNetwork.set(source);
       targetNetwork.set(target);
+      receiver.set('');
+      setReceiveAtExternalWallet(false);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sourceNetwork, targetNetwork],
   );
 
@@ -204,6 +207,18 @@ export function DestinationChainCard() {
               }
             />
           </FormGroup>
+
+          {(receiver.value !== '' || address) && (
+            <>
+              <FormGroup label="Receiving Address:">
+                <div className="font-light">
+                  {receiver.value === ''
+                    ? address
+                    : receiver.value.toLowerCase()}
+                </div>
+              </FormGroup>
+            </>
+          )}
         </div>
       </Card>
     </div>
