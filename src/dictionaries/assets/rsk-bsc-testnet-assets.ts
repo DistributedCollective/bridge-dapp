@@ -71,7 +71,7 @@ export const rskBscTestnetAssets = [
     'XUSD',
     xusdIcon,
     18,
-    '0xca8b437d9d586b938CE000e765476A0594856b51',
+    '0x74858FE37d391f81F89472e1D8BC8Ef9CF67B3b1',
     false,
     new BabelFishDetails(
       xusdAggregatorRSK,
