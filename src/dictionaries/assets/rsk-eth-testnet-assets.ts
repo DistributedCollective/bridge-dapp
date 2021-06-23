@@ -5,7 +5,7 @@ import sovIcon from '../../assets/tokens/sov.svg';
 import ethsIcon from '../../assets/tokens/eths.svg';
 import xusdIcon from '../../assets/tokens/xusd.svg';
 
-export const xusdAggregatorRSK = '0x8d85F8E33cC720206b9A968f3A3A75029be5eb06';
+export const xusdAggregatorRSK = '0xca8b437d9d586b938CE000e765476A0594856b51';
 export const ethsAggregatorRSK = '0x04D92DaA8f3Ef7bD222195e8D1DbE8D89A8CebD3';
 
 export const rskEthTesnetAssets = [
@@ -51,7 +51,7 @@ export const rskEthTesnetAssets = [
     'XUSD',
     xusdIcon,
     18,
-    '0x849D38abD3962cb40d4887E4279ad0e4E5958e34',
+    '0x74858FE37d391f81F89472e1D8BC8Ef9CF67B3b1',
     false,
     new BabelFishDetails(
       xusdAggregatorRSK,
