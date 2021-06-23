@@ -5,5 +5,8 @@
       "placeholder": "Select an item",
       "noResults": "No results"
     }
+  },
+  "maintenance": {
+    "full": "Sovryn Bridge is currently under maintenance, please check our <0>discord</0> for updates."
   }
 }

@@ -1,4 +1,5 @@
 import { BridgePageState } from 'app/containers/BridgePage/types';
+import { MaintenanceStoreState } from 'store/global/maintenance-store/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /*
@@ -7,5 +8,6 @@ import { BridgePageState } from 'app/containers/BridgePage/types';
 */
 export interface RootState {
   bridgePage?: BridgePageState;
+  maintenanceState?: MaintenanceStoreState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
