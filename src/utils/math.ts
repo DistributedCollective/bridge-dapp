@@ -4,7 +4,7 @@ import { AssetDictionary } from '../dictionaries';
 import { wallet } from '../services/wallet';
 
 export function toNumberFormat(amount: number, decimals: number = 2) {
-  return Number(amount).toLocaleString(undefined, {
+  return Number(amount).toLocaleString(navigator.language, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });

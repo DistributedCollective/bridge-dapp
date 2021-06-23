@@ -48,6 +48,7 @@ export function Input({
         className={cn('input', inputClassName)}
         value={value}
         onChange={e => handleChange(e.currentTarget.value)}
+        lang={navigator.language}
         {...props}
       />
       {appendElem && <div className="input-append">{appendElem}</div>}
