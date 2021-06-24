@@ -131,25 +131,6 @@ export function DestinationChainCard() {
               ))}
             </RadioGroup>
           </FormGroup>
-          {!receiveAtExternalWallet ? (
-            <div className="mb-12">
-              <button
-                className="text-secondary hover:underline font-medium"
-                onClick={() => setReceiveAtExternalWallet(true)}
-              >
-                + Receive at external address
-              </button>
-            </div>
-          ) : (
-            <FormGroup label="Enter Receiving Address:">
-              <Input
-                value={receiver.value}
-                onChange={value => receiver.set((value || '').toLowerCase())}
-                placeholder="Enter or paste address"
-              />
-            </FormGroup>
-          )}
-
           {assetList.length > 1 && (
             <FormGroup label="Receive Asset:">
               <AssetSelect
@@ -207,18 +188,36 @@ export function DestinationChainCard() {
               }
             />
           </FormGroup>
-
-          {(receiver.value !== '' || address) && (
-            <>
-              <FormGroup label="Receiving Address:">
+          <FormGroup label="Receiving Address:">
+            {!receiveAtExternalWallet && (
+              <>
                 <div className="font-light">
-                  {receiver.value === ''
+                  {receiver?.value === ''
                     ? address
                     : receiver.value.toLowerCase()}
                 </div>
-              </FormGroup>
-            </>
-          )}
+              </>
+            )}
+            {receiveAtExternalWallet && (
+              <Input
+                className="mb-1"
+                value={receiver.value}
+                onChange={value => receiver.set((value || '').toLowerCase())}
+                placeholder="Enter or paste address"
+              />
+            )}
+            <button
+              className="text-secondary font-medium hover:underline focus:outline-none"
+              onClick={() => {
+                setReceiveAtExternalWallet(!receiveAtExternalWallet);
+                receiver.set('');
+              }}
+            >
+              {receiveAtExternalWallet
+                ? '- Receive at same address'
+                : '+ Receive at external address'}
+            </button>
+          </FormGroup>
         </div>
       </Card>
     </div>
