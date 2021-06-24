@@ -1,3 +1,6 @@
+import { NetworkType } from '../types';
+import { wallet } from '../services/wallet';
+
 export function prettyTx(
   text: string,
   startLength: number = 6,
@@ -57,4 +60,18 @@ export const handleNumber = (value, onlyPositive = true) => {
 
 export function unique(value, index, self) {
   return self.indexOf(value) === index;
+}
+
+export async function getWalletAddressForNetwork(networkType: NetworkType) {
+  try {
+    if (wallet?.provider?.isLiquality) {
+      // Liquality wallet passes eth, bsc and rsk objects to window.
+      return await window[networkType]
+        .request({ method: 'eth_accounts' })
+        .then(e => e[0]);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return wallet.address;
 }

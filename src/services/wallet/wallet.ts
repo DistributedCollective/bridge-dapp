@@ -75,7 +75,10 @@ class Wallet {
 
   public isConnected() {
     if (this.provider) {
-      return this.provider.isConnected() && !!this.address;
+      if (this.provider.hasOwnProperty('isConnected')) {
+        return this.provider.isConnected() && !!this.address;
+      }
+      return !!this.address;
     }
     return false;
   }
