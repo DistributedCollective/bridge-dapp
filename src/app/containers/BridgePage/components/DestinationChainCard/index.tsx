@@ -13,6 +13,8 @@ import { useBridgeState } from '../../../../hooks/useBridgeState';
 import { selectBridgePage } from '../../selectors';
 import { BridgeDictionary } from 'dictionaries';
 import { AssetSelect } from '../../../../components/Form/AssetSelect';
+import { getWalletAddressForNetwork } from '../../../../../utils/helpers';
+import { wallet } from '../../../../../services/wallet';
 
 export function DestinationChainCard() {
   const {
@@ -95,6 +97,26 @@ export function DestinationChainCard() {
     sourceNetwork.value,
     targetNetwork.value,
   ]);
+
+  // Tries to resolve user wallet address for receiving end and fills in it if it's different
+  // than current connected wallet address. Mostly for Liquality Wallet support.
+  useEffect(() => {
+    const run = async () => {
+      if (!!wallet.address) {
+        return await getWalletAddressForNetwork(
+          targetNetwork.value,
+        ).then(address =>
+          wallet.address.toLowerCase() !== address.toLowerCase()
+            ? address.toLowerCase()
+            : '',
+        );
+      }
+      return '';
+    };
+
+    run().then(value => receiver.set(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceNetwork.value, targetNetwork.value, wallet.address]);
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-2 xl:order-3">
