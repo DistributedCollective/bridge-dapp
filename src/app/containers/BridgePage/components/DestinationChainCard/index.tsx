@@ -214,8 +214,8 @@ export function DestinationChainCard() {
               }}
             >
               {receiveAtExternalWallet
-                ? '- Receive at same address'
-                : '+ Receive at external address'}
+                ? '- Click here to receive at current address'
+                : '+ Click here to receive at external address'}
             </button>
           </FormGroup>
         </div>
