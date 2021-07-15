@@ -56,6 +56,9 @@ export function StartingChainCard() {
     [sourceNetwork, targetNetwork],
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => amount.set('0'), [sourceNetwork.get(), asset.get()]);
+
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-1">
       <Card>
