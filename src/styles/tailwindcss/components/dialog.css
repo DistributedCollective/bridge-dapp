@@ -56,8 +56,9 @@
         @apply bg-black;
         @apply text-white;
         @apply w-full;
-        @apply p-12 rounded-2xl;
+        @apply rounded-2xl;
         max-width: 470px;
+        padding: 30px;
         position: relative;
         letter-spacing: 0;
     }
@@ -79,8 +80,8 @@
 
 
     .dialog h1, .dialog .title {
-        @apply font-semibold mb-12 text-center mx-auto;
-        max-width: 240px;
+        @apply font-semibold text-center mx-auto;
+        margin-bottom: 40px;
         font-size: 1.75rem;
         line-height: 2.125rem;
     }
