@@ -1,5 +1,7 @@
 import { NetworkType } from '../types';
 import { wallet } from '../services/wallet';
+import { walletService } from '@sovryn/react-wallet';
+import { ProviderType } from '@sovryn/wallet';
 
 export function prettyTx(
   text: string,
@@ -74,4 +76,27 @@ export async function getWalletAddressForNetwork(networkType: NetworkType) {
     console.error(e);
   }
   return wallet.address;
+}
+
+export function detectWeb3Wallet() {
+  switch (walletService.providerType) {
+    default:
+    case ProviderType.WEB3:
+      const { ethereum } = window as any;
+      if (ethereum) {
+        if (ethereum.isLiquality) return 'liquality';
+        if (ethereum.isNiftyWallet) return 'nifty';
+        if (ethereum.isMetaMask) return 'metamask';
+        return 'unknown';
+      }
+      return 'none';
+    case ProviderType.PORTIS:
+      return 'portis';
+    case ProviderType.LEDGER:
+      return 'ledger';
+    case ProviderType.TREZOR:
+      return 'trezor';
+    case ProviderType.WALLET_CONNECT:
+      return 'wallet-connect';
+  }
 }
