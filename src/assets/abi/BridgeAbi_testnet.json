@@ -64,6 +64,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_newAllowToken",
+        "type": "address"
+      }
+    ],
+    "name": "AllowTokenChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "_tokenAddress",
@@ -229,6 +242,38 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "bool",
+        "name": "_isSuffix",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "_prefix",
+        "type": "string"
+      }
+    ],
+    "name": "PrefixUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "tx_revoked",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RevokeTx",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "_newSideTokenFactory",
         "type": "address"
@@ -264,6 +309,19 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "erc777ConverterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "erc777ConverterSet",
+    "type": "event"
+  },
+  {
     "constant": false,
     "inputs": [
       {
@@ -285,6 +343,21 @@
     "outputs": [
       {
         "internalType": "contract IAllowTokens",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "erc777ConverterAddr",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -1042,7 +1115,7 @@
         "type": "bytes"
       }
     ],
-    "name": "recieveEthAt",
+    "name": "receiveEthAt",
     "outputs": [],
     "payable": true,
     "stateMutability": "payable",
@@ -1143,6 +1216,51 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_revokeTransactionID",
+        "type": "bytes32"
+      }
+    ],
+    "name": "setRevokeTransaction",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_erc777ConverterAddr",
+        "type": "address"
+      }
+    ],
+    "name": "setErc777Converter",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getErc777Converter",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "payable": false,

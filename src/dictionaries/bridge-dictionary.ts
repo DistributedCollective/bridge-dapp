@@ -66,14 +66,14 @@ export class BridgeDictionary {
       NetworkType.RSK,
       NetworkChainId.RSK_TESTNET,
       NetworkChainId.ETH_TESTNET,
-      '0xC0E7A7FfF4aBa5e7286D5d67dD016B719DCc9156',
+      '0xc0e7a7fff4aba5e7286d5d67dd016b719dcc9156',
       rskEthTesnetAssets,
     ),
     new BridgeDetails(
       NetworkType.ETH,
       NetworkChainId.ETH_TESTNET,
       NetworkChainId.RSK_TESTNET,
-      '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
+      '0x2b456e230225c4670fbf10b9da506c019a24cac7',
       ethRskTesnetAssets,
     ),
   ];

@@ -62,7 +62,7 @@ class Network {
     }
     const contract = await this.getContractForNetwork(
       network,
-      contractAddress,
+      contractAddress.toLowerCase(),
       abiInterface,
     );
 
@@ -71,7 +71,7 @@ class Network {
     let gasLimit = options?.gas;
     try {
       gasLimit = await contract.methods[methodName](...args).estimateGas({
-        from: wallet.address,
+        from: wallet.address.toLowerCase(),
         value: options?.value || 0,
         gas: options?.gas,
       });
@@ -82,8 +82,8 @@ class Network {
     const opt = Object.assign(
       {},
       {
-        from: wallet.address,
-        to: contractAddress,
+        from: wallet.address.toLowerCase(),
+        to: contractAddress.toLowerCase(),
         chainId,
         data,
         gas: options?.gas || gasLimit,

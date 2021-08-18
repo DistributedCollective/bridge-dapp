@@ -38,7 +38,7 @@ export function StartingChainCard() {
     }
   }, [assetList, asset]);
 
-  const { value, loading } = useBalanceOf(asset.get(), sourceNetwork.get());
+  const { value, loading } = useBalanceOf(asset.value, sourceNetwork.value);
 
   const changeSourceNetwork = useCallback(
     (value: string) => {
@@ -57,7 +57,7 @@ export function StartingChainCard() {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => amount.set('0'), [sourceNetwork.get(), asset.get()]);
+  useEffect(() => amount.set('0'), [sourceNetwork.value, asset.value]);
 
   return (
     <div className="bridge-card xl:bridge-card-m-400 order-1">
