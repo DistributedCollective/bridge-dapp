@@ -72,6 +72,13 @@ export function BridgePage(props: Props) {
           <ConfirmationButton state={bridgePage} dispatch={dispatch} />
           <TransactionDialog />
         </div>
+
+        <div className="mx-auto mt-11 text-xs max-w-2xl">
+          Withdrawals directly to exchange addresses are not advised due to lack
+          of support by exchanges (e.g. Binance), we are not responsible for any
+          loss of funds in these cases. Please only send funds to wallet
+          addresses that you control exclusively (EOA).
+        </div>
       </main>
     </>
   );
