@@ -6,10 +6,11 @@ import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import bnbIcon from '../../assets/tokens/bnb.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
+import sovIcon from '../../assets/tokens/sov.svg';
+import rbtcIcon from '../../assets/tokens/btc.svg';
 import { BabelFishDetails } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
 import { bnbsAggregatorRSK } from './rsk-bsc-testnet-assets';
-import sovIcon from '../../assets/tokens/sov.svg';
 
 export const bscRskTesnetAssets = [
   new AssetDetails(
@@ -27,6 +28,23 @@ export const bscRskTesnetAssets = [
       [Asset.SOV],
       new Map<Asset, string>(),
       Asset.SOV,
+    ),
+  ),
+  new AssetDetails(
+    Asset.BTCS,
+    'BTCS',
+    'BTCS',
+    rbtcIcon,
+    18,
+    '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B', // todo
+    false,
+    new BabelFishDetails(
+      ethsAggregatorRSK, // todo
+      '0x7d1FE4FdB0Afaf26ada5083A688139EbA10d3e1B', // todo
+      false,
+      [Asset.RBTC],
+      new Map<Asset, string>(),
+      Asset.RBTC,
     ),
   ),
   new AssetDetails(

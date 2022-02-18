@@ -12,4 +12,6 @@ export enum Asset {
   USDT = 'usdt',
   BUSD = 'busd',
   XUSD = 'xusd',
+  RBTC = 'rbtc',
+  BTCS = 'btcs',
 }
