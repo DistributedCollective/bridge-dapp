@@ -41,7 +41,7 @@ export function BridgeInformation({
                   targetNetwork.value,
                 ),
               ),
-              4,
+              5,
             )}{' '}
             {symbol}{' '}
             {min.nested('loading').get() && (
@@ -52,7 +52,7 @@ export function BridgeInformation({
         <div className="flex flex-row w-full space-x-4 mb-2">
           <div className="w-1/2">Max Transfer:</div>
           <div className="w-1/2 flex flex-row items-center justify-start">
-            {toNumberFormat(Number(fromWei(max.nested('value').value)), 4)}{' '}
+            {toNumberFormat(Number(fromWei(max.nested('value').value)), 5)}{' '}
             {symbol}{' '}
             {max.nested('loading').get() && (
               <Spinner size={12} className="ml-1" />
@@ -71,7 +71,7 @@ export function BridgeInformation({
                   targetNetwork.value,
                 ),
               ),
-              4,
+              5,
             )}{' '}
             {symbol}{' '}
             {fee.nested('loading').get() && (
@@ -82,7 +82,7 @@ export function BridgeInformation({
         <div className="flex flex-row w-full space-x-4 mb-2">
           <div className="w-1/2">Daily Limit:</div>
           <div className="w-1/2 flex flex-row items-center justify-start">
-            {toNumberFormat(Number(fromWei(daily.nested('value').value)), 4)}{' '}
+            {toNumberFormat(Number(fromWei(daily.nested('value').value)), 5)}{' '}
             {symbol}{' '}
             {daily.nested('loading').get() && (
               <Spinner size={12} className="ml-1" />
