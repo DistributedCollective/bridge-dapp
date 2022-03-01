@@ -49,7 +49,7 @@ export const bscRskTesnetAssets = [
       new Map<Asset, string>(),
       Asset.RBTC,
       BabelFishRedeem.REDEEM_WITH_EXTRA_DATA,
-      '0x82c9bf6a861bc1f97d6fce9c9b9ca890bcc8da6b',
+      '0x10C848e9495a32acA95F6c23C92eCA2b2bE9903A',
     ),
   ),
   new AssetDetails(
