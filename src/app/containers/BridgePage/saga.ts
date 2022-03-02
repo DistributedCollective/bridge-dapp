@@ -190,7 +190,7 @@ function* confirmTransfer() {
           BabelFishRedeem.REDEEM_WITH_EXTRA_DATA &&
         asset?.aggregatorData.customBridge
       ) {
-        let basset = (
+        let bAsset = (
           AssetDictionary.getContractAddress(
             payload.form.sourceNetwork,
             payload.form.targetNetwork,
@@ -203,7 +203,7 @@ function* confirmTransfer() {
           payload.form.targetNetwork,
           payload.form.asset,
           payload.form.targetAsset,
-          basset,
+          bAsset,
           tokenAmount,
           receiverAddress,
           asset.aggregatorData.customBridge!,
@@ -213,7 +213,7 @@ function* confirmTransfer() {
         asset?.aggregatorData.aggregatorContractAddress &&
         asset?.aggregatorData.redeem === BabelFishRedeem.DEFAULT
       ) {
-        let basset = (
+        let bAsset = (
           AssetDictionary.getContractAddressForRsk(
             payload.form.sourceNetwork,
             payload.form.targetNetwork,
@@ -227,7 +227,7 @@ function* confirmTransfer() {
           payload.form.targetNetwork,
           payload.form.asset,
           payload.form.targetAsset,
-          basset,
+          bAsset,
           tokenAmount,
           receiverAddress,
           BridgeDictionary.get(

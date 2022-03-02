@@ -97,7 +97,7 @@ class Babelfish {
         bAsset,
         mAssetQuanity,
         bridge,
-        new Web3().eth.abi.encodeParameter('address', recipient),
+        new Web3().eth.abi.encodeParameters(['address', 'bytes'], [recipient]),
       ],
     );
   }

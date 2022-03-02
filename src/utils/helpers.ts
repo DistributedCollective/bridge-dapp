@@ -78,7 +78,7 @@ export async function getWalletAddressForNetwork(networkType: NetworkType) {
   return wallet.address;
 }
 
-export function detectWeb3Wallet() {
+export const detectWeb3Wallet = () => {
   switch (walletService.providerType) {
     default:
     case ProviderType.WEB3:
@@ -99,4 +99,4 @@ export function detectWeb3Wallet() {
     case ProviderType.WALLET_CONNECT:
       return 'wallet-connect';
   }
-}
+};

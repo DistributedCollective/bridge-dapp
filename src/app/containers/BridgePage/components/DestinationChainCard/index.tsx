@@ -225,7 +225,7 @@ export function DestinationChainCard() {
                 className="mb-1"
                 value={receiver.value}
                 onChange={value => receiver.set((value || '').toLowerCase())}
-                placeholder="Enter or paste address"
+                placeholder="Enter or paste an address"
               />
             )}
             <button
@@ -236,8 +236,8 @@ export function DestinationChainCard() {
               }}
             >
               {receiveAtExternalWallet
-                ? '- Click here to receive at current address'
-                : '+ Click here to receive at external address'}
+                ? '- Click here to receive at the current address'
+                : '+ Click here to receive at an external address'}
             </button>
           </FormGroup>
         </div>
