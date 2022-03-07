@@ -93,12 +93,7 @@ class Babelfish {
         },
       ],
       'redeemToBridge',
-      [
-        bAsset,
-        mAssetQuanity,
-        bridge,
-        new Web3().eth.abi.encodeParameters(['address', 'bytes'], [recipient]),
-      ],
+      [bAsset, mAssetQuanity, recipient, '0x00'],
     );
   }
 
