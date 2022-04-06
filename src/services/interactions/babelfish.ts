@@ -35,7 +35,7 @@ class Babelfish {
     return network.send(networkType, address, abi, 'redeemToBridge', [
       bAsset,
       mAssetQuanity,
-      recipient,
+      recipient.toLowerCase(),
     ]);
   }
 
@@ -93,7 +93,7 @@ class Babelfish {
         },
       ],
       'redeemToBridge',
-      [bAsset, mAssetQuanity, recipient, '0x00'],
+      [bAsset, mAssetQuanity, recipient.toLowerCase(), '0x00'],
     );
   }
 
