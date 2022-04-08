@@ -24,6 +24,7 @@ import { bridge } from '../../../services/interactions/bridge';
 import { AssetDictionary, BridgeDictionary } from '../../../dictionaries';
 import { selectBridgePage } from './selectors';
 import { babelFishService } from '../../../services/interactions/babelfish';
+import { BabelFishRedeem } from 'models/BabelFishDetails';
 
 const web3 = new Web3();
 const abiCoder = web3.eth.abi;
@@ -40,8 +41,10 @@ function getSpenderAddress(payload: {
   );
 
   if (
-    payload.sourceNetwork === NetworkType.RSK &&
-    asset?.aggregatorData.aggregatorContractAddress
+    (payload.sourceNetwork === NetworkType.RSK &&
+      asset?.aggregatorData.aggregatorContractAddress) ||
+    (asset?.aggregatorData.aggregatorContractAddress &&
+      asset?.aggregatorData.redeem === BabelFishRedeem.REDEEM_WITH_EXTRA_DATA)
   ) {
     return asset?.aggregatorData.aggregatorContractAddress;
   }
@@ -181,10 +184,36 @@ function* confirmTransfer() {
       ).toLowerCase();
 
       if (
-        payload.form.sourceNetwork === NetworkType.RSK &&
-        asset?.aggregatorData.aggregatorContractAddress
+        payload.form.sourceNetwork === NetworkType.BSC &&
+        asset?.aggregatorData.aggregatorContractAddress &&
+        asset?.aggregatorData.redeem ===
+          BabelFishRedeem.REDEEM_WITH_EXTRA_DATA &&
+        asset?.aggregatorData.customBridge
       ) {
-        let basset = (
+        let bAsset = (
+          AssetDictionary.getContractAddress(
+            payload.form.sourceNetwork,
+            payload.form.targetNetwork,
+            payload.form.asset,
+          ) || tokenAddress
+        ).toLowerCase();
+        transferTx = yield call(
+          [babelFishService, babelFishService.redeemToBridgeWithExtraData],
+          payload.form.sourceNetwork,
+          payload.form.targetNetwork,
+          payload.form.asset,
+          payload.form.targetAsset,
+          bAsset,
+          tokenAmount,
+          receiverAddress,
+          asset.aggregatorData.customBridge!,
+        );
+      } else if (
+        payload.form.sourceNetwork === NetworkType.RSK &&
+        asset?.aggregatorData.aggregatorContractAddress &&
+        asset?.aggregatorData.redeem === BabelFishRedeem.DEFAULT
+      ) {
+        let bAsset = (
           AssetDictionary.getContractAddressForRsk(
             payload.form.sourceNetwork,
             payload.form.targetNetwork,
@@ -198,7 +227,7 @@ function* confirmTransfer() {
           payload.form.targetNetwork,
           payload.form.asset,
           payload.form.targetAsset,
-          basset,
+          bAsset,
           tokenAmount,
           receiverAddress,
           BridgeDictionary.get(
@@ -211,8 +240,10 @@ function* confirmTransfer() {
         let extraData: string | undefined = undefined;
 
         if (
-          payload.form.targetNetwork === NetworkType.RSK &&
-          asset?.aggregatorData.aggregatorContractAddress
+          (payload.form.targetNetwork === NetworkType.RSK &&
+            asset?.aggregatorData.aggregatorContractAddress) ||
+          (payload.form.sourceNetwork === NetworkType.RSK &&
+            asset?.aggregatorData.redeem === BabelFishRedeem.RECEIVE_ETH_AT)
         ) {
           receiver = asset?.aggregatorData.aggregatorContractAddress;
           extraData = abiCoder.encodeParameter('address', receiverAddress);

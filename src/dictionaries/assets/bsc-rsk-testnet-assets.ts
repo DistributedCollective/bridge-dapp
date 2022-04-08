@@ -6,10 +6,14 @@ import usdtIcon from '../../assets/tokens/usdt.svg';
 import ethIcon from '../../assets/tokens/eth.svg';
 import bnbIcon from '../../assets/tokens/bnb.svg';
 import busdIcon from '../../assets/tokens/busd.svg';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
-import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
-import { bnbsAggregatorRSK } from './rsk-bsc-testnet-assets';
 import sovIcon from '../../assets/tokens/sov.svg';
+import rbtcIcon from '../../assets/tokens/btc.svg';
+import {
+  BabelFishDetails,
+  BabelFishRedeem,
+} from '../../models/BabelFishDetails';
+import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
+import { bnbsAggregatorRSK, btcsAggregatorRSK } from './rsk-bsc-testnet-assets';
 
 export const bscRskTesnetAssets = [
   new AssetDetails(
@@ -27,6 +31,25 @@ export const bscRskTesnetAssets = [
       [Asset.SOV],
       new Map<Asset, string>(),
       Asset.SOV,
+    ),
+  ),
+  new AssetDetails(
+    Asset.BTCS,
+    'BTCS',
+    'BTCS',
+    rbtcIcon,
+    18,
+    '0x0ed2a1edde92b25448db95e5aa9fe9e9bc0193bf',
+    false,
+    new BabelFishDetails(
+      btcsAggregatorRSK,
+      '0xc41d41cb7a31c80662ac2d8ab7a7e5f5841eebc3',
+      false,
+      [Asset.RBTC],
+      new Map<Asset, string>(),
+      Asset.RBTC,
+      BabelFishRedeem.REDEEM_WITH_EXTRA_DATA,
+      '0x10C848e9495a32acA95F6c23C92eCA2b2bE9903A',
     ),
   ),
   new AssetDetails(

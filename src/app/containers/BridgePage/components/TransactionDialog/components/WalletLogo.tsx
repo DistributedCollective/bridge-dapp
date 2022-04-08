@@ -6,11 +6,9 @@ interface IWalletLogoProps {
   wallet: string;
 }
 
-export const WalletLogo: React.FC<IWalletLogoProps> = ({ wallet }) => {
-  return (
-    <WalletLogoContainer>
-      <WalletLogoImage src={getWalletImage(wallet)} alt="Wallet" />
-      <div className="text-nowrap text-truncate">{getWalletName(wallet)}</div>
-    </WalletLogoContainer>
-  );
-};
+export const WalletLogo: React.FC<IWalletLogoProps> = ({ wallet }) => (
+  <WalletLogoContainer>
+    <WalletLogoImage src={getWalletImage(wallet)} alt="Wallet" />
+    <div className="text-nowrap text-truncate">{getWalletName(wallet)}</div>
+  </WalletLogoContainer>
+);
