@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
+import { ethers } from 'ethers';
 import { Asset, NetworkType } from '../../types';
 import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';

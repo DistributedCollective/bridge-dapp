@@ -1,13 +1,18 @@
 import { AssetDetails } from '../../models/AssetDetails';
 import { Asset } from '../../types';
-import xusdIcon from '../../assets/tokens/xusd.svg';
-import { BabelFishDetails } from '../../models/BabelFishDetails';
-import ethsIcon from '../../assets/tokens/eths.svg';
+import {
+  BabelFishDetails,
+  BabelFishRedeem,
+} from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-mainnet-assets';
+import xusdIcon from '../../assets/tokens/xusd.svg';
+import ethsIcon from '../../assets/tokens/eths.svg';
 import bnbsIcon from '../../assets/tokens/bnbs.svg';
+import btcIcon from '../../assets/tokens/btc.svg';
 // import sovIcon from '../../assets/tokens/sov.svg';
 
 export const bnbsAggregatorRSK = '0xafD905Fe2EdBF5A7367A73B0F1e6a62Cb5E27D3e';
+export const btcsAggregatorBSC = '0x769C0B52c83d335705Fb10b7b78b0C7637c3A6E0';
 
 export const rskBscMainnetAssets = [
   // new AssetDetails(
@@ -27,6 +32,26 @@ export const rskBscMainnetAssets = [
   //     Asset.SOV,
   //   ),
   // ),
+  new AssetDetails(
+    Asset.RBTC,
+    'RBTC',
+    'RBTC',
+    btcIcon,
+    18,
+    '0xa233108b33dc77f1eee9d183ee1dc9725e76d475',
+    true,
+    new BabelFishDetails(
+      btcsAggregatorBSC,
+      '0xa233108b33dc77f1eee9d183ee1dc9725e76d475',
+      true,
+      [Asset.BTCS],
+      new Map<Asset, string>([
+        [Asset.RBTC, '0xa233108b33dc77f1eee9d183ee1dc9725e76d475'],
+      ]),
+      Asset.RBTC,
+      BabelFishRedeem.RECEIVE_ETH_AT,
+    ),
+  ),
   new AssetDetails(
     Asset.BNBs,
     'BNBs',

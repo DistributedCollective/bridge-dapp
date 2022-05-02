@@ -13,7 +13,7 @@ import {
   BabelFishRedeem,
 } from '../../models/BabelFishDetails';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
-import { bnbsAggregatorRSK, btcsAggregatorRSK } from './rsk-bsc-testnet-assets';
+import { bnbsAggregatorRSK, btcsAggregatorBSC } from './rsk-bsc-testnet-assets';
 
 export const bscRskTesnetAssets = [
   new AssetDetails(
@@ -42,14 +42,14 @@ export const bscRskTesnetAssets = [
     '0x0ed2a1edde92b25448db95e5aa9fe9e9bc0193bf',
     false,
     new BabelFishDetails(
-      btcsAggregatorRSK,
+      btcsAggregatorBSC,
       '0xc41d41cb7a31c80662ac2d8ab7a7e5f5841eebc3',
       false,
       [Asset.RBTC],
       new Map<Asset, string>(),
       Asset.RBTC,
       BabelFishRedeem.REDEEM_WITH_EXTRA_DATA,
-      '0x10C848e9495a32acA95F6c23C92eCA2b2bE9903A',
+      '0x10C848e9495a32acA95F6c23C92eCA2b2bE9903A', // fastbtc bridge (rsk)
     ),
   ),
   new AssetDetails(
