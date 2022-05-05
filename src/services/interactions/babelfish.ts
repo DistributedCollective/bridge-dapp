@@ -1,6 +1,4 @@
-import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
-import { ethers } from 'ethers';
 import { Asset, NetworkType } from '../../types';
 import { AssetDictionary } from '../../dictionaries';
 import massetAbi from '../../assets/abi/BabelFish_MassetAbi.json';
@@ -46,7 +44,7 @@ class Babelfish {
     asset: Asset,
     targetAsset: Asset,
     bAsset: string,
-    mAssetQuanity: string,
+    mAssetQuantity: string,
     recipient: string,
     bridge: string,
   ) {
@@ -94,7 +92,7 @@ class Babelfish {
         },
       ],
       'redeemToBridge',
-      [bAsset, mAssetQuanity, recipient.toLowerCase(), '0x00'],
+      [bAsset, mAssetQuantity, recipient.toLowerCase(), '0x00'],
     );
   }
 

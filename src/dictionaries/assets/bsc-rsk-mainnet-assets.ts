@@ -40,11 +40,11 @@ export const bscRskMainnetAssets = [
     'BTCS',
     rbtcIcon,
     18,
-    '0x2591c762e8C9Fe28A03B035b380110dD599aE987', // ok
+    '0x2591c762e8C9Fe28A03B035b380110dD599aE987',
     false,
     new BabelFishDetails(
       btcsAggregatorBSC,
-      '0x68e75416a99f61a8ef3186b3bee41dbf2a3fd4e8', // ok
+      '0x68e75416a99f61a8ef3186b3bee41dbf2a3fd4e8',
       false,
       [Asset.RBTC],
       new Map<Asset, string>(),
