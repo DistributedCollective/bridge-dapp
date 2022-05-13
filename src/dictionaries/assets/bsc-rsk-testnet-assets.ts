@@ -39,7 +39,7 @@ export const bscRskTesnetAssets = [
     'BTCS',
     rbtcIcon,
     18,
-    '0x0ed2a1edde92b25448db95e5aa9fe9e9bc0193bf',
+    '0x26d0e6D8C89B77A86a878BA1a8b4Bb2C18AC1d97',
     false,
     new BabelFishDetails(
       btcsAggregatorBSC,
