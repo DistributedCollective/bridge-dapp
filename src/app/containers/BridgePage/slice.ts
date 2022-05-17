@@ -4,6 +4,7 @@ import { Asset, NetworkChainId, NetworkType } from 'types';
 import { wallet } from 'services/wallet';
 import { NetworkDictionary } from 'dictionaries';
 import { ContainerState, FormPayload, TxStep } from './types';
+import { intercomUpdate } from 'services/intercom';
 
 // The initial state of the BridgePage container
 export const initialState: ContainerState = {
@@ -43,11 +44,13 @@ const bridgePageSlice = createSlice({
     },
     userAddressChanged(state, { payload }: PayloadAction<string>) {
       state.address = payload;
+      intercomUpdate({ 'Wallet address': payload });
     },
     userChainChanged(state, { payload }: PayloadAction<NetworkChainId>) {
       state.networkChain = payload;
       state.networkType = (NetworkDictionary.getByChainId(payload)
         ?.network as unknown) as NetworkType;
+      intercomUpdate({ 'Wallet network': payload.toString() });
     },
 
     submitTransfer(state, { payload }: PayloadAction<FormPayload>) {
