@@ -12,7 +12,7 @@ import btcIcon from '../../assets/tokens/btc.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
 
 export const bnbsAggregatorRSK = '0x790C4451c2e8e4cDC50cEdEC22756DaC993e93eb';
-export const btcsAggregatorBSC = '0xe2C2fbAa4407fa8BB0Dbb7a6a32aD36f8bA484aE';
+export const btcsAggregatorBSC = '0xc54B47AC178273A42Fb71631d8018aD7EBbec330';
 
 export const rskBscTestnetAssets = [
   new AssetDetails(
