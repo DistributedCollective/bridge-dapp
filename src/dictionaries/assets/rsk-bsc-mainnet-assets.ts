@@ -12,7 +12,7 @@ import btcIcon from '../../assets/tokens/btc.svg';
 // import sovIcon from '../../assets/tokens/sov.svg';
 
 export const bnbsAggregatorRSK = '0xafD905Fe2EdBF5A7367A73B0F1e6a62Cb5E27D3e';
-export const btcsAggregatorBSC = '0x769C0B52c83d335705Fb10b7b78b0C7637c3A6E0';
+export const btcsAggregatorBSC = '0x1dA3D286a3aBeaDb2b7677c99730D725aF58e39D';
 
 export const rskBscMainnetAssets = [
   // new AssetDetails(
