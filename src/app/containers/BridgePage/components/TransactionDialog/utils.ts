@@ -7,21 +7,39 @@ import TrezorLogo from 'assets/wallets/trezor.svg';
 import WalletConnectLogo from 'assets/wallets/walletconnect.svg';
 
 export const getWalletName = walletName => {
-  if (walletName === 'liquality') return 'Liquality';
-  if (walletName === 'nifty') return 'Nifty';
-  if (walletName === 'portis') return 'Portis';
-  if (walletName === 'ledger') return 'Ledger';
-  if (walletName === 'trezor') return 'Trezor';
-  if (walletName === 'wallet-connect') return 'Wallet Connect';
-  return 'MetaMask';
+  switch (walletName) {
+    default:
+      return 'MetaMask';
+    case 'liquality':
+      return 'Liquality';
+    case 'nifty':
+      return 'Nifty';
+    case 'portis':
+      return 'Portis';
+    case 'ledger':
+      return 'Ledger';
+    case 'trezor':
+      return 'Trezor';
+    case 'wallet-connect':
+      return 'Wallet Connect';
+  }
 };
 
 export const getWalletImage = walletName => {
-  if (walletName === 'liquality') return LiqualityLogo;
-  if (walletName === 'nifty') return NiftyLogo;
-  if (walletName === 'portis') return PortisLogo;
-  if (walletName === 'ledger') return LedgerLogo;
-  if (walletName === 'trezor') return TrezorLogo;
-  if (walletName === 'wallet-connect') return WalletConnectLogo;
-  return MetamaskLogo;
+  switch (walletName) {
+    default:
+      return MetamaskLogo;
+    case 'liquality':
+      return LiqualityLogo;
+    case 'nifty':
+      return NiftyLogo;
+    case 'portis':
+      return PortisLogo;
+    case 'ledger':
+      return LedgerLogo;
+    case 'trezor':
+      return TrezorLogo;
+    case 'wallet-connect':
+      return WalletConnectLogo;
+  }
 };

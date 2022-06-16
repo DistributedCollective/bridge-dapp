@@ -140,22 +140,38 @@ class Wallet {
   public async changeChain(networkType: NetworkType) {
     const chain = NetworkDictionary.get(networkType);
     if (!chain) return Promise.resolve(null);
-    return this._provider.request({
-      method: 'wallet_addEthereumChain',
-      params: [
-        {
-          chainId: toHex(chain.chainId),
-          chainName: chain.longName,
-          nativeCurrency: {
-            name: chain.coinName,
-            symbol: chain.coinName,
-            decimals: chain.coinDecimals,
+
+    try {
+      return this._provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [
+          {
+            chainId: toHex(chain.chainId),
           },
-          rpcUrls: [chain.nodeUrl],
-          blockExplorerUrls: [chain.explorer],
-        },
-      ],
-    });
+        ],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if ((switchError as any).code === 4902) {
+        return this._provider.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: toHex(chain.chainId),
+              chainName: chain.longName,
+              nativeCurrency: {
+                name: chain.coinName,
+                symbol: chain.coinName,
+                decimals: chain.coinDecimals,
+              },
+              rpcUrls: [chain.nodeUrl],
+              blockExplorerUrls: [chain.explorer],
+            },
+          ],
+        });
+      }
+      return Promise.reject(switchError);
+    }
   }
 
   private trigger(event: EventNames, ...values: any) {

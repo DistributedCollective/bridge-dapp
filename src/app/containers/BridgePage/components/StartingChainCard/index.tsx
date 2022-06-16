@@ -111,7 +111,7 @@ export function StartingChainCard() {
                         targetNetwork.value,
                       ),
                     ),
-                    4,
+                    6,
                   )}{' '}
                   {loading && (
                     <Spinner size={12} className="inline-block ml-1" />

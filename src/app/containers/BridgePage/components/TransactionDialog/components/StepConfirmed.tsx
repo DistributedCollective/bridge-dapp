@@ -1,11 +1,26 @@
 import React from 'react';
 import { ITxProps } from '../types';
 import { TransactionBadge } from '../../../../../components/TransactionBadge';
+import { TxStep } from 'app/containers/BridgePage/types';
 
-export const StepConfirmed: React.FC<ITxProps> = ({ tx, network }) => (
+type StepConfirmedProps = ITxProps & { step: TxStep };
+
+export const StepConfirmed: React.FC<StepConfirmedProps> = ({
+  tx,
+  network,
+  step,
+}) => (
   <>
-    <h1>Transaction confirmed</h1>
-    <p className="lead">Your transaction confirmed.</p>
+    <h1>
+      {step === TxStep.COMPLETED_TRANSFER
+        ? 'Transaction confirmed'
+        : 'Transaction pending'}
+    </h1>
+    <p className="lead">
+      {step === TxStep.COMPLETED_TRANSFER
+        ? 'Your transaction confirmed.'
+        : 'Your transaction pending.'}
+    </p>
     <div className="mt-12 text-center">
       <TransactionBadge transactionHash={tx.hash} networkType={network} />
     </div>
