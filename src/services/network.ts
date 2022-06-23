@@ -87,14 +87,6 @@ class Network {
         chainId,
         data,
         gas: options?.gas || gasLimit,
-        ...(network === NetworkType.RSK
-          ? {
-              gasPrice: toWei(
-                APP_MODE === AppMode.MAINNET ? '0.06' : '0.065',
-                'gwei',
-              ),
-            }
-          : {}),
       },
       options,
     );
