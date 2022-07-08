@@ -186,6 +186,7 @@ function FormButton({
     if (
       data.sourceNetwork.value === NetworkType.RSK &&
       token?.aggregatorData.aggregatorContractAddress &&
+      !token?.aggregatorData.isMinting &&
       bignumber(data.amount.value || '0').greaterThanOrEqualTo(balance || '0')
     )
       return 'aggregator-balance';
@@ -270,7 +271,7 @@ function FormButton({
                 data.sourceNetwork.value,
               ),
             ),
-            4,
+            5,
           )}{' '}
           {AssetDictionary.getSymbol(
             data.sourceNetwork.value,
@@ -293,7 +294,7 @@ function FormButton({
                 data.sourceNetwork.value,
               ),
             ),
-            4,
+            5,
           )}{' '}
           {AssetDictionary.getSymbol(
             data.sourceNetwork.value,
