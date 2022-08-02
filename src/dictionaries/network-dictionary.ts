@@ -47,7 +47,7 @@ export class NetworkDictionary {
       'ETH',
       18,
       ethLogo,
-      'https://rpc.eth.sovryn.app',
+      'https://cloudflare-eth.com',
       // `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}`,
       'https://etherscan.io',
       'https://etherscan.io/tx/:value',
