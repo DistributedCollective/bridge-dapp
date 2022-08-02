@@ -39,7 +39,7 @@ export function ConfirmationButton({ state, dispatch }: Props) {
   );
 
   return (
-    <div className="bridge-actions xl:bridge-actions-sized flex-fill h-fulltext-center order-3 xl:order-2">
+    <div className="bridge-actions xl:bridge-actions-sized flex-fill h-full text-center order-3 xl:order-2">
       {state.address.length === 0 ? (
         <ConnectWallet loading={state.connecting} />
       ) : (
