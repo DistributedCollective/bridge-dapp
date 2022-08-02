@@ -10,13 +10,17 @@
   [build.environment]
     GENERATE_SOURCEMAP = "false"
     REACT_APP_MODE = "testnet"
+    REACT_APP_GOOGLE_ANALYTICS = "GTM-KTSX2PL"
 
 [context.production]
   [context.production.environment]
     REACT_APP_MODE = "mainnet"
+    REACT_APP_GOOGLE_ANALYTICS = "GTM-PT56KWJ"
 
 # PR deployments (previews)
 [context.deploy-preview]
+  [context.deploy-preview.environment]
+    REACT_APP_MODE = "testnet"
 
 # Staging deployments (all branches)
 [context.branch-deploy]
@@ -24,6 +28,6 @@
     REACT_APP_MODE = "mainnet"
 
 # Testnet deployment
-[context.development]
-  [context.development.environment]
+[context.dev]
+  [context.dev.environment]
     REACT_APP_MODE = "testnet"
