@@ -18,7 +18,6 @@ export function useMaintenance() {
   const maintenanceStates: MaintenanceStates = useSelector(selectMaintenance);
 
   const checkMaintenance = (name: States): boolean => {
-    return true;
     return maintenanceStates[name]?.maintenance_active;
   };
 
