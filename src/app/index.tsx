@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { GlobalStyle } from 'styles/global-styles';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
-// import { useMaintenance } from './hooks/useMaintenance';
+import { useMaintenance } from './hooks/useMaintenance';
 import {
   actions as maintenanceActions,
   maintenanceSlice,
@@ -29,9 +29,8 @@ export function App() {
   useInjectSaga({ key: maintenanceSlice, saga: maintenanceStateSaga });
   const dispatch = useDispatch();
 
-  // const { checkMaintenance, States } = useMaintenance();
-  // const siteLocked = checkMaintenance(States.BRIDGE);
-  const siteLocked = true;
+  const { checkMaintenance, States } = useMaintenance();
+  const siteLocked = checkMaintenance(States.BRIDGE);
 
   useEffect(() => {
     dispatch(maintenanceActions.fetchMaintenance());
