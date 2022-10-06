@@ -3,11 +3,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import delay from '@redux-saga/delay-p';
 import { actions } from './slice';
 
-import { APP_MODE, backendUrl } from 'utils/network-utils';
-
 function fetchState() {
   return axios
-    .get(`${backendUrl[APP_MODE]}/maintenance`)
+    .get(`https://maintenance-mode.sovryn.app/maintenance`)
     .then(response => ({ response }))
     .catch(error => ({ error }));
 }

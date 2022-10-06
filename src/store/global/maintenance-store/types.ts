@@ -13,5 +13,8 @@ export interface Maintenance {
   id: number;
   name: string;
   label: string;
-  maintenance_active: boolean;
+  isInMaintenance: boolean;
+  createdAt: string;
+  updatedAt: string;
+  groupName: string;
 }
