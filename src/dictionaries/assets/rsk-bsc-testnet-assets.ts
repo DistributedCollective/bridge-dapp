@@ -1,14 +1,11 @@
 import { AssetDetails } from '../../models/AssetDetails';
 import { Asset } from '../../types';
-import {
-  BabelFishDetails,
-  BabelFishRedeem,
-} from '../../models/BabelFishDetails';
+import { BabelFishDetails } from '../../models/BabelFishDetails';
 import xusdIcon from '../../assets/tokens/xusd.svg';
 import ethsIcon from '../../assets/tokens/eths.svg';
 import bnbsIcon from '../../assets/tokens/bnbs.svg';
 import sovIcon from '../../assets/tokens/sov.svg';
-import btcIcon from '../../assets/tokens/btc.svg';
+// import btcIcon from '../../assets/tokens/btc.svg';
 import { ethsAggregatorRSK, xusdAggregatorRSK } from './rsk-eth-testnet-assets';
 
 export const bnbsAggregatorRSK = '0x790C4451c2e8e4cDC50cEdEC22756DaC993e93eb';
@@ -32,26 +29,26 @@ export const rskBscTestnetAssets = [
       Asset.SOV,
     ),
   ),
-  new AssetDetails(
-    Asset.RBTC,
-    'RBTC',
-    'RBTC',
-    btcIcon,
-    18,
-    '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2',
-    true,
-    new BabelFishDetails(
-      btcsAggregatorBSC,
-      '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2',
-      true,
-      [Asset.BTCS],
-      new Map<Asset, string>([
-        [Asset.RBTC, '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2'],
-      ]),
-      Asset.RBTC,
-      BabelFishRedeem.RECEIVE_ETH_AT,
-    ),
-  ),
+  // new AssetDetails(
+  //   Asset.RBTC,
+  //   'RBTC',
+  //   'RBTC',
+  //   btcIcon,
+  //   18,
+  //   '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2',
+  //   true,
+  //   new BabelFishDetails(
+  //     btcsAggregatorBSC,
+  //     '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2',
+  //     true,
+  //     [Asset.BTCS],
+  //     new Map<Asset, string>([
+  //       [Asset.RBTC, '0xf629e5C7527aC7Bc9ce26Bdd6D66F0eb955ef3B2'],
+  //     ]),
+  //     Asset.RBTC,
+  //     BabelFishRedeem.RECEIVE_ETH_AT,
+  //   ),
+  // ),
   new AssetDetails(
     Asset.BNBs,
     'BNBs',
